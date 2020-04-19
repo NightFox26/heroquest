@@ -1,0 +1,1 @@
+start public\sass\dart-sass\sass.bat public/sass/styles.scss public/css/styles.css  --watch --style=compressed

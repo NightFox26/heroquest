@@ -1,0 +1,53 @@
+.modalBgFade {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 11;
+    .modal {        
+        display: none;
+        position: absolute;
+        max-height: 400px;
+        margin: auto;
+        overflow-y: auto;
+        top: 40%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        width: 30%;
+        border: 5px solid black;
+        border-radius: 20px;
+        box-shadow: 5px 5px 10px black;
+        padding: 20px 40px; 
+        background-image: url("../images/bg/paper.jpg");
+        background-size: cover;
+        .desc{
+            padding: 0 40px;
+        }
+        .reward{
+            color: $red;
+            font-style: oblique;
+            img{
+                position: relative;
+                top: 8px;
+            }
+        }
+        .btn-closeModal{
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            line-height: 30px;
+            &:before {
+                content: "";
+                display: block;
+                background: url("../images/icon/exit.png") no-repeat;
+                background-size: contain;
+                width: 30px;
+                height: 30px;                            
+            }
+        }
+    }
+}

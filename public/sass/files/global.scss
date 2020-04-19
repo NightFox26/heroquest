@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: "heroquest";
+    a {
+        color:$orange;
+        text-decoration: none;
+        &:hover {       
+            text-decoration: none;
+            color: white;      
+        }   
+    }    
+
+    button,
+    input[type='submit']{        
+        border: transparent;
+        transition: 0.3s all ease-in;       
+        border-radius: 2px;
+        margin-right: 5px;
+        img{
+            vertical-align: middle;                
+        }
+        &:hover{
+            cursor: pointer;
+            background-color: $orange;
+            color: white;
+        }
+    }
+
+    button,
+    a{
+        font-family: "arial";
+        font-size:14px;
+        font-weight: bold;
+    }
+
+    input[type="submit"]{
+        font-family: "heroquest";
+    }    
+}
+
+.wrapperBody{
+    overflow: auto;
+    padding: 70px 0;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+      }
+}
+
+.titleShadow{
+    text-shadow: 0 0 50px black;
+}
+
+.textShadow{
+    text-shadow: 0 0 10px black;
+}
+
+.lightBox{
+    box-shadow: 0 0 14px 4px white;
+}
+
+.textBorder{
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+
+}
+
+.centerText{
+    text-align: center;
+}
+
+.btn{
+    display: inline-block;    
+    padding: 2px 5px;
+    background-color: $orange;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 0px rgb(94, 75, 75);
+    margin-right: 5px;
+    img{        
+        vertical-align: middle;         
+    }
+}

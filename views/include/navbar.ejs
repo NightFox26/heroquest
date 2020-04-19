@@ -1,0 +1,30 @@
+<button onClick="toggle_headerFooter();" class="btn" id="menuVisbleBtn">
+    <img src="/images/icon/menuLess.png" alt="icon sans menu">
+</button>
+<nav>
+    <% if (locals.user){ %>
+        <button>
+            <img src="/images/icon/profil.png" alt="icon armurerie"> Profil de <%= locals.user %>
+        </button>
+
+        <button>
+            <img src="/images/icon/letter.png" alt="icon armurerie"> Lettres
+        </button>
+
+        <button>
+            <img src="/images/icon/trophy.png" alt="icon armurerie"> Trophés
+        </button>
+
+        <button>
+            <img src="/images/icon/status.png" alt="icon armurerie"> Statistiques
+        </button>
+    <% } %>
+
+    <button onClick="toggle_full_screen();" class="btn float-right">
+        <img src="/images/icon/window.png" alt="icon fenetre">
+    </button>
+    <button onClick="toggle_headerFooter();" class="btn float-right">
+        <img src="/images/icon/menuLess.png" alt="icon sans menu">
+    </button>
+
+</nav>

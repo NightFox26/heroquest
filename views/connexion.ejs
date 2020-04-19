@@ -1,0 +1,28 @@
+
+<%- include('include/header'); %>
+
+<%- include('include/navbar'); %>
+
+<body id="loginPage">
+
+    <section class="wrapperBody">
+        <h1 class="textBorder titleShadow"><%= msg %></h1>
+        <P class="textShadow">Formulaire de connexion au serveur de jeu. <br>
+        si vous ne possedez pas de compte merci d'en créer un en suivant  <a href='<%=  urlWeb %>' target="_blank">ce lien</a></P>
+
+        <form action="/login" method="POST" class="lightBox">
+            <input type="text" name="username" placeholder="Pseudo">
+            <input type="password" name="password" placeholder="Mot de passe">
+            <input type="submit" value="Pousser la porte">
+        </form>
+
+        <% if (locals.loginError){ %>
+            <div class="loginFail centerText"><img src="/images/cards/rien.png" alt="rien trouvé"></div>
+        <% } %>
+
+
+    </section>
+
+    <%- include('include/footer'); %> 
+</body>
+</html>

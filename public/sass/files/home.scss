@@ -1,0 +1,32 @@
+#homePage{    
+    background-image: url("../images/bg/bg-wood.png");
+    .wrapperBody{
+        height: 100vh; 
+        // margin-top: -60px;
+        padding-top: 130px;       
+        padding-bottom: 10px; 
+        text-align: center;
+        .titleImage{
+            position: absolute;
+            display: inline-block;
+            top: 20px;  
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;        
+        }
+        .homeLink{
+            display: inline-block;
+            margin: 0 50px;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            &:hover{
+                opacity: 1;
+            }
+            a{
+                img{
+                    height: 395px;    
+                }
+            }
+        }
+    }
+}

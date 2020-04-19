@@ -1,0 +1,44 @@
+
+<%- include('include/header'); %>
+<%- include('include/navbar'); %>
+<%- include('component/modalInfo'); %>
+
+<body id="homePage">
+    <section class="wrapperBody">
+        <div class="titleImage"><img src="/images/elements/logoHd.png" alt="logo titre HerQuest"></div>
+
+        <div class="homeLink">
+            <a href="/game/classique">
+                <img src="/images/elements/classicMode.png" alt="image du mode classic">                
+            </a>
+        </div>
+
+        <div class="homeLink">
+            <% if (tyranModeUnlocked){  %>
+                <a href="/game/tyrannique">
+                    <img src="/images/elements/tyrannicMode.png" alt="image du mode tyrannic">                
+                </a>
+            <% }else{ %>
+                <a onclick="showModalInfo('Le mode de jeu \'Tyrannique\' est la version extreme du jeu.<br><br> Il inclut un nouveau plateau de jeu, de nouvelles cartes, de nouveaux monstres ... et de nouveaux tresors !', 'Disponible qu\'une fois le mode \'classique\' terminé !')">
+                    <img src="/images/elements/tyrannicMode.png" alt="image du mode tyrannic">                
+                </a>
+            <% } %>
+        </div>
+
+        <div class="homeLink">            
+            <% if (gdxModeUnlocked){  %>
+                <a href="/gdx">
+                    <img src="/images/elements/gdx.png" alt="image du gdx">                
+                </a>
+            <% }else{ %>
+                <a onclick="showModalInfo('Le mode de jeu \'Editeur GDX\' vous permet de concevoir vous même des étages de jeu.','Disponible une fois le stage 5 du mode \'classique\' terminé !')">
+                    <img src="/images/elements/gdx.png" alt="image du gdx">                
+                </a>
+            <% } %>
+        </div>
+
+
+    </section>
+    <%- include('include/footer'); %>      
+</body>
+</html>
