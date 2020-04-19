@@ -4,12 +4,14 @@ let path = require('path');
 let bodyParser = require('body-parser');
 let session = require('express-session');
 const EventEmitter = require('events').EventEmitter;
-
+// const mysql      = require('mysql');
+// let db = mysql.createConnection(require("./config/db"));
 
 const color = require("./modules/colorsTxt");
 const configInit = require("./config/configInit");
 const serverFunc = require("./modules/functionServer");
 const game = require("./game/plateau");
+let db = serverFunc.getBdd()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend: true}));
@@ -31,8 +33,7 @@ app.get('/', function(req, res) {
 
 .get('/login', function(req, res) {
     res.locals.loginError = req.session.loginError;
-    req.session.loginError = undefined;
-    req.session.flash = [];
+    req.session.loginError = undefined;    
 
     serverFunc.checkAutoLogin(req);  
     res.setHeader('Content-Type', 'text/html');      
@@ -42,12 +43,13 @@ app.get('/', function(req, res) {
 .post('/login', function(req, res) {
     res.setHeader('Content-Type', 'text/html');  
     if(req.body.username == "fox" && req.body.password == "123"){
-        req.session.user = "fox";  
-          
+        req.session.user = req.body.username;  
+        req.sendFlash("success","Bonjour "+req.session.user)  
         color.successTxt(req.session.user + " vient de se connecter !");
         res.redirect('/home');
     }else{
         color.errorTxt("ALERT : "+req.body.username + " n'arrive pas à se connecter !");
+        req.sendFlash("alert","Identifiants incorrect ! ")
         req.session.loginError = true;
         res.redirect('/login');
     }    
@@ -56,24 +58,27 @@ app.get('/', function(req, res) {
 .get('/home', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
-        res.locals.user =  req.session.user ;        
+        res.locals.user =  req.session.user ;                
         let opt = {tyranModeUnlocked: configInit.tyranModeUnlocked,
                    gdxModeUnlocked: configInit.gdxModeUnlocked}         
         res.render('home.ejs', opt); 
     }else{
+        req.sendFlash("alert","Vous devez vous connecter pour acceder a l'accueil !")
         res.redirect('/login');
     }
 })
 
 .get('/game/classique', function(req, res) {
     configInit.gameMode = "classique"    
-    var opt = {gameMode: configInit.gameMode}
+    var opt = {gameMode: configInit.gameMode}    
+    req.sendFlash("normal","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")    
     res.setHeader('Content-Type', 'text/html');      
     res.redirect('/taverne');    
 })
 
 .get('/game/tyrannique', function(req, res) {
     configInit.gameMode = "tyrannique"
+    req.sendFlash("alert","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
     var opt = {gameMode: configInit.gameMode}
     res.setHeader('Content-Type', 'text/html');      
     res.redirect('/taverne');  
@@ -83,12 +88,13 @@ app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
         res.locals.user =  req.session.user ;
-        res.sendFlash("info","Bienvenue a la taverne "+res.locals.user)
-        res.sendFlash("success","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
+
+        res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.user)
         
         var opt = {gameMode: configInit.gameMode}
         res.render('taverne.ejs', opt); 
     }else{
+        req.sendFlash("alert","Vous devez vous connecter pour acceder a la taverne !")
         res.redirect('/login');
     }   
 })

@@ -5,8 +5,8 @@ $(function(){
         $(this).next('.flash').delay(500).show('fast', showNextOne);
     });
     
-    $('.flash').first().delay(5000).hide('slow', function hideNextOne() {
-        $(this).next('.flash').delay(3000).hide('slow', hideNextOne);
+    $('.flash').first().delay(3000).hide('slow', function hideNextOne() {
+        $(this).next('.flash').delay(2500).hide('slow', hideNextOne);
     });
     /********************/ 
     

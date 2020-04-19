@@ -22,6 +22,11 @@ function kickUser(){
     });
 }
 
+function getBdd(){
+  const mysql = require('mysql');
+  return mysql.createConnection(require("../config/db"));
+}
+
 function checkAutoLogin(req){
   if(configInit.autoLogin){
       req.session.user ="fox";
@@ -33,5 +38,6 @@ function checkAutoLogin(req){
 module.exports = {
     kickUser,
     debugObj,
-    checkAutoLogin
+    checkAutoLogin,
+    getBdd
 }

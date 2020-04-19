@@ -7,12 +7,12 @@
         
         <section id="playerSection">
             <div class="content overflowAuto">                
-                <h1>
-                    HERO : 
-                    <img src="images/icon/barbare.png" alt="" class="iconAvatar"> 
-                    <span class="playerName"><%= user %></span><br>
-                    Mode : "<%= gameMode %>"
+                <h1>                  
+                    Mode : "<%= gameMode %>"<br>
+                    Hero : <img src="images/icon/barbare.png" alt="" class="iconAvatar"> 
+                    <span class="playerName"><%= user %></span>
                 </h1>
+                <hr>
 
                 <div>
                     <img src="images/elements/barbare.png" alt="fiche avatar" class="avatar">
@@ -49,7 +49,7 @@
             </div>
         </section>
 
-        <section id="taverneSection"></section>
+        <section id="taverneSection" class="<%= gameMode %>"></section>
 
         <section id="allPlayerSection">
             <div class="content overflowAuto">

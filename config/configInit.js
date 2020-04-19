@@ -11,14 +11,14 @@ exports.urlWebSubscribe = "http://google.com";
 /*************/
 /*****BDD*****/
 /*************/
-exports.host    = "localhost";
+exports.dbHost    = "localhost";
 exports.dbName  = "heroquest";
-exports.user    = "root";
-exports.pass    = "";
+exports.dbUser    = "root";
+exports.dbPass    = "";
 /**************/
 
 exports.tyranModeUnlocked   = false;
 exports.gdxModeUnlocked     = false;
-exports.autoLogin           = true; // mettre a false en prod
+exports.autoLogin           = false; // mettre a false en prod
 exports.gameMode            = "classique";
 exports.IA_name             = "Astria";

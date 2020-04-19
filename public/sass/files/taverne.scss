@@ -2,7 +2,8 @@
     .wrapperBody{                
         background-color: $black;
         display: flex;
-        justify-content: space-between;         
+        justify-content: space-between; 
+        align-items: center;        
         section#playerSection,
         section#allPlayerSection{
             display: inline-block;
@@ -10,14 +11,14 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
             width: 368px;
-            height: 870px;
+            height: 830px;
             padding: 40px 30px;  
             .content{
                 height: 100%;
                 h1{
                     @extend .textBorderBlack;
                     color: $red;
-                    margin-top: 0;
+                    margin: 0;
                 }
                 .avatar{
                     width: 100%;
@@ -39,12 +40,18 @@
 
         section#taverneSection{
             width: 60%;
-            height: 870px;
-            background-image: url("../images/bg/taverne.jpg");
+            height: 830px;
+            
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center center;
             border-radius: 20px;
+            &.classique{
+                background-image: url("../images/bg/taverne.jpg");
+            }
+            &.tyrannique{
+                background-image: url("../images/bg/taverne3.jpg");
+            }
         } 
         
         section#allPlayerSection{
