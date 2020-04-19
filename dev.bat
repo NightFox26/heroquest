@@ -1,2 +1,2 @@
-call sassWatch.bat;
+call sass.bat;
 call server.bat;

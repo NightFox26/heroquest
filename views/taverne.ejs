@@ -5,7 +5,142 @@
 
 <body id="tavernePage">
     <section class="wrapperBody">
-        <h1>je suis la taverne du mode : <%= gameMode %></h1>
+        
+        <section id="playerSection">
+            <div class="content overflowAuto">
+                <h1 class="centerText">Bienvenue dans la taverne du mode "<%= gameMode %>" <%= user %></h1>
+                <div>
+                    <img src="images/elements/barbare.png" alt="fiche avatar" class="avatar">
+                </div>
+    
+                <form action="" method="POST">
+                    <input type="text" name="mode" value='<%= gameMode %>' hidden>
+    
+                    <div class="centerText">
+                        <label for="etage">Partir en quete :</label>
+                        <select name="etage" id="etage">
+                            <option value="">Etage 1</option>
+                            <option value="">Etage 2</option>
+                            <option value="">Etage 3</option>
+                        </select>
+                    </div>
+    
+                    <hr>
+                    <label for="">Joueurs a ma table : </label> <br><br>
+                    <input type="checkbox"><img src="images/icon/elf.png" alt="" class="iconAvatar"> <label class="playerName">JeanPhi</label>  <br>
+
+                    <input type="checkbox"><img src="images/icon/naim.png" alt="" class="iconAvatar"> <label class="playerName">Floflo</label>  <br>
+
+                    <input type="checkbox"><img src="images/icon/barbare.png" alt="" class="iconAvatar"> <label class="playerName">Manu</label>  <br>
+                    
+    
+                    <hr>
+                    <div class="centerText formSubmit">
+                        <button type="submit" class="btn">
+                            <img src="images/icon/boots.png" alt="icone bottes"> Partir avec ces vauriens
+                        </button> 
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="taverneSection"></section>
+
+        <section id="allPlayerSection">
+            <div class="content overflowAuto">
+                <h1>Joueurs Connectés :</h1>
+                <ul>
+                    <li>
+                        <img src="images/icon/magicien.png" alt="" class="iconAvatar">
+                        <span class="playerName">Nightfox26</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li>  
+                    
+                    <li>
+                        <img src="images/icon/elf.png" alt="" class="iconAvatar">
+                        <span class="playerName">Onichan666</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li> 
+
+                    <li>
+                        <img src="images/icon/naim.png" alt="" class="iconAvatar">
+                        <span class="playerName">Pascal</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li> 
+
+                    <li>
+                        <img src="images/icon/barbare.png" alt="" class="iconAvatar">
+                        <span class="playerName">Marvin</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li> 
+                </ul>
+
+
+
+                <h1>Joueurs hors ligne :</h1>
+                <ul>
+                    <li>
+                        <img src="images/icon/naimBl.png" alt="" class="iconAvatar">
+                        <span class="playerName">John Weak</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li>  
+                    
+                    <li>
+                        <img src="images/icon/elfBl.png" alt="" class="iconAvatar">
+                        <span class="playerName">Jean Camille</span>
+
+                        <div class="playersAction">
+                            <button class="btn">
+                                <img src="images/icon/letter.png" alt="icone lettre">
+                            </button>
+                            <button class="btn">
+                                <img src="images/icon/cup.png" alt="icone coupe">
+                            </button>
+                        </div>
+                    </li> 
+                </ul>
+            </div>
+        </section>
 
     </section>
     <%- include('include/footer'); %>      

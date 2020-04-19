@@ -14,7 +14,13 @@ body {
             text-decoration: none;
             color: white;      
         }   
-    }    
+    }  
+    ul{
+        padding-left: 10px;
+        li{
+            list-style: none;
+        }
+    }  
 
     button,
     input[type='submit']{        
@@ -32,6 +38,14 @@ body {
         }
     }
 
+    input[type='checkbox']{
+        display: inline-block;
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }  
+
     button,
     a{
         font-family: "arial";
@@ -47,6 +61,7 @@ body {
 .wrapperBody{
     overflow: auto;
     padding: 70px 0;
+    height: 100vh; 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
         display: none;
@@ -68,11 +83,28 @@ body {
 .textBorder{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: white;
+}
 
+.textBorderBlack{
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+}
+
+.textBorderRed{
+    -webkit-text-stroke-width: 0.4px;
+    -webkit-text-stroke-color: $red;
 }
 
 .centerText{
     text-align: center;
+}
+
+.overflowAuto{
+    overflow: auto;    
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .btn{
@@ -84,7 +116,8 @@ body {
     border-radius: 5px;
     box-shadow: 1px 1px 8px 0px rgb(94, 75, 75);
     margin-right: 5px;
+    @extend .textBorderRed;
     img{        
-        vertical-align: middle;         
+        vertical-align: middle;        
     }
 }

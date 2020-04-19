@@ -1,0 +1,66 @@
+#tavernePage{
+    .wrapperBody{                
+        background-color: $black;
+        display: flex;
+        justify-content: space-between;         
+        section#playerSection,
+        section#allPlayerSection{
+            display: inline-block;
+            background-image: url("../images/elements/marbre.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 368px;
+            height: 870px;
+            padding: 40px 30px;  
+            .content{
+                height: 100%;
+                h1{
+                    @extend .textBorderBlack;
+                    color: $red;
+                    margin-top: 0;
+                }
+                .avatar{
+                    width: 100%;
+                }                 
+                form{ 
+                    .formSubmit{
+                        margin-top: 50px;
+                    }
+                }
+                .iconAvatar,
+                .playerName{
+                    color: $red;
+                    @extend .textBorderBlack;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }         
+        }
+
+        section#taverneSection{
+            width: 60%;
+            height: 870px;
+            background-image: url("../images/bg/taverne.jpg");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            border-radius: 20px;
+        } 
+        
+        section#allPlayerSection{
+            ul{
+                li{
+                    margin-bottom: 12px;
+                    position: relative;
+                    .playersAction{  
+                        position: absolute;
+                        top: 50%;
+                        right: 0;                     
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+    }
+
+}
