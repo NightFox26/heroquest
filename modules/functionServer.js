@@ -1,5 +1,5 @@
-const color = require("./colorsTxt");
-const configInit = require("../config/configInit");
+const color       = require("./colorsTxt");
+const configInit  = require("../config/configInit");
 
 //pour poser des question dans la console du serveur
 const readline = require('readline').createInterface({
@@ -7,26 +7,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
-function debugObj(obj){
-    // exemple d'objet :
-    /*
-    const obj = {
-        name: 'joe',
-        age: 35,
-        person1: {
-          name: 'Tony',
-          age: 50,
-          person2: {
-            name: 'Albert',
-            age: 21,
-            person3: {
-              name: 'Peter',
-              age: 23
-            }
-          }
-        }
-      }
-    */
+function debugObj(obj){    
     console.log(JSON.stringify(obj, null, 2))
 }
 

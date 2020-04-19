@@ -20,6 +20,7 @@ app.use(session({
     cookie: {secrure: false}
 }))
 
+app.use(require("./modules/flash"))
 
 /**************/
 // LES ROUTES //
@@ -31,14 +32,9 @@ app.get('/', function(req, res) {
 .get('/login', function(req, res) {
     res.locals.loginError = req.session.loginError;
     req.session.loginError = undefined;
+    req.session.flash = [];
 
-    serverFunc.checkAutoLogin(req);
-    // if(configInit.autoLogin){
-    //     req.session.user ="fox";
-    // }else{
-    //     req.session.user = undefined;
-    // }
-    
+    serverFunc.checkAutoLogin(req);  
     res.setHeader('Content-Type', 'text/html');      
     res.render('connexion.ejs', {msg: "HeroQuest V2.0",urlWeb: configInit.urlWebSubscribe}); 
 })
@@ -46,7 +42,8 @@ app.get('/', function(req, res) {
 .post('/login', function(req, res) {
     res.setHeader('Content-Type', 'text/html');  
     if(req.body.username == "fox" && req.body.password == "123"){
-        req.session.user = "fox";           
+        req.session.user = "fox";  
+          
         color.successTxt(req.session.user + " vient de se connecter !");
         res.redirect('/home');
     }else{
@@ -85,7 +82,10 @@ app.get('/', function(req, res) {
 .get('/taverne', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
-        res.locals.user =  req.session.user ;   
+        res.locals.user =  req.session.user ;
+        res.sendFlash("info","Bienvenue a la taverne "+res.locals.user)
+        res.sendFlash("success","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
+        
         var opt = {gameMode: configInit.gameMode}
         res.render('taverne.ejs', opt); 
     }else{

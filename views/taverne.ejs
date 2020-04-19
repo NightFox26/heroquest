@@ -1,14 +1,19 @@
 
 <%- include('include/header'); %>
-<%- include('include/navbar'); %>
-<%- include('component/modalInfo'); %>
+
 
 <body id="tavernePage">
     <section class="wrapperBody">
         
         <section id="playerSection">
-            <div class="content overflowAuto">
-                <h1 class="centerText">Bienvenue dans la taverne du mode "<%= gameMode %>" <%= user %></h1>
+            <div class="content overflowAuto">                
+                <h1>
+                    HERO : 
+                    <img src="images/icon/barbare.png" alt="" class="iconAvatar"> 
+                    <span class="playerName"><%= user %></span><br>
+                    Mode : "<%= gameMode %>"
+                </h1>
+
                 <div>
                     <img src="images/elements/barbare.png" alt="fiche avatar" class="avatar">
                 </div>

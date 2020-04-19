@@ -10,3 +10,14 @@
     <link rel="stylesheet" href="/css/styles.css">
     
 </head>
+
+<%- include('navbar'); %>
+<%- include('../component/modalInfo'); %>
+
+<% if(locals.flash) { %>
+    <aside id="flashBox">
+        <% locals.flash.forEach(function(flash){ %>
+            <%- include('../component/flashMessage',{flash:flash}); %>
+        <% }) %>
+    </aside>
+<% } %> 

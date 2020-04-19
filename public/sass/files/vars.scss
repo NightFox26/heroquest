@@ -8,7 +8,13 @@
     src: url("../fonts/ALGER.TTF");
 }
 
-$orange: #D15E00;
-$black: #1C1C1C;
-$grey: #979797;
-$red: #874343;
+$orange:    #D15E00;
+$black:     #1C1C1C;
+$grey:      #979797;
+$green:     #5ACEA5;
+$blue:      #6A65C9;
+$red:       #874343;
+
+$gradientRed: linear-gradient(90deg, rgba(221,26,26,0.3) 0%, rgba(255,160,160,0.3)100%);
+
+
