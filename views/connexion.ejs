@@ -3,13 +3,14 @@
 
 <body id="loginPage">
 
-    <section class="wrapperBody">
-        <h1 class="textBorder titleShadow"><%= msg %></h1>
+    <section class="wrapperBody">        
+        <div class="titleImage"><img src="/images/elements/logoHd.png" alt="logo titre HerQuest"></div>
+        
         <P class="textShadow">Formulaire de connexion au serveur de jeu. <br>
         si vous ne possedez pas de compte merci d'en créer un en suivant  <a href='<%=  urlWeb %>' target="_blank">ce lien</a></P>
 
         <form action="/login" method="POST" class="lightBox">
-            <input type="text" name="username" placeholder="Pseudo">
+            <input type="email" name="mail" placeholder="Email">
             <input type="password" name="password" placeholder="Mot de passe">
             <input type="submit" value="Pousser la porte">
         </form>

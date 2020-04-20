@@ -9,13 +9,13 @@
             <div class="content overflowAuto">                
                 <h1>                  
                     Mode : "<%= gameMode %>"<br>
-                    Hero : <img src="images/icon/barbare.png" alt="" class="iconAvatar"> 
-                    <span class="playerName"><%= user %></span>
+                    Hero : <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar"> 
+                    <span class="playerName"><%= hero.name %></span>
                 </h1>
                 <hr>
 
                 <div>
-                    <img src="images/elements/barbare.png" alt="fiche avatar" class="avatar">
+                    <img src="images/elements/<%= hero.type %>.png" alt="fiche avatar" class="avatar">
                 </div>
     
                 <form action="" method="POST">

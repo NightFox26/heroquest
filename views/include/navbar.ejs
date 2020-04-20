@@ -4,7 +4,11 @@
 <nav>
     <% if (locals.user){ %>
         <button>
-            <img src="/images/icon/profil.png" alt="icon armurerie"> Profil de <%= locals.user %>
+            <img src="/images/icon/profil.png" alt="icon armurerie"> <%= locals.user.name %>
+        </button>
+        
+        <button>
+            <img src="/images/icon/status.png" alt="icon armurerie"> <%= locals.hero.name %>
         </button>
 
         <button>
@@ -15,9 +19,6 @@
             <img src="/images/icon/trophy.png" alt="icon armurerie"> Trophés
         </button>
 
-        <button>
-            <img src="/images/icon/status.png" alt="icon armurerie"> Statistiques
-        </button>
     <% } %>
 
     <button onClick="toggle_full_screen();" class="btn float-right">

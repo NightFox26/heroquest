@@ -1,17 +1,25 @@
-let express = require('express');
-let app = express();
-let path = require('path');
-let bodyParser = require('body-parser');
-let session = require('express-session');
-const EventEmitter = require('events').EventEmitter;
-// const mysql      = require('mysql');
-// let db = mysql.createConnection(require("./config/db"));
+let express         = require('express');
+let app             = express();
+let path            = require('path');
+let bodyParser      = require('body-parser');
+let session         = require('express-session');
+const EventEmitter  = require('events').EventEmitter;
 
-const color = require("./modules/colorsTxt");
-const configInit = require("./config/configInit");
-const serverFunc = require("./modules/functionServer");
-const game = require("./game/plateau");
-let db = serverFunc.getBdd()
+const color         = require("./modules/colorsTxt");
+const configInit    = require("./config/configInit");
+const servFunc      = require("./modules/functionServer");
+const game          = require("./game/plateau");
+
+
+//Models
+/*
+var userModels      = require("./models/User");
+var diceModels      = require("./models/Dice");
+var heroModels      = require("./models/Hero");
+*/
+const userMng = require("./models/manager/UserMng");
+const heroMng = require("./models/manager/HeroMng");
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend: true}));
@@ -35,30 +43,37 @@ app.get('/', function(req, res) {
     res.locals.loginError = req.session.loginError;
     req.session.loginError = undefined;    
 
-    serverFunc.checkAutoLogin(req);  
+    servFunc.checkAutoLogin(req);  
     res.setHeader('Content-Type', 'text/html');      
-    res.render('connexion.ejs', {msg: "HeroQuest V2.0",urlWeb: configInit.urlWebSubscribe}); 
+    res.render('connexion.ejs', {urlWeb: configInit.urlWebSubscribe}); 
 })
 
 .post('/login', function(req, res) {
-    res.setHeader('Content-Type', 'text/html');  
-    if(req.body.username == "fox" && req.body.password == "123"){
-        req.session.user = req.body.username;  
-        req.sendFlash("success","Bonjour "+req.session.user)  
-        color.successTxt(req.session.user + " vient de se connecter !");
-        res.redirect('/home');
-    }else{
-        color.errorTxt("ALERT : "+req.body.username + " n'arrive pas à se connecter !");
-        req.sendFlash("alert","Identifiants incorrect ! ")
-        req.session.loginError = true;
-        res.redirect('/login');
-    }    
+    res.setHeader('Content-Type', 'text/html'); 
+    userMng.getUserByEmailAndPass(req.body.mail, req.body.password,function(user){
+        if(user){
+            heroMng.getHeroByUserId(user.id,function(hero){
+                req.session.user = user;  
+                req.session.hero = hero;  
+                req.sendFlash("success","Bonjour "+user.name)  
+                req.sendFlash("info","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
+                color.successTxt(user.name + " vient de se connecter !");
+                res.redirect('/home');
+            })
+        }else{
+            color.errorTxt("ALERT : "+req.body.mail + " n'arrive pas à se connecter !");
+            req.sendFlash("alert","Identifiants incorrect ! ")
+            req.session.loginError = true;
+            res.redirect('/login');
+        }  
+    });
 })
 
 .get('/home', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
-        res.locals.user =  req.session.user ;                
+        res.locals.user =  req.session.user;                
+        res.locals.hero =  req.session.hero;                
         let opt = {tyranModeUnlocked: configInit.tyranModeUnlocked,
                    gdxModeUnlocked: configInit.gdxModeUnlocked}         
         res.render('home.ejs', opt); 
@@ -88,8 +103,9 @@ app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
         res.locals.user =  req.session.user ;
+        res.locals.hero =  req.session.hero ;
 
-        res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.user)
+        res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
         
         var opt = {gameMode: configInit.gameMode}
         res.render('taverne.ejs', opt); 
@@ -117,7 +133,15 @@ app.listen(configInit.port, configInit.hostname, () => {
     color.astriaTxt("Bienvenue, je suis Astria l'IA de ce serveur.");    
     color.astriaTxt("je me met en attente ...");  
     
-    //serverFunc.kickUser();
-    //serverFunc.debugObj(obj);
+    /*
+    var fox = new heroModels.Hero("Nightfox26",playerModels.Barbare);
+    var toto = new heroModels.Hero("jean miche",playerModels.Naim); 
+    fox.attack(toto, new diceModels.AtkDice(2));
+    toto.moving(new diceModels.moveDice(2));
+    */
+    
+    
+    //servFunc.kickUser();
+    //servFunc.debugObj(obj);
     //color.warningTxt(obj["person1"]["name"]);
 });

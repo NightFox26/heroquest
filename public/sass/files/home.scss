@@ -1,17 +1,10 @@
 #homePage{    
     background-image: url("../images/bg/bg-wood.png");
-    .wrapperBody{        
+    .wrapperBody{  
+        position: relative;      
         padding-top: 130px;       
         padding-bottom: 10px; 
         text-align: center;
-        .titleImage{
-            position: absolute;
-            display: inline-block;
-            top: 20px;  
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;        
-        }
         .homeLink{
             display: inline-block;
             margin: 0 50px;
