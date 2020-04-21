@@ -10,5 +10,9 @@ $(function(){
     });
     /********************/ 
     
+    $("#chatBox").draggable({
+        handle: ".chatHeader",
+        containment: "parent"
+    });
     
 });

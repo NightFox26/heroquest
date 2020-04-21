@@ -9,24 +9,20 @@
         display: none;
         padding: 0 10px;
         border-radius: 10px;    
-        border: 2px solid black;
-        //background-image: url("../images/bg/paper.jpg");
+        border: 2px solid black;        
+        background-image: url("../images/bg/paper.jpg");      
         background-size: cover;
         margin-bottom: 15px;        
         &.normal{        
-            background-image: url("../images/bg/paper.jpg");      
             @extend .lightBox;
         }
-        &.info{        
-            background-image: url("../images/bg/paper.jpg");      
+        &.info{ 
             @extend .lightBoxBlue;
         }
-        &.success{        
-            background-image: url("../images/bg/paper.jpg");      
+        &.success{  
             @extend .lightBoxGreen;
         }
-        &.alert{
-            background-image: url("../images/bg/paper.jpg");
+        &.alert{            
             @extend .lightBoxRed;       
         }
         .message{        

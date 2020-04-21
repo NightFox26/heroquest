@@ -5,10 +5,9 @@
 <body id="tavernePage">
     <section class="wrapperBody">
         
-        <section id="playerSection">
-            <div class="content overflowAuto">                
-                <h1>                  
-                    Mode : "<%= gameMode %>"<br>
+        <section id="playerSection" class="boxShadow">
+            <div class="content overflowAuto boxShadow">                
+                <h1> 
                     Hero : <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar"> 
                     <span class="playerName"><%= hero.name %></span>
                 </h1>
@@ -49,10 +48,12 @@
             </div>
         </section>
 
-        <section id="taverneSection" class="<%= gameMode %>"></section>
+        <section id="taverneSection" class="<%= gameMode %>">
+            <%- include('./component/chat'); %>
+        </section>
 
-        <section id="allPlayerSection">
-            <div class="content overflowAuto">
+        <section id="allPlayerSection" class="boxShadow">
+            <div class="content overflowAuto boxShadow">
                 <h1>Joueurs Connectés :</h1>
                 <ul>
                     <li>

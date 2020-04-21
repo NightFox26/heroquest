@@ -103,11 +103,12 @@ app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
         res.locals.user =  req.session.user ;
-        res.locals.hero =  req.session.hero ;
+        res.locals.hero =  req.session.hero ;      
 
         res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
         
-        var opt = {gameMode: configInit.gameMode}
+        var opt = {gameMode: configInit.gameMode,
+                   page: 'taverne'}
         res.render('taverne.ejs', opt); 
     }else{
         req.sendFlash("alert","Vous devez vous connecter pour acceder a la taverne !")

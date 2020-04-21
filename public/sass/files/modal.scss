@@ -34,20 +34,6 @@
                 position: relative;
                 top: 8px;
             }
-        }
-        .btn-closeModal{
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            line-height: 30px;
-            &:before {
-                content: "";
-                display: block;
-                background: url("../images/icon/exit.png") no-repeat;
-                background-size: contain;
-                width: 30px;
-                height: 30px;                            
-            }
-        }
+        }        
     }
 }

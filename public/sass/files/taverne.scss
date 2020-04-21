@@ -6,19 +6,24 @@
         align-items: center;        
         section#playerSection,
         section#allPlayerSection{
-            display: inline-block;
-            background-image: url("../images/elements/marbre.png");
+            display: inline-block;            
+            background-image: url("../images/bg/paper.jpg");  
             background-repeat: no-repeat;
             background-size: 100% 100%;
             width: 368px;
             height: 830px;
-            padding: 40px 30px;  
+            padding: 25px 25px; 
+            border-radius: 25px; 
             .content{
                 height: 100%;
-                h1{
+                padding:10px;                
+                h1{                    
                     @extend .textBorderBlack;
                     color: $red;
-                    margin: 0;
+                    
+                    margin: 0;                    
+                    color: $black;
+                    text-shadow: 1px 1px 2px white;
                 }
                 .avatar{
                     width: 100%;
@@ -41,7 +46,7 @@
         section#taverneSection{
             width: 60%;
             height: 830px;
-            
+            position: relative;
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center center;

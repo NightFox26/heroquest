@@ -119,6 +119,11 @@ body {
     }
 }
 
+.boxShadow{
+    box-shadow: 2px 2px 8px 7px black
+}
+
+
 .btn{
     display: inline-block;    
     padding: 2px 5px;
@@ -131,5 +136,20 @@ body {
     @extend .textBorderRed;
     img{        
         vertical-align: middle;        
+    }
+}
+
+.btn-close{
+    position: absolute;
+    top: 23px;
+    right: 15px;
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/exit.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
     }
 }
