@@ -1,6 +1,7 @@
 <footer>
-    <a href="/login" class="btn">
-        <img src="/images/icon/exit.png" alt="icon deco"> Connexion / Déconnexion
+    <% if(locals.user){ %>
+    <a href="/logout" class="btn">
+        <img src="/images/icon/exit.png" alt="icon deco"> Déconnexion
     </a>
 
     <a href="/home" class="btn">
@@ -9,12 +10,35 @@
 
     <a href="/taverne" class="btn">
         <img src="/images/icon/cup.png" alt="icon coupe"> Taverne
-    </a>    
+    </a> 
+
+    <div class="usersLogged btn btn-invalid float-right"><img src="/images/icon/nbUsers.png" alt=""> <span class="nb">: 0</span> </div>
+
+    <% } %> 
+    
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
 <script src="/js/jqueryUIdrag/jquery-ui.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+
 <script src="/js/functionJs.js"></script>
-<script src="/js/client.js"></script>
+<script src="/js/dom.js"></script>
+
+<% if(locals.page != "login"){ %>
+    <script src="/js/globalsInfos.js"></script>
+<% } %>
+
+<% if(locals.page == "taverne"){ %>
+    <script src="/js/clientTaverne.js"></script>
+<% } %>
+
+<% if(locals.page == "home"){ %>
+    <script src="/js/clientGame.js"></script>
+<% } %>
+
+<script>
+  
+</script>

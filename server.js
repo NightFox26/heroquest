@@ -1,37 +1,39 @@
-let express         = require('express');
-let app             = express();
-let path            = require('path');
-let bodyParser      = require('body-parser');
-let session         = require('express-session');
-const EventEmitter  = require('events').EventEmitter;
+var express = require('express'),
+app = express(),
+server  = require("http").createServer(app),
+io = require("socket.io")(server),
+bodyParser      = require('body-parser');
+session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true
+}),
+path            = require('path'),
+eventEmitter  = require('events').EventEmitter,
+moment = require('moment');
+
+app.use(session);
+app.use(express.static(path.join(__dirname, '/public/')))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extend: true}));
+app.use(require("./modules/flash")); 
 
 const color         = require("./modules/colorsTxt");
 const configInit    = require("./config/configInit");
 const servFunc      = require("./modules/functionServer");
 const game          = require("./game/plateau");
 
-
 //Models
-/*
-var userModels      = require("./models/User");
-var diceModels      = require("./models/Dice");
-var heroModels      = require("./models/Hero");
-*/
+var User            = require("./models/User");
+var Dice            = require("./models/Dice");
+var Hero            = require("./models/Hero");
+var Monster         = require("./models/Monster");
+
 const userMng = require("./models/manager/UserMng");
 const heroMng = require("./models/manager/HeroMng");
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extend: true}));
-app.use(session({
-    secret: 'fox26100',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {secrure: false}
-}))
-
-app.use(require("./modules/flash"))
-
+var userLogged      = new Map();
+var usersInTaverne  = new Map();
 /**************/
 // LES ROUTES //
 /**************/
@@ -41,11 +43,21 @@ app.get('/', function(req, res) {
 
 .get('/login', function(req, res) {
     res.locals.loginError = req.session.loginError;
-    req.session.loginError = undefined;    
-
+    req.session.loginError = undefined;
+    res.locals.page =  "login";
     servFunc.checkAutoLogin(req);  
     res.setHeader('Content-Type', 'text/html');      
     res.render('connexion.ejs', {urlWeb: configInit.urlWebSubscribe}); 
+})
+
+.get('/logout', function(req, res) {    
+    if(req.session.user != undefined &&  req.session.user != ""){
+        req.session.loginError = undefined;
+        color.errorTxt(req.session.user.name +" vient de se deconnecter !");        
+        userLogged.delete(req.session.user.id);            
+        req.session.user = null; 
+    }  
+    res.redirect('/login');
 })
 
 .post('/login', function(req, res) {
@@ -54,7 +66,8 @@ app.get('/', function(req, res) {
         if(user){
             heroMng.getHeroByUserId(user.id,function(hero){
                 req.session.user = user;  
-                req.session.hero = hero;  
+                req.session.hero = hero;
+                userLogged.set(user.id,user);          
                 req.sendFlash("success","Bonjour "+user.name)  
                 req.sendFlash("info","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
                 color.successTxt(user.name + " vient de se connecter !");
@@ -73,7 +86,8 @@ app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
         res.locals.user =  req.session.user;                
-        res.locals.hero =  req.session.hero;                
+        res.locals.hero =  req.session.hero;      
+        res.locals.page =  "home";          
         let opt = {tyranModeUnlocked: configInit.tyranModeUnlocked,
                    gdxModeUnlocked: configInit.gdxModeUnlocked}         
         res.render('home.ejs', opt); 
@@ -97,19 +111,16 @@ app.get('/', function(req, res) {
     var opt = {gameMode: configInit.gameMode}
     res.setHeader('Content-Type', 'text/html');      
     res.redirect('/taverne');  
-})
+})   
 
 .get('/taverne', function(req, res) {
     res.setHeader('Content-Type', 'text/html'); 
     if(req.session.user != undefined &&  req.session.user != ""){
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;      
-
+        res.locals.page =  "taverne"; 
         res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
-        
-        var opt = {gameMode: configInit.gameMode,
-                   page: 'taverne'}
-        res.render('taverne.ejs', opt); 
+        res.render('taverne.ejs', {gameMode: configInit.gameMode}); 
     }else{
         req.sendFlash("alert","Vous devez vous connecter pour acceder a la taverne !")
         res.redirect('/login');
@@ -123,9 +134,7 @@ app.get('/', function(req, res) {
     color.infoTxt("lancement de l\'etage : "+ req.params.etage); 
 })
 
-.use(express.static(path.join(__dirname, '/public/')))
-
-app.listen(configInit.port, configInit.hostname, () => {    
+server.listen(configInit.port, configInit.hostname, () => {    
     process.stdout.write('\033c');  //pour effacer la console  
     color.successTxt(`Le serveur tourne en local sur : http://${configInit.hostname}:${configInit.port}/`); 
     
@@ -134,15 +143,74 @@ app.listen(configInit.port, configInit.hostname, () => {
     color.astriaTxt("Bienvenue, je suis Astria l'IA de ce serveur.");    
     color.astriaTxt("je me met en attente ...");  
     
-    /*
-    var fox = new heroModels.Hero("Nightfox26",playerModels.Barbare);
-    var toto = new heroModels.Hero("jean miche",playerModels.Naim); 
-    fox.attack(toto, new diceModels.AtkDice(2));
-    toto.moving(new diceModels.moveDice(2));
-    */
     
+    // var fox = new Hero("Nightfox26","Barbare");
+    // var toto = new heroModels.Hero("jean miche","Naim"); 
+    // fox.attack(toto, new diceModels.AtkDice(2));
+    // console.log(fox)
+    // console.log(toto)    
+    // fox.moving(new Dice.MoveDice(2));
     
+    // var fimir1 = new Monster("Fimir");
+    // console.log(fimir1)
+    // fimir1.moving()
+        
     //servFunc.kickUser();
     //servFunc.debugObj(obj);
     //color.warningTxt(obj["person1"]["name"]);
 });
+
+
+
+
+servFunc.checkNbUser(io);
+
+const io_game = io.of("/game")
+var usersInGame = [];
+io_game.on('connection', (socket) => {
+    color.infoTxt('Un utilisateur se connecte au plateau');
+    socket.on('disconnect', (reason) => {
+        color.errorTxt(' quitte la home');
+    });
+});
+
+const io_taverne = io.of('/taverne');  
+io_taverne.on('connection',function(socket){ 
+    
+    socket.on("userLoggedTavern", function(idUser){
+        userMng.getUserByIdWithHero(idUser.id,(user)=>{ 
+            color.infoTxt(user.player.name +' se connecte a la taverne');
+            usersInTaverne.set(socket.id,{player:user.player,hero:user.hero}); 
+            userMng.getAllUsersWithHeros((allUsers)=>{    
+                socket.broadcast.emit("newUserLogged", user.hero.name)              
+                io_taverne.emit('tavernNotLoggedUsers',allUsers);
+                io_taverne.emit('tavernLoggedUsers',Array.from(usersInTaverne));
+            });
+        });
+    })  
+    
+    socket.on('message', (msg) => { 
+        let hero =  usersInTaverne.get(socket.id).hero.name;
+        let dateTime = moment().format('DD/MM -- H:mm');
+        console.log( dateTime+" --- "+hero+ " dit = "+msg)                  
+        io_taverne.emit('message',{hero,msg,dateTime});
+    });
+
+   socket.on('disconnect', (reason) => {
+       if(usersInTaverne.get(socket.id)){
+           color.errorTxt(usersInTaverne.get(socket.id).player.name + ' quitte la taverne'); 
+           usersInTaverne.delete(socket.id);        
+           userMng.getAllUsersWithHeros((allUsers)=>{                    
+               io_taverne.emit('tavernNotLoggedUsers',allUsers);
+               io_taverne.emit('tavernAllUsers',Array.from(usersInTaverne));
+           });
+       }
+    });
+});
+
+          
+
+
+
+
+

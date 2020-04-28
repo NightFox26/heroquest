@@ -35,12 +35,6 @@ function page_Fullscreen() {
     }
 }
 
-function closeModal(){      
-    $(".modal").slideUp(300,function(){
-        $(".modalBgFade").fadeOut(500)
-    });    
-}
-
 function showModalInfo(text, reward=null){      
     $(".modalBgFade").fadeIn(500,function(){
         $(".modal p.desc").html(text)
@@ -53,6 +47,21 @@ function showModalInfo(text, reward=null){
     });    
 }
 
+function closeModal(){      
+    $(".modal").slideUp(300,function(){
+        $(".modalBgFade").fadeOut(500)
+    });    
+}
+
 function toggle_headerFooter(){
     $("nav, footer").fadeToggle(500);
+}
+
+function toggle_Chat(){
+    $("#chatBox").fadeToggle(500);
+    $("#chatBox input[name='message']").focus();
+}
+
+function closeChat(){
+    $("#chatBox").fadeOut(500);
 }

@@ -20,5 +20,6 @@ exports.dbPass    = "";
 exports.tyranModeUnlocked   = false;
 exports.gdxModeUnlocked     = false;
 exports.autoLogin           = false; // mettre a false en prod
+exports.countUserOnSite     = true; // mettre a false en prod
 exports.gameMode            = "classique";
 exports.IA_name             = "Astria";

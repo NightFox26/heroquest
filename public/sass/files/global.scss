@@ -7,6 +7,11 @@ body {
     margin: 0;
     padding: 0;
     font-family: "heroquest";
+    small{
+        font-size: 11px;
+        color: $orange;
+        text-shadow: 1px 1px 1px black;
+    }
     a {
         color:$orange;
         text-decoration: none;
@@ -66,6 +71,10 @@ body {
     &::-webkit-scrollbar {
         display: none;
       }
+}
+
+.float-right{
+    float: right;
 }
 
 .titleShadow{
@@ -137,6 +146,11 @@ body {
     img{        
         vertical-align: middle;        
     }
+}
+
+.btn-invalid{
+    @extend .btn;
+    background-color: $orange;
 }
 
 .btn-close{

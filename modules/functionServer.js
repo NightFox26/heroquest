@@ -35,9 +35,30 @@ function checkAutoLogin(req){
   }
 }
 
+function checkNbUser(io){
+    if(configInit.countUserOnSite){
+        setInterval(()=>{            
+            io.emit("nbUserLogged",io.engine.clientsCount);
+        },5000)       
+    }
+}
+
+function substrateArrayUser(arr, arrToRemove){    
+    for(let i=arr.length-1; i>=0; i--){        
+        for(let j=0; j<arrToRemove.length; j++){
+            if(arr[i] && (arr[i].player.id === arrToRemove[j].player.id)){                
+                arr.splice(i, 1);
+            }
+        }
+    }
+    return arr;
+}
+
 module.exports = {
     kickUser,
     debugObj,
     checkAutoLogin,
-    getBdd
+    getBdd,
+    checkNbUser,
+    substrateArrayUser
 }

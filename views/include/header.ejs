@@ -22,3 +22,7 @@
         <% }) %>
     </aside>
 <% } %> 
+
+<% if(locals.user) { %>
+    <div id="userId" hidden><%= user.id %></div>
+<% } %> 

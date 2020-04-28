@@ -1,56 +1,59 @@
-function PersoAction(){
-    this.moving = function(dice){
+class PersAction {    
+    moving(dice){
         console.log(this.nom+" peut se deplacer de  "+dice.move+" cases");
     }
     
-    this.attack = function(perso,dice){
-        console.log(perso.nom+" subit "+dice.atk+" pts de degats de la part de "+this.nom);
-        perso.hp -= dice.atk;
+    attack(pers,dice){
+        console.log(pers.nom+" subit "+dice.atk+" pts de degats de la part de "+this.nom);
+        pers.stats.hp -= dice.atk;
     }
 }
-function Barbare(){   
-    this.hp = 8;
-    this.mp = 2;
-    this.moveDice = 2;
-    this.atkDice = 3;
-    this.defDice = 2;
+
+class Barbare{  
+    constructor(){
+        this.hp = 8;
+        this.mp = 2;
+        this.atkDice = 3;
+        this.defDice = 2;
+        this.moveDice = 2;
+    }    
 }
 
-function Elf(){   
-    this.hp = 6;
-    this.mp = 4;
-    this.moveDice = 2;
-    this.atkDice = 2;
-    this.defDice = 2;
+class Elf{   
+    constructor(){
+        this.hp = 6;
+        this.mp = 4;
+        this.atkDice = 2;
+        this.defDice = 2;
+        this.moveDice = 2;
+    }    
 }
 
-function Naim(){    
-    this.hp = 7;
-    this.mp = 3;
-    this.moveDice = 2;
-    this.atkDice = 2;
-    this.defDice = 2;
+class Naim{    
+    constructor(){
+        this.hp = 7;
+        this.mp = 3;
+        this.atkDice = 2;
+        this.defDice = 2;
+        this.moveDice = 2;
+    }  
 }
 
-function Magicien(){    
-    this.hp = 5;
-    this.mp = 5;
-    this.moveDice = 2;
-    this.atkDice = 1;
-    this.defDice = 2;
+class Magicien{   
+    constructor(){
+        this.hp = 4;
+        this.mp = 6;
+        this.atkDice = 1;
+        this.defDice = 2;
+        this.moveDice = 2;
+    }    
 }
 
-function Hero(nom,type){
-    this.name = nom;  
-    this.type =  type.name;
-    PersoAction.call(this);
-    type.call(this);
-}
-
-module.exports = {
-    Hero,
-    Barbare,
-    Elf,
-    Naim,
-    Magicien
+module.exports = class Hero extends PersAction {    
+    constructor(nom,type){
+        super();
+        this.nom = nom; 
+        this.class = type;
+        this.stats = eval(`new ${type}()`);        
+    }
 }
