@@ -22,9 +22,16 @@ function kickUser(){
     });
 }
 
+function testBdd(server){
+    getBdd().connect((err)=>{
+        if(err){ color.errorTxt("bdd not connected !"); color.errorTxt("Le serveur va stopper !"); server.close();}
+        else{ color.successTxt("La base de donnée est connectée !")}
+    }); 
+}
+
 function getBdd(){
-  const mysql = require('mysql');
-  return mysql.createConnection(require("../config/db"));
+  const mysql = require('mysql');  
+  return mysql.createConnection(require("../config/db"));  
 }
 
 function checkAutoLogin(req){
@@ -60,5 +67,6 @@ module.exports = {
     checkAutoLogin,
     getBdd,
     checkNbUser,
-    substrateArrayUser
+    substrateArrayUser,
+    testBdd
 }

@@ -18,6 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend: true}));
 app.use(require("./modules/flash")); 
 
+
+
 const color         = require("./modules/colorsTxt");
 const configInit    = require("./config/configInit");
 const servFunc      = require("./modules/functionServer");
@@ -31,6 +33,9 @@ var Monster         = require("./models/Monster");
 
 const userMng = require("./models/manager/UserMng");
 const heroMng = require("./models/manager/HeroMng");
+
+//test de la connection a la BDD
+servFunc.testBdd(server);
 
 var userLogged      = new Map();
 var usersInTaverne  = new Map();
@@ -66,7 +71,7 @@ app.get('/', function(req, res) {
         if(user){
             heroMng.getHeroByUserId(user.id,function(hero){
                 req.session.user = user;  
-                req.session.hero = hero;
+                req.session.hero = hero;                
                 userLogged.set(user.id,user);          
                 req.sendFlash("success","Bonjour "+user.name)  
                 req.sendFlash("info","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
@@ -134,6 +139,17 @@ app.get('/', function(req, res) {
     color.infoTxt("lancement de l\'etage : "+ req.params.etage); 
 })
 
+.get('*', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');    
+    if(req.session.user){
+        color.errorTxt(req.session.user.name+" a cherché a rejoindre une page inexistante !");
+    }else{
+        color.errorTxt("Un utilisateur non connecté a cherché a rejoindre une page inexistante !");
+    }
+    res.status(404);
+    res.render('404.ejs',); 
+})
+
 server.listen(configInit.port, configInit.hostname, () => {    
     process.stdout.write('\033c');  //pour effacer la console  
     color.successTxt(`Le serveur tourne en local sur : http://${configInit.hostname}:${configInit.port}/`); 
@@ -145,10 +161,11 @@ server.listen(configInit.port, configInit.hostname, () => {
     
     
     // var fox = new Hero("Nightfox26","Barbare");
-    // var toto = new heroModels.Hero("jean miche","Naim"); 
-    // fox.attack(toto, new diceModels.AtkDice(2));
+    // var toto = new Hero("jean miche","Naim"); 
     // console.log(fox)
     // console.log(toto)    
+
+    // fox.attack(toto, new Dice.AtkDice(2));
     // fox.moving(new Dice.MoveDice(2));
     
     // var fimir1 = new Monster("Fimir");
@@ -180,9 +197,9 @@ io_taverne.on('connection',function(socket){
     socket.on("userLoggedTavern", function(idUser){
         userMng.getUserByIdWithHero(idUser.id,(user)=>{ 
             color.infoTxt(user.player.name +' se connecte a la taverne');
+            socket.broadcast.emit("newUserLogged", user.hero.name)       
             usersInTaverne.set(socket.id,{player:user.player,hero:user.hero}); 
-            userMng.getAllUsersWithHeros((allUsers)=>{    
-                socket.broadcast.emit("newUserLogged", user.hero.name)              
+            userMng.getAllUsersWithHeros((allUsers)=>{                               
                 io_taverne.emit('tavernNotLoggedUsers',allUsers);
                 io_taverne.emit('tavernLoggedUsers',Array.from(usersInTaverne));
             });
@@ -199,10 +216,11 @@ io_taverne.on('connection',function(socket){
    socket.on('disconnect', (reason) => {
        if(usersInTaverne.get(socket.id)){
            color.errorTxt(usersInTaverne.get(socket.id).player.name + ' quitte la taverne'); 
-           usersInTaverne.delete(socket.id);        
+           socket.broadcast.emit("userQuit", usersInTaverne.get(socket.id).hero.name)         
+           usersInTaverne.delete(socket.id);   
            userMng.getAllUsersWithHeros((allUsers)=>{                    
                io_taverne.emit('tavernNotLoggedUsers',allUsers);
-               io_taverne.emit('tavernAllUsers',Array.from(usersInTaverne));
+               io_taverne.emit('tavernLoggedUsers',Array.from(usersInTaverne));
            });
        }
     });

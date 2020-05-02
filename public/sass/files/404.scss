@@ -1,0 +1,39 @@
+#Page404 {
+
+    background-image: url("../images/bg/bg-login.png"), url("../images/bg/bg-wood.png");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .wrapperBody {
+
+        width: 650px;
+        margin: auto;
+        padding: 20px;
+        padding-bottom: 90px;
+
+        .titleImage {
+            position: relative;
+            left: 20px;
+            margin-top: 120px;
+        }
+
+        h1,h2{
+            color: $red;
+            text-align: center;
+            text-shadow: 1px 1px 2px black;
+        }
+        p{
+            text-align: center;
+            color:white;
+        }
+
+        .loginFail {
+            margin-top: 40px;
+
+            img {
+                box-shadow: 2px 2px 10px 4px black;
+            }
+        }
+    }
+}

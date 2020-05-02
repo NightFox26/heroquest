@@ -1,17 +1,8 @@
-//gestion des flash messages
-function animateFlashMessage(){
-    $('.flash').first().delay(500).show('fast', function showNextOne() {
-        $(this).next('.flash').delay(500).show('fast', showNextOne);
-    });
-
-    $('.flash').first().delay(3000).hide('slow', function hideNextOne() {
-        $(this).next('.flash').delay(2500).hide('slow', hideNextOne);
-        $(this).remove();
-    });
-}
 
 $(function () { 
-    animateFlashMessage();  
+
+    //permet d'initialiser les nouveau flash message sur une nouvelle page
+    new Flash(null,null);  
 
     //chatBox draggable
     $("#chatBox").draggable({

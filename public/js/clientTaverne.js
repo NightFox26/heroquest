@@ -4,6 +4,7 @@ $(function(){
     
     //previent le serveur qu'un utilisateur se connecte
     socket.emit("userLoggedTavern",{id:myId});
+    
 
     //Affiche les utilisateurs connectés a la taverne (sauf sois meme)
     socket.on('tavernLoggedUsers', (users) => {        
@@ -23,9 +24,15 @@ $(function(){
         }
     });
 
+    //un nouvelle utilisateur se connecte a la taverne
     socket.on("newUserLogged",(heroName)=>{        
-        $("#flashBox").append(flashMessageNewUser(heroName));
-        animateFlashMessage();
+        console.log(heroName)  
+        new Flash(heroName+" vient d'entrer dans la taverne !", "success"); 
+    })
+
+    //un utilisateur quitte a la taverne
+    socket.on("userQuit",(heroName)=>{          
+        new Flash(heroName+" à quitté la taverne !", "alert"); 
     })
 
     //envois de message chat vers le serveur
@@ -41,13 +48,6 @@ $(function(){
         $("#chatBox .chatBody ul").append(`<li><div><small>${msg.dateTime}</small></div> <span>${msg.hero} :</span>${msg.msg}</li>`);
         $("#chatBox .chatBody").animate({ scrollTop: $('#chatBox .chatBody ul').height()}, 1000);
     });
-
-
-    function flashMessageNewUser(heroName){
-        return `<div class="flash info"><p class="message"> ${heroName} vient d'entrer dans la taverne !</p></div>`;
-    }
-
-
 
 
 
