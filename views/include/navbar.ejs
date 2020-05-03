@@ -18,7 +18,6 @@
         <button>
             <img src="/images/icon/trophy.png" alt="icon armurerie"> Trophés
         </button>
-
     <% } %>
 
     <button onClick="toggle_full_screen();" class="btn float-right">
@@ -28,8 +27,8 @@
         <img src="/images/icon/menuLess.png" alt="icon sans menu">
     </button>
     <% if(locals.page == "taverne"){ %>
-    <button onClick="toggle_Chat();" class="btn float-right">
-        <img src="/images/icon/dial.png" width=30 alt="icon tchat">
+    <button onClick="toggle_Chat();" class="btn float-right" id="chatBtn">
+        <img src="/images/icon/dial.png" width=30 alt="icon tchat"><span>0</span>
     </button>
     <% } %>
      

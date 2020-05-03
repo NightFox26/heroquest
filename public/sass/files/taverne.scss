@@ -16,21 +16,42 @@
             border-radius: 25px; 
             .content{
                 height: 100%;
-                padding:10px;                
-                h1{                    
-                    @extend .textBorderBlack;
-                    color: $red;
-                    
-                    margin: 0;                    
-                    color: $black;
-                    text-shadow: 1px 1px 2px white;
+                padding:10px;
+                position: relative;                
+                h1{ 
+                    margin: 0;
+                    @extend .niceTitle;
+                }
+                .niceTitle{
+                    font-size: 26px;
                 }
                 .avatar{
                     width: 100%;
                 }                 
                 form{ 
+                    .niceTitle{
+                        font-size: 22px;
+                        margin-bottom: 10px;                  
+                    }
+                    .ratBox{
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                    }
+                    .selectCoequipier{
+                        position: relative;
+                        .btn-close{
+                            right: 5px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                    }
                     .formSubmit{
                         margin-top: 50px;
+                        position: absolute;
+                        left: 5px;
+                        right: 5px;
+                        bottom: 15px;
                     }
                 }
                 .iconAvatar,
@@ -39,6 +60,7 @@
                     @extend .textBorderBlack;
                     display: inline-block;
                     vertical-align: middle;
+                    margin-left: 3px;
                 }
             }         
         }
@@ -62,7 +84,7 @@
         section#allPlayerSection{
             ul{
                 li{
-                    margin-bottom: 12px;
+                    margin-bottom: 4px;
                     position: relative;
                     .playersAction{  
                         position: absolute;
@@ -70,6 +92,15 @@
                         right: 0;                     
                         transform: translateY(-50%);
                     }
+                }
+                &.notConnectedUser{                    
+                    li{
+                        .playersAction{
+                            .drink{
+                                display: none;
+                            }
+                        }
+                    }                    
                 }
             }
         }

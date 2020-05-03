@@ -59,6 +59,7 @@ app.get('/', function(req, res) {
     if(req.session.user != undefined &&  req.session.user != ""){
         req.session.loginError = undefined;
         color.errorTxt(req.session.user.name +" vient de se deconnecter !");        
+        req.sendFlash("sad","Au revoir "+req.session.user.name+" ...")  
         userLogged.delete(req.session.user.id);            
         req.session.user = null; 
     }  
@@ -73,14 +74,14 @@ app.get('/', function(req, res) {
                 req.session.user = user;  
                 req.session.hero = hero;                
                 userLogged.set(user.id,user);          
-                req.sendFlash("success","Bonjour "+user.name)  
-                req.sendFlash("info","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
+                req.sendFlash("happy","Bonjour "+user.name)  
+                req.sendFlash("normal","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
                 color.successTxt(user.name + " vient de se connecter !");
                 res.redirect('/home');
             })
         }else{
             color.errorTxt("ALERT : "+req.body.mail + " n'arrive pas à se connecter !");
-            req.sendFlash("alert","Identifiants incorrect ! ")
+            req.sendFlash("angry","Identifiants incorrect ! ")
             req.session.loginError = true;
             res.redirect('/login');
         }  
@@ -97,7 +98,7 @@ app.get('/', function(req, res) {
                    gdxModeUnlocked: configInit.gdxModeUnlocked}         
         res.render('home.ejs', opt); 
     }else{
-        req.sendFlash("alert","Vous devez vous connecter pour acceder a l'accueil !")
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a l'accueil !")
         res.redirect('/login');
     }
 })
@@ -112,7 +113,7 @@ app.get('/', function(req, res) {
 
 .get('/game/tyrannique', function(req, res) {
     configInit.gameMode = "tyrannique"
-    req.sendFlash("alert","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
+    req.sendFlash("surprised","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
     var opt = {gameMode: configInit.gameMode}
     res.setHeader('Content-Type', 'text/html');      
     res.redirect('/taverne');  
@@ -124,19 +125,33 @@ app.get('/', function(req, res) {
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;      
         res.locals.page =  "taverne"; 
-        res.sendFlash("info","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
+        res.sendFlash("happy","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
         res.render('taverne.ejs', {gameMode: configInit.gameMode}); 
     }else{
-        req.sendFlash("alert","Vous devez vous connecter pour acceder a la taverne !")
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
         res.redirect('/login');
     }   
 })
 
-.get('/game/etage/:etage', function(req, res) {
-    res.setHeader('Content-Type', 'text/html');      
-    game.runPlateau();
-    res.send('Vous êtes sur l\'etage : '+ req.params.etage);
-    color.infoTxt("lancement de l\'etage : "+ req.params.etage); 
+.post('/game-normal', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    let etage = 1;
+
+    res.redirect('/game/normal/'+etage);  
+})
+
+.get('/game/:gameMode/:etage', function(req, res) {    
+    res.setHeader('Content-Type', 'text/html'); 
+    if(req.session.user != undefined &&  req.session.user != ""){ 
+        res.locals.user =  req.session.user ;
+        res.locals.hero =  req.session.hero ;    
+        game.runPlateau();    
+        color.infoTxt("lancement de l\'etage : "+ req.params.etage + " en mode "+configInit.gameMode); 
+        res.render('game-normal.ejs', {gameMode: configInit.gameMode, etage:req.params.etage});
+    }else{
+        req.sendFlash("angry","Vous devez vous connecter pour acceder au plateau de jeu !")
+        res.redirect('/login');
+    }  
 })
 
 .get('*', function(req, res) {
@@ -207,11 +222,43 @@ io_taverne.on('connection',function(socket){
     })  
     
     socket.on('message', (msg) => { 
-        let hero =  usersInTaverne.get(socket.id).hero.name;
+        let hero =  usersInTaverne.get(socket.id).hero;
         let dateTime = moment().format('DD/MM -- H:mm');
-        console.log( dateTime+" --- "+hero+ " dit = "+msg)                  
+        console.log( dateTime+" --- "+hero.name+ " dit = "+msg)                  
         io_taverne.emit('message',{hero,msg,dateTime});
     });
+
+    socket.on('invitation', (socketId) => { 
+        let heroSender =  usersInTaverne.get(socket.id).hero;
+        let heroInvited = usersInTaverne.get(socketId).hero;
+        console.log(heroSender.name +" invite "+ heroInvited.name +" a sa table !");
+        let params = {  heroSender:heroSender,
+                        socketIdSender:socket.id,
+                        heroInvited:heroInvited,
+                        socketIdInvited:socketId,
+                    }        
+        socket.to(socketId).emit('invitation', params);
+    });
+
+    socket.on('invitation_refused', ({socketIdSender,heroInvited}) => {         
+        color.errorTxt(heroInvited.name +" à refusé l'inviation !"); 
+        socket.to(socketIdSender).emit('invitation_refused', heroInvited);      
+    });
+
+    socket.on('invitation_accepted', ({socketIdSender,heroSender,socketIdInvited,heroInvited}) => {         
+        color.successTxt(heroInvited.name +" à accepté l'inviation !");
+        socket.to(socketIdSender).emit('invitation_accepted', {socketIdInvited,heroInvited});        
+        socket.emit('join_table', {socketIdSender,heroSender});        
+    });
+
+    socket.on('kick_table', (userKickedSocket) => { 
+        let heroKicker =  usersInTaverne.get(socket.id).hero;        
+        let heroKicked =  usersInTaverne.get(userKickedSocket).hero;        
+        color.warningTxt(heroKicked.name +" à été kické de la table par "+heroKicker.name);
+        socket.to(userKickedSocket).emit('kick_table',heroKicker);
+    });
+
+
 
    socket.on('disconnect', (reason) => {
        if(usersInTaverne.get(socket.id)){

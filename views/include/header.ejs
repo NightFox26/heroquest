@@ -15,13 +15,15 @@
 <%- include('../component/modalInfo'); %>
 
 
-<% if(locals.flash) { %>
-    <aside id="flashBox">
+
+<aside id="flashBox">
+    <% if(locals.flash) { %>
         <% locals.flash.forEach(function(flash){ %>
             <%- include('../component/flashMessage',{flash:flash}); %>
         <% }) %>
-    </aside>
-<% } %> 
+    <% } %> 
+</aside>
+
 
 <% if(locals.user) { %>
     <div id="userId" hidden><%= user.id %></div>

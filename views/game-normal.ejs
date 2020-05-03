@@ -1,0 +1,23 @@
+<%- include('include/header'); %>
+
+<body id="gamePage">
+    <div class="wrapperBody">
+        <section id="personnage">
+
+        </section>
+
+        <section id="plateau" class="boxShadow">
+            <% for(var i=0; i<26; i++){ %>
+                <% for(var j=0; j<19; j++){ %>
+                    <div class="tiles"></div>
+                <% } %>
+            <% } %>
+        </section>
+
+        <section id="actions">
+
+        </section>
+    </div>
+    <%- include('include/footer'); %>      
+</body>
+</html>

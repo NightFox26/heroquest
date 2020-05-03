@@ -85,6 +85,10 @@ body {
     text-shadow: 0 0 10px black;
 }
 
+.textShadowWhite{
+    text-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
 .lightBox{
     box-shadow: 0 0 14px 4px white;
 }
@@ -101,13 +105,17 @@ body {
     box-shadow: 0 0 14px 4px $blue;
 }
 
+.lightBoxOrange{
+    box-shadow: 0 0 14px 4px $orange;
+}
+
 .textBorder{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: white;
 }
 
 .textBorderBlack{
-    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-width: 0.8px;
     -webkit-text-stroke-color: black;
 }
 
@@ -130,6 +138,12 @@ body {
 
 .boxShadow{
     box-shadow: 2px 2px 8px 7px black
+}
+
+.niceTitle{
+    font-size: 28px;
+    @extend .textBorderRed;
+    @extend .textShadowWhite;
 }
 
 
@@ -167,3 +181,28 @@ body {
         height: 30px;                            
     }
 }
+
+.btn-yes{    
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/yes.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
+    }
+}
+
+.btn-no{    
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/no.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
+    }
+}
+

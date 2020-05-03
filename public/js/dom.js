@@ -1,3 +1,8 @@
+function playCssAnim(params) {
+    $(params.elm).removeClass(params.anim).addClass(params.anim + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $(this).removeClass(params.anim);
+    });
+};
 
 $(function () { 
 
@@ -9,4 +14,5 @@ $(function () {
         handle: ".chatHeader",
         containment: "parent"
     });
+
 })

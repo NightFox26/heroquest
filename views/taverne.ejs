@@ -1,14 +1,11 @@
-
 <%- include('include/header'); %>
-
-
 <body id="tavernePage">
     <section class="wrapperBody">
         
         <section id="playerSection" class="boxShadow">
-            <div class="content overflowAuto boxShadow">                
+            <div class="content overflowAuto boxShadow">
                 <h1> 
-                    Hero : <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar"> 
+                    <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar"> 
                     <span class="playerName"><%= hero.name %></span>
                 </h1>
                 <hr>
@@ -17,7 +14,7 @@
                     <img src="images/elements/<%= hero.type %>.png" alt="fiche avatar" class="avatar">
                 </div>
     
-                <form action="" method="POST">
+                <form action="/game-normal" method="POST">
                     <input type="text" name="mode" value='<%= gameMode %>' hidden>
     
                     <div class="centerText">
@@ -30,13 +27,17 @@
                     </div>
     
                     <hr>
-                    <label for="">Joueurs a ma table : </label> <br><br>
-                    <input type="checkbox"><img src="images/icon/elf.png" alt="" class="iconAvatar"> <label class="playerName">JeanPhi</label>  <br>
 
-                    <input type="checkbox"><img src="images/icon/naim.png" alt="" class="iconAvatar"> <label class="playerName">Floflo</label>  <br>
+                    <div class="niceTitle">Joueurs a ma table : </div>                    
 
-                    <input type="checkbox"><img src="images/icon/barbare.png" alt="" class="iconAvatar"> <label class="playerName">Manu</label>  <br>
-                    
+                    <div id="playersAtMyTable">
+                        <div class="ratBox">
+                            <img src="images/icon/rat.png" alt="rat icon" width="60">
+                            <img src="images/icon/rat.png" alt="rat icon" width="60">
+                            <img src="images/icon/rat.png" alt="rat icon" width="60">
+                            <img src="images/icon/rat.png" alt="rat icon" width="60">
+                        </div>                        
+                    </div>
     
                     <hr>
                     <div class="centerText formSubmit">
@@ -50,15 +51,16 @@
 
         <section id="taverneSection" class="<%= gameMode %>">
             <%- include('./component/chat'); %>
+            <div id="invitationBox"></div>
         </section>
 
         <section id="allPlayerSection" class="boxShadow">
             <div class="content overflowAuto boxShadow">
-                <h1>Heros dans la taverne :</h1>
+                <div class="niceTitle">Heros à la taverne :</div>
                 <ul class="connectedUser">
                 </ul>
 
-                <h1>Heros non present :</h1>
+                <div class="niceTitle">Heros non present :</div>
                 <ul class="notConnectedUser">                    
                 </ul>
             </div>

@@ -1,0 +1,79 @@
+#flashBox{    
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    width: 260px;
+    z-index: 20;
+    transform: translateX(-50%);
+    .flash{
+        display: none;
+        padding: 0 10px;
+        border-radius: 10px;    
+        border: 2px solid black;        
+        background-image: url("../images/bg/paper.jpg");      
+        background-size: cover;
+        margin-bottom: 15px; 
+        .iaIcon{
+            margin-top: 10px;
+            text-align: center;            
+            @extend .niceTitle;
+            &:before{
+                content:"";
+                display: inline-block;
+                vertical-align: middle;
+                width: 50px;
+                height: 50px;                
+                background-size: contain;
+                margin-right: 10px;   
+            }
+        }       
+        &.normal{        
+            @extend .lightBox;  
+            .iaIcon{                
+                &:before{
+                    background-image:url('../images/icon/ia/normal.png');
+                }
+            }           
+        }
+        &.surprised{ 
+            @extend .lightBoxBlue;
+            .iaIcon{                
+                &:before{
+                    background-image:url('../images/icon/ia/surprised.png');
+                }
+            } 
+        }
+        &.happy{  
+            @extend .lightBoxGreen;
+            .iaIcon{                
+                &:before{
+                    background-image:url('../images/icon/ia/happy.png');
+                }
+            } 
+        }
+        &.sad{  
+            @extend .lightBoxOrange;
+            .iaIcon{                
+                &:before{
+                    background-image:url('../images/icon/ia/crying.png');
+                }
+            } 
+        }
+        &.angry{            
+            @extend .lightBoxRed;  
+            .iaIcon{                
+                &:before{
+                    background-image:url('../images/icon/ia/angry.png');
+                }
+            }      
+        }
+        .message{ 
+            margin-top: 5px;       
+            color: $red;
+            font-size: 18px;
+            text-align: center; 
+            @extend .textBorderBlack;          
+            @extend .textShadow;          
+        }
+    }
+}
