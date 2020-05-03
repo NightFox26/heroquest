@@ -3,8 +3,8 @@ const servFunc   = require("../../modules/functionServer");
 
 let connection  = servFunc.getBdd();
 
-function getHeroById(id){    
-    connection.query('SELECT * FROM heros WHERE id= ?',[id], function (err, row) {
+function getHeroById(id,callBack){    
+    connection.query('SELECT * FROM heros WHERE id= ?',[id], function (err, hero) {
         if (err) throw err;
         callBack(hydrateHero(hero[0]));    
     });    

@@ -1,0 +1,33 @@
+#newGameForm,
+#loadGameForm{
+    display: none;
+    width: 420px;
+    position: absolute;
+    left:38%;
+    top: 20%;
+    border: 5px solid black;
+    border-radius: 8px;
+    background-image: url("../images/bg/paper.jpg");   
+    z-index: 10; 
+    form{
+        padding: 15px;
+        padding-bottom: 0;
+        .niceTitle{
+            font-size: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 8px;
+            &+input,
+            &+select{
+                text-align: center;
+                float: right;
+                line-height: 20px;                                
+            }
+        }
+
+        select{
+            height: 27px;
+        }
+
+    }
+}

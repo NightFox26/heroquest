@@ -2,23 +2,18 @@
     display: none;
     width: 380px;
     position: absolute;
-    left:0px;
-    top: 30px;
+    left:8px;
+    top: 0px;
     border: 5px solid black;
     border-radius: 8px;
     background-image: url("../images/bg/paper.jpg");   
-    z-index: 10;  
+    z-index: 10; 
+
     .chatHeader{
-        background-color: $black;
-        cursor: move;
-        h2{
-            padding: 5px 5px;
-            text-shadow: 1px 1px 2px white;
-            margin-bottom: 5px;
-        }
+        @extend .blackHeader;
     }
     .chatBody{
-        height: 400px;
+        height: 340px;
         padding:0 10px;
         padding-bottom: 30px;
         ul{

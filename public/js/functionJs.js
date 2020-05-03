@@ -65,3 +65,36 @@ function toggle_Chat(){
 function closeChat(){
     $("#chatBox").fadeOut(500);
 }
+
+function toggle_NewGame(){
+    $("#newGameForm").fadeToggle(500);
+    $("#newGameForm input[name='game_name']").focus();
+    if ($("#newGameForm").is(':visible')){
+        closeLoadGame(0)
+    }
+}
+
+function closeNewGame(time = 500){
+    $("#newGameForm").fadeOut(time);
+}
+
+function toggle_LoadGame(){
+    $("#loadGameForm").fadeToggle(500);
+    if ($("#loadGameForm").is(':visible')){
+        closeNewGame(0);
+    }
+}
+
+function closeLoadGame(time = 500){
+    $("#loadGameForm").fadeOut(time);
+}
+
+function open_FichePerso(){
+    $("#fichePerso").hide(200,function(){
+        $("#fichePerso").show(500);
+    });
+}
+
+function closeFichePerso(time = 500){
+    $("#fichePerso").fadeOut(time);
+}

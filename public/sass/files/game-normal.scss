@@ -1,5 +1,5 @@
 #gamePage{
-    background-image:  url("../images/bg/bg-wood.png");
+    background-image:  url("../images/bg/bg-wood.jpg");
     .wrapperBody{
         display: flex;
         align-items: center;
@@ -12,7 +12,7 @@
             height: 812px;        
             background-image: url("../images/elements/plateau.jpg");
             background-size: 100% 100%;
-            background-color: red;
+            // background-color: red;
             background-repeat: no-repeat;
             margin: auto;
             padding: 8px;

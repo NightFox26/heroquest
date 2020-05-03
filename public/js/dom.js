@@ -9,10 +9,28 @@ $(function () {
     //permet d'initialiser les nouveau flash message sur une nouvelle page
     new Flash(null,null);  
 
-    //chatBox draggable
+    //les elements draggable
     $("#chatBox").draggable({
         handle: ".chatHeader",
         containment: "parent"
     });
+
+    
+    $("#newGameForm").draggable({
+        handle: ".blackHeader",
+        containment: "parent"
+    });
+
+    $("#loadGameForm").draggable({
+        handle: ".blackHeader",
+        containment: "parent"
+    });
+
+    $("#fichePerso").draggable({
+        handle: ".blackHeader",
+        containment: "parent"
+    });
+
+    /****************************/
 
 })

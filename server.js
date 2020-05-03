@@ -196,6 +196,19 @@ server.listen(configInit.port, configInit.hostname, () => {
 
 
 servFunc.checkNbUser(io);
+io.on('connection', (socket) => {
+    socket.on("getPersoFiche",({typeMonster,idPerso})=>{
+        if(typeMonster !== undefined){
+            console.log("je souhaite les infos sur le "+typeMonster);
+            socket.emit("receivePersoFiche",new Monster("Rat"))
+        }else if(idPerso !== undefined){
+            console.log("je souhaite les infos un heros qui a l'id : "+idPerso);
+            heroMng.getHeroById(idPerso,(hero)=>{
+                socket.emit("receivePersoFiche",hero)
+            });
+        }
+    });
+})
 
 const io_game = io.of("/game")
 var usersInGame = [];

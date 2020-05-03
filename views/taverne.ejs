@@ -1,11 +1,11 @@
 <%- include('include/header'); %>
 <body id="tavernePage">
-    <section class="wrapperBody">
+    <section class="wrapperBody">        
         
         <section id="playerSection" class="boxShadow">
             <div class="content overflowAuto boxShadow">
                 <h1> 
-                    <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar"> 
+                    <img src="images/icon/<%= hero.type %>.png" alt="" class="iconAvatar" data-idPerso='<%= hero.id %>'> 
                     <span class="playerName"><%= hero.name %></span>
                 </h1>
                 <hr>
@@ -13,29 +13,25 @@
                 <div>
                     <img src="images/elements/<%= hero.type %>.png" alt="fiche avatar" class="avatar">
                 </div>
+
+                <div class="centerText">
+                    <button class="btn" onclick="toggle_NewGame()">Nouvelle partie</button>
+                    <button class="btn" onclick="toggle_LoadGame()">Continuer la quête</button>
+                </div>
     
                 <form action="/game-normal" method="POST">
                     <input type="text" name="mode" value='<%= gameMode %>' hidden>
-    
-                    <div class="centerText">
-                        <label for="etage">Partir en quete :</label>
-                        <select name="etage" id="etage">
-                            <option value="">Etage 1</option>
-                            <option value="">Etage 2</option>
-                            <option value="">Etage 3</option>
-                        </select>
-                    </div>
-    
                     <hr>
 
-                    <div class="niceTitle">Joueurs a ma table : </div>                    
-
+                    <div class="niceTitle">Joueurs a ma table : </div>
                     <div id="playersAtMyTable">
                         <div class="ratBox">
-                            <img src="images/icon/rat.png" alt="rat icon" width="60">
-                            <img src="images/icon/rat.png" alt="rat icon" width="60">
-                            <img src="images/icon/rat.png" alt="rat icon" width="60">
-                            <img src="images/icon/rat.png" alt="rat icon" width="60">
+                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" width="60" data-typeMonster="Rat">
+
+                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" width="60" data-typeMonster="Rat">
+
+                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" width="60" data-typeMonster="Rat">
+                            
                         </div>                        
                     </div>
     
@@ -51,6 +47,9 @@
 
         <section id="taverneSection" class="<%= gameMode %>">
             <%- include('./component/chat'); %>
+            <%- include('./component/newGame'); %>
+            <%- include('./component/loadGame'); %>
+            <%- include('./component/fichePerso'); %>
             <div id="invitationBox"></div>
         </section>
 

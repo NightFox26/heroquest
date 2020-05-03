@@ -10,6 +10,18 @@ class MonstAction {
     }
 }
 
+class Rat{
+    constructor(){
+        this.name = "Rat détrousseur";
+        this.desc = "Généralement en avoir un à sa table est considéré comme un signe de faible sociabilité, alors en avoir trois ...";
+        this.hp = 1;
+        this.mp = 0;
+        this.atkDice = 1;
+        this.defDice = 1;
+        this.move = 4;
+    } 
+}
+
 class Squelette{
     constructor(){
         this.hp = 1;
@@ -92,9 +104,10 @@ class Gargouille{
 
 
 module.exports = class Monster extends MonstAction {    
-    constructor(type){
+    constructor(type, id=null){
         super();
-        this.nom = type;
+        this.id         = id;
+        this.type       = type;        
         this.stats = eval(`new ${type}()`);        
     }
 }

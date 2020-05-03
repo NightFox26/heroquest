@@ -1,0 +1,27 @@
+<aside id="newGameForm" class="boxShadow">
+    <div class="blackHeader boxShadow">
+        <h2>HeroQuest nouvelle partie 
+            <button class="btn btn-close" onclick="closeNewGame()"></button>
+        </h2>
+    </div>
+
+    <form action="" method="POST">
+        <div class="niceTitle">Mode de jeu</div>
+        <input type="text" value="classique" name="game_mode" disabled>
+
+        <div class="niceTitle">Nom de la partie</div>
+        <input type="text" value="" name="game_name">
+
+        <div class="niceTitle">Nombre de joueurs autorisé</div>
+        <select name="nb_players" id="">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+        </select>
+
+        <p class="centerText">
+            <input type="submit" class="btn" value="Créer la partie">
+        </p>
+    </form>
+</aside>

@@ -50,11 +50,12 @@ class Magicien{
 }
 
 module.exports = class Hero extends PersAction {    
-    constructor(id= null,name = null,type = null,player_id = null){
+    constructor(id= null,name = null,type = null,desc = null,player_id = null){
         super();
         this.id         = id;
         this.name       = name; 
         this.type       = type;
+        this.desc       = desc
         this.player_id  = player_id;
         if(type){
             this.stats = eval(`new ${type}()`);
@@ -71,6 +72,10 @@ module.exports = class Hero extends PersAction {
 
     setType(type){
         this.type = type;
+    }
+
+    setDescription(description){
+        this.desc = description;
     }
 
     setPlayer_id(player_id){

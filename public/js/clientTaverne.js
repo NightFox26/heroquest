@@ -9,7 +9,7 @@ $(function(){
     socket.on('tavernLoggedUsers', (users) => {        
         $("#allPlayerSection .connectedUser").html("");        
         for(let user of (new Map(users))){ 
-            $("#allPlayerSection .connectedUser").append('<li data-idUser="'+user[1].player.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
+            $("#allPlayerSection .connectedUser").append('<li data-idUser="'+user[1].player.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar" data-idPerso="'+user[1].hero.id+'"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
             $("#allPlayerSection .notConnectedUser li[data-idUser='"+user[1].player.id+"']").remove()
         }
         $("#allPlayerSection .connectedUser li[data-idUser='"+myId+"'] .playersAction").remove()
@@ -19,7 +19,7 @@ $(function(){
     socket.on('tavernNotLoggedUsers', (users) => {        
         $("#allPlayerSection .notConnectedUser").html("");        
         for(let user of users){                            
-            $("#allPlayerSection .notConnectedUser").append('<li data-idUser="'+user.player.id+'"><img src="images/icon/'+user.hero.type+'Bl.png" alt="'+user.hero.type+' icon" class="iconAvatar"><span class="playerName"> '+user.hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
+            $("#allPlayerSection .notConnectedUser").append('<li data-idUser="'+user.player.id+'"><img src="images/icon/'+user.hero.type+'Bl.png" alt="'+user.hero.type+' icon" class="iconAvatar" data-idPerso="'+user.hero.id+'"><span class="playerName"> '+user.hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
         }
     });
 
@@ -102,7 +102,7 @@ $(function(){
     function addPlayerToTable(heroSocket,hero){
         $(".ratBox").hide(500);
         let rowPlayer = `<div class="selectCoequipier hero-${hero.id}" data-idSocket="${heroSocket}">
-                        <input type="checkbox"><img src="images/icon/${hero.type}.png" alt="hero icon" class="iconAvatar"> <label class="playerName">${hero.name}</label>  
+                        <input type="checkbox"><img src="images/icon/${hero.type}.png" alt="hero icon" class="iconAvatar" data-idPerso='${hero.id}'> <label class="playerName">${hero.name}</label>  
                         <button type="button" class="btn btn-close"></button> 
                     </div>`;
         $("#playersAtMyTable").append(rowPlayer);
