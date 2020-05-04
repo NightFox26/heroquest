@@ -1,6 +1,7 @@
 const color       = require("./colorsTxt");
 const configInit  = require("../config/configInit");
 
+
 //pour poser des question dans la console du serveur
 const readline = require('readline').createInterface({
     input: process.stdin,
@@ -68,5 +69,5 @@ module.exports = {
     getBdd,
     checkNbUser,
     substrateArrayUser,
-    testBdd
+    testBdd    
 }

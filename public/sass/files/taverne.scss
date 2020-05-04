@@ -29,19 +29,23 @@
                 .avatar{
                     width: 100%;
                 }                 
-                form{                     
+                #gameConfig{                     
                     .niceTitle{
                         font-size: 22px;
                         margin-bottom: 10px;                  
                     }
-                    .ratBox{
-                        display: flex;
-                        justify-content: space-around;
-                        flex-wrap: wrap;
-                        img{
-                            width: 50px;
+
+                    #slotsBox{                       
+                        .ratBox{
+                            display: flex;
+                            justify-content: space-around;
+                            flex-wrap: wrap;
+                            img{
+                                width: 50px;
+                            }
                         }
                     }
+                    /*
                     .selectCoequipier{
                         position: relative;
                         .btn-close{
@@ -50,7 +54,8 @@
                             transform: translateY(-50%);
                         }
                     }
-                    .quete{
+                    */
+                    #questBox{                        
                         .niceTitle{
                             margin-bottom: 0;
                         }
@@ -62,10 +67,9 @@
                             background-position: center;
                         }
                     }
-                    .formSubmit{
+                    .formSubmit{                        
                         margin-top:20px;
-                        margin-bottom: 10px;
-                        
+                        margin-bottom: 10px;                        
                     }
                 }
                 .iconAvatar,

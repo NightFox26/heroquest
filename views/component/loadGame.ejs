@@ -5,11 +5,11 @@
         </h2>
     </div>
 
-    <form action="/loadGame" method="POST">
+    <form action="/loadCroisade" method="POST">
         <div class="niceTitle">Mode de jeu</div>
         <input type="text" value="classique" name="game_mode" disabled>
-
-        <div class="niceTitle">Croisade </div>
+        <hr>
+        <div class="niceTitle">Croisade  </div>
         <select name="partie_id">
             <% parties.forEach(function(partie){ %>
                 <option value="<%= partie.id %>"><%= partie.name %> (etage : <%= partie.etage %> )</option>

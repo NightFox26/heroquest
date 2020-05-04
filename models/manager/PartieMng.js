@@ -23,12 +23,13 @@ function getAllPartieByUserId(hero_id,callBack){
     });    
 }
 
-function insertPartieByUserId(name,hero_id,slots,mode,hero_name){
+function insertPartieByUserId(name,hero_id,slots,mode,hero_name,callback){
     let datas = {name,hero_id,slots,mode}    
     connection.query('INSERT INTO parties SET ?',
-                    datas, function (err, row) {
+                    datas, function (err,result) {
         if (err) throw err; 
-        console.log("Une partie a été crée par "+hero_name+" !");       
+        console.log("Une partie a été crée par "+hero_name+" !");
+        callback(new Partie(result.insertId,name,hero_id,1,slots,mode))
     });    
 }
 

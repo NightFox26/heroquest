@@ -19,36 +19,43 @@
                     <button class="btn" onclick="toggle_LoadGame()">Continuer la quête</button>
                 </div>
     
-                <form action="/game-normal" method="POST">
-                    <input type="text" name="mode" value='<%= gameMode %>' hidden>
-                    <hr>
-
-                    <div class="niceTitle">Joueurs a ma table : </div>
-                    <div id="playersAtMyTable">
-                        <div class="ratBox">
-                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat">
-
-                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat">
-
-                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat">
-                            
+                <% if(locals.partie){ %>
+                    <div id="gameConfig">
+                        <% if(locals.partie.slots > 1){ %>
+                            <hr>
+                            <section id="slotsBox">
+                                <div class="niceTitle">Joueurs a ma table : </div>
+                                <div id="playersAtMyTable">                            
+                                    <div class="ratBox">
+                                        <% for(let i=1; i < locals.partie.slots; i++){ %>
+                                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat">    
+                                        <% } %>
+                                    </div>                        
+                                </div>
+                            </section>                    
+                        <% } %>
+                        <hr>
+                        <section id="questBox">
+                            <div class="niceTitle">Croisade : <%= locals.partie.name %> </div>
+                            <div class="niceTitle">Quête : etage <%= locals.partie.etage %> </div>
+                            <div class="bgQuest"></div>
+                        </section>                    
+        
+                        <hr>
+                        <div class="centerText formSubmit">
+                            <a href='/game/<%= locals.partie.mode  %>/<%= locals.partie.etage  %>' class="btn">
+                                <img src="images/icon/boots.png" alt="icone bottes"> 
+                                <% if(locals.partie.slots == 1){ %>
+                                    Partir en solitaire
+                                <% } else if (locals.partie.slots == 2){ %>
+                                    Partir avec ce vaurien
+                                <% } else { %>
+                                    Partir avec ces vauriens
+                                <% } %>
+                            </a> 
                         </div>                        
                     </div>
-                    <hr>
-                    
-                    <div class="quete">
-                        <div class="niceTitle">Croisade : <span>Toto la frite</span> </div>
-                        <div class="niceTitle">Quête : <span>L'epreuve</span> </div>
-                        <div class="bgQuest"></div>
-                    </div>
-    
-                    <hr>
-                    <div class="centerText formSubmit">
-                        <button type="submit" class="btn">
-                            <img src="images/icon/boots.png" alt="icone bottes"> Partir avec ces vauriens
-                        </button> 
-                    </div>
-                </form>
+                <% } %>
             </div>
         </section>
 
