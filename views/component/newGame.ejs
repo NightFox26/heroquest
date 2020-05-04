@@ -5,15 +5,16 @@
         </h2>
     </div>
 
-    <form action="" method="POST">
+    <form action="/newGame" method="POST">
         <div class="niceTitle">Mode de jeu</div>
-        <input type="text" value="classique" name="game_mode" disabled>
+        <input type="text" value="classique" disabled> 
+        <input type="text" value="classique" name="game_mode" hidden>       
 
-        <div class="niceTitle">Nom de la partie</div>
+        <div class="niceTitle">Nom de la Croisade</div>
         <input type="text" value="" name="game_name">
 
         <div class="niceTitle">Nombre de joueurs autorisé</div>
-        <select name="nb_players" id="">
+        <select name="game_slots" id="">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>

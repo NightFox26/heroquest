@@ -31,8 +31,9 @@ var Dice            = require("./models/Dice");
 var Hero            = require("./models/Hero");
 var Monster         = require("./models/Monster");
 
-const userMng = require("./models/manager/UserMng");
-const heroMng = require("./models/manager/HeroMng");
+const userMng   = require("./models/manager/UserMng");
+const heroMng   = require("./models/manager/HeroMng");
+const partieMng = require("./models/manager/PartieMng");
 
 //test de la connection a la BDD
 servFunc.testBdd(server);
@@ -125,12 +126,30 @@ app.get('/', function(req, res) {
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;      
         res.locals.page =  "taverne"; 
-        res.sendFlash("happy","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
-        res.render('taverne.ejs', {gameMode: configInit.gameMode}); 
+        partieMng.getAllPartieByUserId(req.session.hero.id,(parties)=>{  
+            if(req.query.newGame){
+                res.sendFlash("normal","Bravo pour cette nouvelle croisade ! On part quand ? ")
+            }else{
+                res.sendFlash("happy","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
+            }       
+            
+            res.render('taverne.ejs', {gameMode: configInit.gameMode, parties:parties}); 
+        })
     }else{
         req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
         res.redirect('/login');
     }   
+})
+
+.post('/newGame', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    let mode = req.body.game_mode;
+    let name = req.body.game_name;
+    let slots = req.body.game_slots;
+    let hero_id = req.session.hero.id;
+    let hero_name = req.session.hero.name;
+    partieMng.insertPartieByUserId(name,hero_id,slots,mode,hero_name)
+    res.redirect('/taverne?newGame=true');  
 })
 
 .post('/game-normal', function(req, res) {

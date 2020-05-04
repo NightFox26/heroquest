@@ -3,7 +3,7 @@
         background-color: $black;
         display: flex;
         justify-content: space-between; 
-        align-items: center;        
+        // align-items: center;        
         section#playerSection,
         section#allPlayerSection{
             display: inline-block;            
@@ -11,13 +11,14 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
             width: 368px;
-            height: 830px;
+            height: 100%;
+            // height: auto;
             padding: 25px 25px; 
             border-radius: 25px; 
             .content{
                 height: 100%;
                 padding:10px;
-                position: relative;                
+                position: relative;                               
                 h1{ 
                     margin: 0;
                     @extend .niceTitle;
@@ -28,7 +29,7 @@
                 .avatar{
                     width: 100%;
                 }                 
-                form{ 
+                form{                     
                     .niceTitle{
                         font-size: 22px;
                         margin-bottom: 10px;                  
@@ -37,6 +38,9 @@
                         display: flex;
                         justify-content: space-around;
                         flex-wrap: wrap;
+                        img{
+                            width: 50px;
+                        }
                     }
                     .selectCoequipier{
                         position: relative;
@@ -46,12 +50,22 @@
                             transform: translateY(-50%);
                         }
                     }
+                    .quete{
+                        .niceTitle{
+                            margin-bottom: 0;
+                        }
+                        .bgQuest{
+                            height: 180px;
+                            background-image: url("../images/elements/map1.jpg");  
+                            background-repeat: no-repeat;
+                            background-size: contain;
+                            background-position: center;
+                        }
+                    }
                     .formSubmit{
-                        margin-top: 50px;
-                        position: absolute;
-                        left: 5px;
-                        right: 5px;
-                        bottom: 15px;
+                        margin-top:20px;
+                        margin-bottom: 10px;
+                        
                     }
                 }
                 .iconAvatar,
@@ -67,7 +81,7 @@
 
         section#taverneSection{
             width: 60%;
-            height: 830px;
+            height: 100%;
             position: relative;
             background-repeat: no-repeat;
             background-size: contain;

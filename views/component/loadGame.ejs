@@ -5,15 +5,15 @@
         </h2>
     </div>
 
-    <form action="" method="POST">
+    <form action="/loadGame" method="POST">
         <div class="niceTitle">Mode de jeu</div>
         <input type="text" value="classique" name="game_mode" disabled>
 
-        <div class="niceTitle">Reprendre </div>
+        <div class="niceTitle">Croisade </div>
         <select name="partie_id">
-            <option value="1">lA QUETE DU RELOU</option>
-            <option value="2">lA QUETE DU RELOU 2</option>
-            <option value="3">lA QUETE DU RELOU 3</option>
+            <% parties.forEach(function(partie){ %>
+                <option value="<%= partie.id %>"><%= partie.name %> (etage : <%= partie.etage %> )</option>
+            <% }) %>
         </select>
 
         <p class="centerText">
