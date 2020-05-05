@@ -9,7 +9,7 @@ $(function(){
     socket.on('tavernLoggedUsers', (users) => {        
         $("#allPlayerSection .connectedUser").html("");        
         for(let user of (new Map(users))){ 
-            $("#allPlayerSection .connectedUser").append('<li data-idUser="'+user[1].player.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar" data-idPerso="'+user[1].hero.id+'"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
+            $("#allPlayerSection .connectedUser").append('<li data-idUser="'+user[1].player.id+'" data-idHero="'+user[1].hero.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar" data-idPerso="'+user[1].hero.id+'"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
             $("#allPlayerSection .notConnectedUser li[data-idUser='"+user[1].player.id+"']").remove()
         }
         $("#allPlayerSection .connectedUser li[data-idUser='"+myId+"'] .playersAction").remove()
@@ -52,11 +52,28 @@ $(function(){
         playCssAnim({elm:'#chatBtn',anim:"bounce"});
     });
 
+    //boucle de verification des nouvelles parties qui attendent des joueurs    
+    setInterval(function(){
+        $.get( "/taverne/getAllWaitingTables", function(tablesWaiting){
+            console.log(tablesWaiting)
+            $(".connectedUser li .tableWaiting").remove();
+            tablesWaiting.forEach(table => {
+                $(".connectedUser li[data-idhero='"+table.hero_id+"'] .drink").slideDown(500,function(){
+                    playCssAnim({elm:$(this),anim:"bounce"}); 
+                }) 
+            });
+        } )
+    },4000)
+    
+
 
     //envois une requete d'invitation joueur au server
     $(document).on("click",".drink",function(){ 
+        $("#tableTaverne").show(500);
+        /*
         let playerSocketId = $(this).parents("li").attr("data-socketId");        
         socket.emit('invitation',playerSocketId);
+        */
     })
 
     //reception d'invitation joueur depuis le server

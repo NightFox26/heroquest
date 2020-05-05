@@ -62,6 +62,14 @@ function substrateArrayUser(arr, arrToRemove){
     return arr;
 }
 
+function getAllIdHeroInTavern(usersInTaverne){
+    var herosId = [];
+    for(let user of usersInTaverne){
+        herosId.push(user[1].hero.id)
+    }
+    return herosId;
+}
+
 module.exports = {
     kickUser,
     debugObj,
@@ -69,5 +77,6 @@ module.exports = {
     getBdd,
     checkNbUser,
     substrateArrayUser,
-    testBdd    
+    testBdd,
+    getAllIdHeroInTavern   
 }

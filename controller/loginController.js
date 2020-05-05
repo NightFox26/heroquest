@@ -4,6 +4,7 @@ const servFunc      = require("../modules/functionServer");
 
 const userMng   = require("../models/manager/UserMng");
 const heroMng   = require("../models/manager/HeroMng");
+const partieMng = require("../models/manager/PartieMng");
 
 function getLoginController(req,res){
     res.locals.loginError = req.session.loginError;
@@ -20,12 +21,14 @@ function postLoginController(req,res,userLogged){
         if(user){
             heroMng.getHeroByUserId(user.id,function(hero){
                 req.session.user = user;  
-                req.session.hero = hero;                
-                userLogged.set(user.id,user);          
-                req.sendFlash("happy","Bonjour "+user.name)  
-                req.sendFlash("normal","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
-                color.successTxt(user.name + " vient de se connecter !");
-                res.redirect('/home');
+                req.session.hero = hero;   
+                partieMng.stopAllPartiesStatusByUserId(req.session.hero,()=>{             
+                    userLogged.set(user.id,user);          
+                    req.sendFlash("happy","Bonjour "+user.name)  
+                    req.sendFlash("normal","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
+                    color.successTxt(user.name + " vient de se connecter !");
+                    res.redirect('/home');
+                })
             })
         }else{
             color.errorTxt("ALERT : "+req.body.mail + " n'arrive pas à se connecter !");

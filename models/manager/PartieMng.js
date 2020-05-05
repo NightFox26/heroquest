@@ -10,7 +10,6 @@ function getPartieById(id,callBack){
     });    
 }
 
-// a tester et a finir
 function getAllPartieByUserId(hero_id,callBack){    
     connection.query('SELECT * FROM parties WHERE hero_id= ?',
                     hero_id, function (err, parties) {
@@ -23,15 +22,49 @@ function getAllPartieByUserId(hero_id,callBack){
     });    
 }
 
-function insertPartieByUserId(name,hero_id,slots,mode,hero_name,callback){
-    let datas = {name,hero_id,slots,mode}    
-    connection.query('INSERT INTO parties SET ?',
-                    datas, function (err,result) {
+function getAllWaitingTables(userIdTavern,callback){
+    connection.query('SELECT * FROM parties WHERE status= ? AND hero_id IN ( ? )',
+                    ["waiting",userIdTavern], function (err, parties) {
+        if (err) throw err;
+        let allParties = []
+        for( let partie of parties){
+            allParties.push(hydratePartie(partie));  
+        }     
+        callback(allParties);
+    });
+}
+
+function insertPartieByUserId(name,hero,slots,mode,callback){
+    stopAllPartiesStatusByUserId(hero,()=>{
+        let datas = {name,hero_id:hero.id,slots,mode,hero_1_id:hero.id}    
+        connection.query('INSERT INTO parties SET ?',
+                        datas, function (err,result) {
+            if (err) throw err; 
+            console.log("Une partie a été crée par "+hero.id+" !");
+            callback(new Partie(result.insertId,name,hero.id,1,slots,mode,"waiting",hero.id))
+        });
+    })    
+}
+
+
+function stopAllPartiesStatusByUserId(hero,callback){      
+    connection.query('UPDATE parties SET status = "stopped" WHERE hero_id = ?',
+    hero.id, function (err,result) {
         if (err) throw err; 
-        console.log("Une partie a été crée par "+hero_name+" !");
-        callback(new Partie(result.insertId,name,hero_id,1,slots,mode))
+        console.log("les partie sont toute stoppé pour "+hero.name+" !");
+        callback()
     });    
 }
+
+function uppdatePartieStatusById(partie,newStatus,callback){      
+    connection.query('UPDATE parties SET status = ? WHERE id = ?',
+    [newStatus,partie.id], function (err,result) {
+        if (err) throw err; 
+        console.log("la partie id : "+partie.id+" vient de passer en : "+newStatus+" !");
+        callback()
+    });    
+}
+
 
 function hydratePartie(cols){
     let partie = new Partie();    
@@ -47,5 +80,8 @@ function hydratePartie(cols){
 module.exports = {
     getPartieById,
     getAllPartieByUserId,
-    insertPartieByUserId
+    insertPartieByUserId,
+    getAllWaitingTables,
+    stopAllPartiesStatusByUserId,
+    uppdatePartieStatusById
 }

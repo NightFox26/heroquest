@@ -31,8 +31,8 @@
                 }                 
                 #gameConfig{                     
                     .niceTitle{
-                        font-size: 22px;
-                        margin-bottom: 10px;                  
+                        font-size: 20px;
+                        margin-bottom: 10px;                                         
                     }
 
                     #slotsBox{                       
@@ -45,19 +45,13 @@
                             }
                         }
                     }
-                    /*
-                    .selectCoequipier{
-                        position: relative;
-                        .btn-close{
-                            right: 5px;
-                            top: 50%;
-                            transform: translateY(-50%);
-                        }
-                    }
-                    */
+                    
                     #questBox{                        
                         .niceTitle{
                             margin-bottom: 0;
+                            &:nth-child(2){
+                                margin-bottom: 10px;
+                            } 
                         }
                         .bgQuest{
                             height: 180px;
@@ -109,6 +103,11 @@
                         top: 50%;
                         right: 0;                     
                         transform: translateY(-50%);
+                        .drink{
+                            transition: none;
+                            background-color: $green;
+                            display: none;
+                        }
                     }
                 }
                 &.notConnectedUser{                    

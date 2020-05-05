@@ -66,6 +66,10 @@ function closeChat(){
     $("#chatBox").fadeOut(500);
 }
 
+function closeTable(){
+    $("#tableTaverne").fadeOut(500);
+}
+
 function toggle_NewGame(){
     $("#newGameForm").fadeToggle(500);
     $("#newGameForm input[name='game_name']").focus();

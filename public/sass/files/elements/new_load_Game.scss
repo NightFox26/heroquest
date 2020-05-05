@@ -1,14 +1,10 @@
 #newGameForm,
 #loadGameForm{
     display: none;
-    width: 420px;
-    position: absolute;
+    width: 420px;    
     left:38%;
     top: 20%;
-    border: 5px solid black;
-    border-radius: 8px;
-    background-image: url("../images/bg/paper.jpg");   
-    z-index: 10; 
+    z-index: 11;    
     form{
         padding: 15px;
         padding-bottom: 0;
@@ -27,6 +23,10 @@
 
         select{
             height: 27px;
+        }
+
+        input[type="submit"]{
+            margin-top: 10px;
         }
 
     }

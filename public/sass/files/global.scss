@@ -220,3 +220,19 @@ body {
     cursor: pointer;
 }
 
+.windowModalDraggable{
+    width: 380px;
+    height: auto;
+    position: absolute;
+    left:8px;
+    top: 0px;
+    border: 5px solid black;
+    border-radius: 8px;    
+    background-image: url("../images/bg/paper.jpg");      
+    background-size: cover;
+    @extend .boxShadow;
+    .header{
+        @extend .blackHeader;
+        @extend .boxShadow;
+    }
+}

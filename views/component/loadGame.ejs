@@ -1,5 +1,5 @@
-<aside id="loadGameForm" class="boxShadow">
-    <div class="blackHeader boxShadow">
+<aside id="loadGameForm" class="windowModalDraggable">
+    <div class="header">
         <h2>HeroQuest continuer partie 
             <button class="btn btn-close" onclick="closeLoadGame()"></button>
         </h2>
@@ -12,7 +12,7 @@
         <div class="niceTitle">Croisade  </div>
         <select name="partie_id">
             <% parties.forEach(function(partie){ %>
-                <option value="<%= partie.id %>"><%= partie.name %> (etage : <%= partie.etage %> )</option>
+                <option value="<%= partie.id %>"><%= partie.name %> - etage <%= partie.etage %> - <%= partie.slots - 1 %> slots</option>
             <% }) %>
         </select>
 

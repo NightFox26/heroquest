@@ -36,7 +36,6 @@ var userLogged      = new Map();
 var usersInTaverne  = new Map();
 
 
-
 /**************/
 // LES ROUTES //
 /**************/
@@ -67,6 +66,11 @@ app.get('/', function(req, res) {
 .get('/taverne', function(req, res) {
     const ctrl = require('./controller/taverneController');
     ctrl.getTaverneController(req,res);  
+})
+
+.get('/taverne/getAllWaitingTables', function(req,res) {
+    const ctrl = require('./controller/taverneController');
+    ctrl.getAllWaitingTablesController(req,res,usersInTaverne);  
 })
 
 .get('/taverne/tyrannique', function(req, res) {
@@ -125,8 +129,6 @@ server.listen(configInit.port, configInit.hostname, () => {
     //servFunc.debugObj(obj);
     //color.warningTxt(obj["person1"]["name"]);
 });
-
-
 
 // Websocket lié au contexte global du site
 const ctrlGlobalSocket = require('./controller/socketController/globalsSocketController');

@@ -1,0 +1,36 @@
+#tableTaverne{
+    display: none;
+    width: 320px;    
+    right: 0; 
+    left: auto;     
+    .table{
+        height: 260px;        
+        background-image: url("../images/elementS/table.png"); 
+        background-repeat: no-repeat;
+        background-position: top center;     
+        background-size: contain;
+        position: relative;
+        #hero1{
+            text-align: center;
+        }
+        #hero2{
+            position: absolute;
+            left: 30px;
+            top: 30%;
+        }
+        #hero3{
+            position: absolute;
+            right: 30px;
+            top: 30%;
+        }
+        #hero4{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 17%;
+        }
+        .iconAvatar{
+            width: 50px;
+        }
+    }
+}

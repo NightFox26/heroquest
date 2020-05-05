@@ -35,6 +35,14 @@ function getTaverneClassiqueController(req,res){
     res.redirect('/taverne');    
 }
 
+function getAllWaitingTablesController(req,res,usersInTaverne){       
+    res.setHeader('Content-Type', 'application/json');        
+    let idUserInTavern = servFunc.getAllIdHeroInTavern(usersInTaverne)
+    partieMng.getAllWaitingTables(idUserInTavern,(tables)=>{
+        res.end(JSON.stringify(tables));    
+    }) 
+}
+
 function getTaverneTyranniqueController(req,res){
     configInit.gameMode = "tyrannique"
     req.sendFlash("surprised","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
@@ -48,9 +56,9 @@ function postTaverneNewCroisadeController(req,res){
     let mode = req.body.game_mode;
     let name = req.body.game_name;
     let slots = req.body.game_slots;
-    let hero_id = req.session.hero.id;
+    let hero = req.session.hero;
     let hero_name = req.session.hero.name;
-    partieMng.insertPartieByUserId(name,hero_id,slots,mode,hero_name,(partie)=>{
+    partieMng.insertPartieByUserId(name,hero,slots,mode,(partie)=>{
         res.redirect('/taverne?idPartie='+partie.id); 
     })
 }
@@ -59,8 +67,13 @@ function postTaverneLoadCroisadeController(req,res){
     res.setHeader('Content-Type', 'text/html');
     let mode = req.body.game_mode;      
     let partie_id = req.body.partie_id;
-    partieMng.getPartieById(partie_id,(partie)=>{
-        res.redirect('/taverne?idPartie='+partie.id); 
+    partieMng.getPartieById(partie_id,(partie)=>{        
+        let hero = req.session.hero;
+        partieMng.stopAllPartiesStatusByUserId(hero,()=>{
+            partieMng.uppdatePartieStatusById(partie,"waiting",()=>{
+                res.redirect('/taverne?idPartie='+partie.id);
+            })
+        })        
     })
 }
 
@@ -70,5 +83,6 @@ module.exports = {
     getTaverneClassiqueController,
     getTaverneTyranniqueController,
     postTaverneNewCroisadeController,
-    postTaverneLoadCroisadeController
+    postTaverneLoadCroisadeController,
+    getAllWaitingTablesController
 }

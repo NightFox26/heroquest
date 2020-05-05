@@ -10,24 +10,8 @@ $(function () {
     new Flash(null,null);  
 
     //les elements draggable
-    $("#chatBox").draggable({
-        handle: ".chatHeader",
-        containment: "parent"
-    });
-
-    
-    $("#newGameForm").draggable({
-        handle: ".blackHeader",
-        containment: "parent"
-    });
-
-    $("#loadGameForm").draggable({
-        handle: ".blackHeader",
-        containment: "parent"
-    });
-
-    $("#fichePerso").draggable({
-        handle: ".blackHeader",
+    $(".windowModalDraggable").draggable({
+        handle: ".header",
         containment: "parent"
     });
 

@@ -1,17 +1,7 @@
 #chatBox{
     display: none;
-    width: 380px;
-    position: absolute;
-    left:8px;
-    top: 0px;
-    border: 5px solid black;
-    border-radius: 8px;
-    background-image: url("../images/bg/paper.jpg");   
-    z-index: 10; 
-
-    .chatHeader{
-        @extend .blackHeader;
-    }
+    width: 380px;   
+    z-index: 11; 
     .chatBody{
         height: 340px;
         padding:0 10px;
