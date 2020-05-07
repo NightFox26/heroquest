@@ -31,18 +31,30 @@ function getTaverneSocketController(io,usersInTaverne){
             io_taverne.emit('message',{hero,msg,dateTime});
         });
 
-        socket.on('invitation', (socketId) => { 
-            let heroSender =  usersInTaverne.get(socket.id).hero;
-            let heroInvited = usersInTaverne.get(socketId).hero;
-            console.log(heroSender.name +" invite "+ heroInvited.name +" a sa table !");
-            let params = {  heroSender:heroSender,
-                            socketIdSender:socket.id,
-                            heroInvited:heroInvited,
-                            socketIdInvited:socketId,
-                        }        
-            socket.to(socketId).emit('invitation', params);
+        socket.on('getParty', ({partyId,heroChefSocket}) => { 
+            let hero =  usersInTaverne.get(socket.id).hero;
+            partieMng.getPartieById(partyId,(party)=>{
+                console.log("J'envoie les infos de la table id "+partyId+" a "+hero.name);               
+                socket.emit('infosParty',{party,heroChefSocket});
+            })
         });
 
+        
+        socket.on('joinParty', ({heroChefSocket,idTable,idSlot}) => { 
+            let heroSender =  usersInTaverne.get(socket.id).hero;
+            let heroChef = usersInTaverne.get(heroChefSocket).hero;
+            
+            color.infoTxt(heroSender.name +" souhaite rejoindre la table id : "+ idTable + " sur le slot "+ idSlot);
+            
+            let params = {  heroSender:heroSender,
+                            socketIdSender:socket.id,
+                            heroChef:heroChef,
+                            heroChefSocket:heroChefSocket,
+                        }        
+            socket.to(heroChefSocket).emit('joinPartyRequest', params);
+        });
+        
+        /*
         socket.on('invitation_refused', ({socketIdSender,heroInvited}) => {         
             color.errorTxt(heroInvited.name +" à refusé l'inviation !"); 
             socket.to(socketIdSender).emit('invitation_refused', heroInvited);      
@@ -60,6 +72,7 @@ function getTaverneSocketController(io,usersInTaverne){
             color.warningTxt(heroKicked.name +" à été kické de la table par "+heroKicker.name);
             socket.to(userKickedSocket).emit('kick_table',heroKicker);
         });
+        */
 
 
 

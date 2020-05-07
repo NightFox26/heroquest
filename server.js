@@ -70,7 +70,7 @@ app.get('/', function(req, res) {
 
 .get('/taverne/getAllWaitingTables', function(req,res) {
     const ctrl = require('./controller/taverneController');
-    ctrl.getAllWaitingTablesController(req,res,usersInTaverne);  
+    ctrl.getAllWaitingTablesController(req,res,usersInTaverne); 
 })
 
 .get('/taverne/tyrannique', function(req, res) {
@@ -110,7 +110,7 @@ server.listen(configInit.port, configInit.hostname, () => {
     color.infoTxt("Connection par navigateur web : http://nightfox26.hopto.org:8000/");    
     color.errorTxt(".....");    
     color.astriaTxt("Bienvenue, je suis Astria l'IA de ce serveur.");    
-    color.astriaTxt("je me met en attente ...");  
+    color.astriaTxt("je me met en attente ..."); 
     
     
     // var fox = new Hero("Nightfox26","Barbare");

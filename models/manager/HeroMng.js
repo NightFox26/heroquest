@@ -19,14 +19,15 @@ function getHeroByUserId(userId,callBack){
 }
 
 function hydrateHero(cols){
-    let hero = new Hero();    
-    for(attrib in cols){        
-        let setter = "set"+attrib.charAt(0).toUpperCase() + attrib.slice(1); 
-        // console.log(setter)       
-        hero[setter](cols[attrib]);
-    }
-
-    hero.setStats(cols["type"]);
+    let hero = new Hero();
+    if(cols)  {
+        for(attrib in cols){        
+            let setter = "set"+attrib.charAt(0).toUpperCase() + attrib.slice(1); 
+            // console.log(setter)       
+            hero[setter](cols[attrib]);
+        }
+        hero.setStats(cols["type"]);
+    }  
     return hero;
 }
 

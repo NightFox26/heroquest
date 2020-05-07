@@ -1,10 +1,10 @@
 <aside id="tableTaverne" class="windowModalDraggable">
     <div class="header">
-        <h2>Table de jeu
+        <h2><span>Table de jeu</span> 
             <button class="btn btn-close" onclick="closeTable()"></button>
         </h2>
     </div>
-    <div class="table">
+    <div class="table" data-idTable="">
         <div id="hero1">
             <img src="images/icon/barbare.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat"> 
         </div>
@@ -19,5 +19,19 @@
         <div id="hero4">
             <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat"> 
         </div>
+    </div>
+
+    <div class="infosPartie blackFooter boxShadow">
+        <ul>
+            <li>
+                <img src="images/mobilier/Escalier.png" width="40" height="30" alt="icon escalier"> 
+                Etage : <span class="etage">5</span>
+            </li>
+            <li>
+                <img src="images/icon/mode.png" width="40" alt="icon mode"> 
+                Mode : <span class="mode">classique</span>
+            </li>
+        </ul>
+        
     </div>
 </aside>

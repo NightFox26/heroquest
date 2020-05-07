@@ -9,7 +9,7 @@ class Invitation{
     }
     
     create(){        
-        $("#tavernePage #invitationBox").append(`<div class="invitation invitation-${this.heroSender.id}"><div><img src="images/icon/${this.heroSender.type}.png" alt="hero icon"/></div><div><img src="images/icon/cup.png" alt="cup icon"/><img src="images/icon/arrow_right.png" width="50" alt="fleche icon"/></div><div><img src="images/icon/${this.heroInvited.type}.png" alt="hero icon"/></div><p> ${this.heroSender.name} souhaite vous payer un verre a sa table !</p><button class="btn btn-yes"></button><button class="btn btn-no"></button></div>`);
+        $("#tavernePage #invitationBox").append(`<div class="invitation invitation-${this.heroSender.id}"><div><img src="images/icon/${this.heroSender.type}.png" alt="hero icon"/></div><div><img src="images/icon/cup.png" alt="cup icon"/><img src="images/icon/arrow_right.png" width="50" alt="fleche icon"/></div><div><img src="images/icon/${this.heroInvited.type}.png" alt="hero icon"/></div><p> ${this.heroSender.name} souhaite venir boire un verre à votre table !</p><button class="btn btn-yes"></button><button class="btn btn-no"></button></div>`);
         
          this.animation();
          this.bindingYes();

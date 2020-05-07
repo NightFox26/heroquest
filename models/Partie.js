@@ -41,19 +41,19 @@ module.exports = class Partie{
         this.status = status;
     }
 
-    setHero_1_id(hero_1_id){
-        this.hero_1_id = hero_1_id;
+    setHero_1_id(hero_1){
+        this.hero_1_id = hero_1;        
     }
 
-    setHero_2_id(hero_2_id){
-        this.hero_2_id = hero_2_id;
+    setHero_2_id(hero_2){        
+        this.hero_2_id = hero_2; 
     }
 
-    setHero_3_id(hero_3_id){
-        this.hero_3_id = hero_3_id;
+    setHero_3_id(hero_3){
+        this.hero_3_id = hero_3; 
     }
 
-    setHero_4_id(hero_4_id){
-        this.hero_4_id = hero_4_id;
+    setHero_4_id(hero_4){
+        this.hero_4_id = hero_4; 
     }
 }

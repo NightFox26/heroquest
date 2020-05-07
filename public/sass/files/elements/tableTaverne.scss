@@ -33,4 +33,17 @@
             width: 50px;
         }
     }
+
+    .infosPartie{
+        margin-bottom: 15px;
+        ul{
+            li{
+                @extend .textShadowWhite;
+                img{
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
 }

@@ -1,8 +1,9 @@
+const socketGlobal = io();
+
 $(function(){
-    const socket = io();
 
     //affiche le nombre total d'utilisateur connecté au jeu
-    socket.on("nbUserLogged",(nb)=>{       
+    socketGlobal.on("nbUserLogged",(nb)=>{       
         $("footer .usersLogged span.nb").text(" : "+nb);
     })
 
@@ -11,10 +12,10 @@ $(function(){
         open_FichePerso();
         let typeMonster = $(this).attr("data-typeMonster");
         let idPerso = $(this).attr("data-idPerso");        
-        socket.emit("getPersoFiche",{typeMonster:typeMonster,idPerso:idPerso});
+        socketGlobal.emit("getPersoFiche",{typeMonster:typeMonster,idPerso:idPerso});
     })
 
-    socket.on("receivePersoFiche",(perso)=>{        
+    socketGlobal.on("receivePersoFiche",(perso)=>{        
         $('#fichePerso .content').css("background-image",`url('../images/elements/${perso.type}.png')`);
         $('#fichePerso .icon').attr("src",`/images/icon/${perso.type}.png`);
         //si la fiche est pour un hero

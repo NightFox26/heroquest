@@ -35,12 +35,17 @@ function getTaverneClassiqueController(req,res){
     res.redirect('/taverne');    
 }
 
-function getAllWaitingTablesController(req,res,usersInTaverne){       
-    res.setHeader('Content-Type', 'application/json');        
-    let idUserInTavern = servFunc.getAllIdHeroInTavern(usersInTaverne)
-    partieMng.getAllWaitingTables(idUserInTavern,(tables)=>{
-        res.end(JSON.stringify(tables));    
-    }) 
+function getAllWaitingTablesController(req,res,usersInTaverne){  
+    if(req.session.user != undefined &&  req.session.user != ""){     
+        res.setHeader('Content-Type', 'application/json');        
+        let idUserInTavern = servFunc.getAllIdHeroInTavern(usersInTaverne)    
+        partieMng.getAllWaitingTables(idUserInTavern,(tables)=>{
+            res.end(JSON.stringify(tables));   
+        }) 
+    }else{
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
+        res.redirect('/login');
+    }    
 }
 
 function getTaverneTyranniqueController(req,res){

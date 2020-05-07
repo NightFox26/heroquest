@@ -8,7 +8,7 @@ var Monster         = require("../../models/Monster");
 function getGlobalSocketController(io){    
     io.on('connection', (socket) => {
 
-        socket.on("getPersoFiche",({typeMonster,idPerso})=>{
+        socket.on("getPersoFiche",({typeMonster=undefined,idPerso=undefined})=>{
             envoiFichePerso(typeMonster,idPerso,socket)
         });
     })

@@ -1,11 +1,13 @@
 const Partie     = require("../Partie");
 const servFunc   = require("../../modules/functionServer");
 
+const heroMng = require("./HeroMng")
+
 let connection  = servFunc.getBdd();
 
 function getPartieById(id,callBack){    
     connection.query('SELECT * FROM parties WHERE id= ?',[id], function (err, partie) {
-        if (err) throw err;
+        if (err) throw err;        
         callBack(hydratePartie(partie[0]));    
     });    
 }
@@ -16,7 +18,7 @@ function getAllPartieByUserId(hero_id,callBack){
         if (err) throw err;
         let allParties = []
         for( let partie of parties){
-            allParties.push(hydratePartie(partie));  
+            allParties.push(hydratePartie(partie));
         }     
         callBack(allParties);
     });    
@@ -31,7 +33,7 @@ function getAllWaitingTables(userIdTavern,callback){
             allParties.push(hydratePartie(partie));  
         }     
         callback(allParties);
-    });
+    });   
 }
 
 function insertPartieByUserId(name,hero,slots,mode,callback){
@@ -73,7 +75,7 @@ function hydratePartie(cols){
         // console.log(setter)       
         partie[setter](cols[attrib]);
     }
-    return partie;
+    return partie;    
 }
 
 

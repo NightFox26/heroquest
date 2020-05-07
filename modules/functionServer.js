@@ -46,7 +46,7 @@ function checkAutoLogin(req){
 function checkNbUser(io){
     if(configInit.countUserOnSite){
         setInterval(()=>{            
-            io.emit("nbUserLogged",io.engine.clientsCount);
+            io.emit("nbUserLogged",io.engine.clientsCount);            
         },5000)       
     }
 }

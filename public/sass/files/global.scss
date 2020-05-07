@@ -86,7 +86,7 @@ body {
 }
 
 .textShadowWhite{
-    text-shadow: 0 0 10px rgb(255, 255, 255);
+    text-shadow: 0 0 2px rgb(255, 255, 255);
 }
 
 .lightBox{
@@ -154,6 +154,11 @@ body {
         text-shadow: 1px 1px 2px white;
         margin-bottom: 5px;
     }
+}
+
+.blackFooter{
+    @extend .blackHeader;
+    cursor: default;
 }
 
 
