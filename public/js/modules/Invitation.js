@@ -1,15 +1,17 @@
 class Invitation{ 
-    constructor(socket,heroSender,socketIdSender,heroInvited,socketIdInvited){        
-        this.heroSender         = heroSender;
-        this.heroInvited        = heroInvited;        
-        this.socketIdSender     = socketIdSender;        
-        this.socketIdInvited    = socketIdInvited;  
-        this.socket             = socket;   
+    constructor(socket,heroChef,socketHeroChef,heroJoiner,socketHeroJoiner,idParty,slot){        
+        this.heroChef           = heroChef;        
+        this.socketHeroChef     = socketHeroChef;  
+        this.heroJoiner         = heroJoiner;
+        this.socketHeroJoiner   = socketHeroJoiner;        
+        this.socket             = socket; 
+        this.idParty            = idParty;  
+        this.slot               = slot;  
         this.create();       
     }
     
     create(){        
-        $("#tavernePage #invitationBox").append(`<div class="invitation invitation-${this.heroSender.id}"><div><img src="images/icon/${this.heroSender.type}.png" alt="hero icon"/></div><div><img src="images/icon/cup.png" alt="cup icon"/><img src="images/icon/arrow_right.png" width="50" alt="fleche icon"/></div><div><img src="images/icon/${this.heroInvited.type}.png" alt="hero icon"/></div><p> ${this.heroSender.name} souhaite venir boire un verre à votre table !</p><button class="btn btn-yes"></button><button class="btn btn-no"></button></div>`);
+        $("#tavernePage #invitationBox").append(`<div class="invitation invitation-${this.heroJoiner.id}"><div><img src="images/icon/${this.heroJoiner.type}.png" alt="hero icon"/></div><div><img src="images/icon/cup.png" alt="cup icon"/><img src="images/icon/arrow_right.png" width="50" alt="fleche icon"/></div><div><img src="images/icon/${this.heroChef.type}.png" alt="hero icon"/></div><p> ${this.heroJoiner.name} souhaite venir boire un verre à votre table !</p><button class="btn btn-yes"></button><button class="btn btn-no"></button></div>`);
         
          this.animation();
          this.bindingYes();
@@ -22,27 +24,29 @@ class Invitation{
 
     bindingYes(){        
         var $this = this;        
-        $(document).on("click.invitationAccepted",`.invitation-${$this.heroSender.id} .btn-yes`,function(e){
+        $(document).on("click.invitationAccepted",`.invitation-${$this.heroJoiner.id} .btn-yes`,function(e){
             $(this).parents(".invitation").hide(500,function(){
                 $this.socket.emit("invitation_accepted",
-                    {   socketIdSender:$this.socketIdSender,
-                        heroSender:$this.heroSender,
-                        socketIdInvited:$this.socketIdInvited,
-                        heroInvited:$this.heroInvited
+                    {   idParty         :$this.idParty,
+                        slot            :$this.slot,
+                        socketHeroChef  :$this.socketHeroChef,
+                        heroChef        :$this.heroChef,
+                        socketHeroJoiner:$this.socketHeroJoiner,
+                        heroJoiner      :$this.heroJoiner,
                     })
                 $(document).off(".invitationAccepted");
-                $(`.invitation-${$this.heroSender.id}`).remove();
+                $(`.invitation-${$this.heroJoiner.id}`).remove();
             })
         })
     }
 
     bindingNo(){        
         var $this = this;        
-        $(document).on("click.invitationRefused",`.invitation-${$this.heroSender.id} .btn-no`,function(e){
+        $(document).on("click.invitationRefused",`.invitation-${$this.heroJoiner.id} .btn-no`,function(e){
             $(this).parents(".invitation").hide(500,function(){
-                $this.socket.emit("invitation_refused",{socketIdSender:$this.socketIdSender,heroInvited:$this.heroInvited})
+                $this.socket.emit("invitation_refused",{socketHeroJoiner:$this.socketHeroJoiner,heroChef:$this.heroChef})
                 $(document).off(".invitationRefused");
-                $(`.invitation-${$this.heroSender.id}`).remove();
+                $(`.invitation-${$this.heroJoiner.id}`).remove();
             })
         })   
     }

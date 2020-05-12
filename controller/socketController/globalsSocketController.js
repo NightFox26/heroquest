@@ -4,6 +4,7 @@ const servFunc      = require("../../modules/functionServer");
 
 const heroMng       = require("../../models/manager/HeroMng");
 var Monster         = require("../../models/Monster");
+const partieMng = require("../../models/manager/PartieMng");
 
 function getGlobalSocketController(io){    
     io.on('connection', (socket) => {
@@ -11,6 +12,8 @@ function getGlobalSocketController(io){
         socket.on("getPersoFiche",({typeMonster=undefined,idPerso=undefined})=>{
             envoiFichePerso(typeMonster,idPerso,socket)
         });
+
+        
     })
 }
 

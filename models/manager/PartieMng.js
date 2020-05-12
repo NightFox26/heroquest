@@ -12,6 +12,13 @@ function getPartieById(id,callBack){
     });    
 }
 
+function getPartieByIdAndHero(id,heroId,callBack){    
+    connection.query('SELECT * FROM parties WHERE id= ? AND hero_id= ?',[id,heroId], function (err, partie) {
+        if (err) throw err;        
+        callBack(hydratePartie(partie[0]));    
+    });    
+}
+
 function getAllPartieByUserId(hero_id,callBack){    
     connection.query('SELECT * FROM parties WHERE hero_id= ?',
                     hero_id, function (err, parties) {
@@ -50,7 +57,7 @@ function insertPartieByUserId(name,hero,slots,mode,callback){
 
 
 function stopAllPartiesStatusByUserId(hero,callback){      
-    connection.query('UPDATE parties SET status = "stopped" WHERE hero_id = ?',
+    connection.query('UPDATE parties SET status = "stopped", hero_2_id=0, hero_3_id=0, hero_4_id=0 WHERE hero_id = ?',
     hero.id, function (err,result) {
         if (err) throw err; 
         console.log("les partie sont toute stoppé pour "+hero.name+" !");
@@ -63,6 +70,15 @@ function uppdatePartieStatusById(partie,newStatus,callback){
     [newStatus,partie.id], function (err,result) {
         if (err) throw err; 
         console.log("la partie id : "+partie.id+" vient de passer en : "+newStatus+" !");
+        callback()
+    });    
+}
+
+function uppdatePartieHeroById(idParty,slot,hero,callback){      
+    connection.query('UPDATE parties SET hero_'+slot+'_id = ? WHERE id = ?',
+    [hero.id,idParty], function (err,result) {
+        if (err) throw err; 
+        console.log("la partie id : "+idParty+" vient d'ajouter "+hero.name+" au slot "+slot+ "!");
         callback()
     });    
 }
@@ -85,5 +101,7 @@ module.exports = {
     insertPartieByUserId,
     getAllWaitingTables,
     stopAllPartiesStatusByUserId,
-    uppdatePartieStatusById
+    uppdatePartieStatusById,
+    getPartieByIdAndHero,
+    uppdatePartieHeroById
 }

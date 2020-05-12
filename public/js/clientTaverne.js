@@ -1,9 +1,12 @@
 $(function(){
     const socket = io('/taverne');
+    let searchParams = new URLSearchParams(window.location.search)
+
     var myId = $("#userId").text();
-    
+    var idPartie =searchParams.get('idPartie');
+          
     //previent le serveur qu'un utilisateur se connecte
-    socket.emit("userLoggedTavern",{id:myId});    
+    socket.emit("userLoggedTavern",({idUser:myId,idPartie:idPartie}));    
 
     //Affiche les utilisateurs connectés a la taverne
     socket.on('tavernLoggedUsers', (users) => {        
@@ -57,8 +60,7 @@ $(function(){
         $.get( "/taverne/getAllWaitingTables", function(tablesWaiting){           
             $(".connectedUser li .tableWaiting").remove();
             tablesWaiting.forEach(table => {
-                $(".connectedUser li[data-idhero='"+table.hero_id+"'] .drink").attr("data-tableId",table.id).slideDown(500,function(){
-                    $(this).a
+                $(".connectedUser li[data-idhero='"+table.hero_id+"'] .drink").attr("data-tableId",table.id).slideDown(500,function(){                    
                     playCssAnim({elm:$(this),anim:"bounce"}); 
                 }) 
             });
@@ -67,45 +69,51 @@ $(function(){
 
     //envois une requete pour voir la table d'un joueur
     $(document).on("click",".drink",function(){ 
-        let heroChefSocket = $(this).parents("li").attr("data-socketid");
+        let socketHeroChef = $(this).parents("li").attr("data-socketid");
         let partyId = $(this).attr("data-tableid");
-        socket.emit('getParty', ({partyId,heroChefSocket}));
+        socket.emit('getParty', ({partyId,socketHeroChef}));
     })
 
     //reception des infos sur la table
-    socket.on("infosParty",({party,heroChefSocket})=>{        
-        new TableTaverne(socketGlobal,heroChefSocket,party);
+    socket.on("infosParty",({party,socketHeroChef})=>{ 
+        new TableTaverne(socketGlobal,socketHeroChef,party);
         $("#tableTaverne").show(500);      
     });
 
     //envois d'une demande pour rejoindre une table
     $(document).on("click",".table .slot",function(){ 
         let idSlot = $(this).attr("data-idSlot");
-        let idTable = $(this).parents(".table").attr("data-idTable");
-        let heroChefSocket = $(this).parents(".table").find("#hero1 img").attr("data-socket");
-        socket.emit("joinParty",({heroChefSocket,idTable,idSlot}));       
-    })
-
-
-    /*********** A REVOIR !!!!!! */
+        let idParty = $(this).parents(".table").attr("data-idTable");
+        let socketHeroChef = $(this).parents(".table").find("#hero1 img").attr("data-socket");
+        socket.emit("joinParty",({socketHeroChef,idParty,idSlot}));       
+    })    
 
     //reception d'invitation joueur depuis le server
-    socket.on('joinPartyRequest', ({heroSender,socketIdSender,heroChef,heroChefSocket})=>{        
-        new Flash(heroSender.name+" souhaite rejoindre votre table ! <br> Vous devriez accepter.", "happy");          
-        new Invitation(socket,heroSender,socketIdSender,heroChef,heroChefSocket); 
+    socket.on('joinPartyRequest', ({idParty,idSlot,heroChef,socketHeroChef,heroJoiner,socketHeroJoiner})=>{        
+        new Flash(heroJoiner.name+" souhaite rejoindre votre table ! <br> Vous devriez accepter.", "happy");          
+        new Invitation(socket,heroChef,socketHeroChef,heroJoiner,socketHeroJoiner,idParty,idSlot); 
+    });
+
+    
+    //reception du refus d'invitation d'un utilisateur
+    socket.on('invitation_refused', (heroChef)=>{        
+        new Flash(heroChef.name+" ne souhaite pas trinquer avec vous .... ", "surprised");
+        $("#tableTaverne").hide(500);
+    });
+   
+    //reception de l'acceptation d'invitation d'un utilisateur
+    socket.on('invitation_accepted', ({socketIdInvited,heroChef})=>{        
+        new Flash(heroChef.name+" à accepté de trinquer avec vous ! ", "happy");
+        // addPlayerToTable(socketIdInvited,heroInvited);
     });
 
     //reception du refus d'invitation d'un utilisateur
-    socket.on('invitation_refused', (heroInvited)=>{        
-        new Flash(heroInvited.name+" ne souhaite pas vous rejoindre .... ", "surprised");
+    socket.on('chef_table_exited', (idParty)=>{        
+        new Flash("Le chef de table a quitté precipitamment la taverne .... ", "surprised");
+        $("#tableTaverne").hide(500);
     });
 
-    //reception de l'acceptation d'invitation d'un utilisateur
-    socket.on('invitation_accepted', ({socketIdInvited,heroInvited})=>{        
-        new Flash(heroInvited.name+" à accepté de boire a votre table ! ", "happy");
-        addPlayerToTable(socketIdInvited,heroInvited);
-    });
-
+     /*********** A REVOIR !!!!!! */
     //ajouter a ma table l'utilisateur qui m'a invité
     socket.on('join_table', ({socketIdSender,heroSender})=>{        
         new Flash("Vous rejoignez la table de "+heroSender.name, "normal");
