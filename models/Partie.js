@@ -11,6 +11,10 @@ module.exports = class Partie{
         this.hero_2_id  = hero_2_id;
         this.hero_3_id  = hero_3_id;
         this.hero_4_id  = hero_4_id;
+        this.hero_1     = null;
+        this.hero_2     = null;
+        this.hero_3     = null;
+        this.hero_4     = null;
     }
 
     setId(id){
@@ -55,5 +59,21 @@ module.exports = class Partie{
 
     setHero_4_id(hero_4){
         this.hero_4_id = hero_4; 
+    }
+
+    setHero_1(hero){
+        this.hero_1 = hero;
+    }
+
+    setHero_2(hero){
+        this.hero_2 = hero;
+    }
+
+    setHero_3(hero){
+        this.hero_3 = hero;
+    }
+
+    setHero_4(hero){
+        this.hero_4 = hero;
     }
 }

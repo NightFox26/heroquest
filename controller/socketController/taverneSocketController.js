@@ -43,7 +43,7 @@ function getTaverneSocketController(io,usersInTaverne,req){
         socket.on('getParty', ({partyId,socketHeroChef}) => { 
             let hero =  usersInTaverne.get(socket.id).hero;
             partieMng.getPartieById(partyId,(party)=>{
-                console.log("J'envoie les infos de la table id "+partyId+" a "+hero.name);               
+                //console.log("J'envoie les infos de la table id "+partyId+" a "+hero.name);               
                 socket.emit('infosParty',{party,socketHeroChef});
             })
         });

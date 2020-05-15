@@ -59,13 +59,30 @@ $(function(){
     setInterval(function(){
         $.get( "/taverne/getAllWaitingTables", function(tablesWaiting){           
             $(".connectedUser li .tableWaiting").remove();
+            var idTablesWaiting = [];
             tablesWaiting.forEach(table => {
                 $(".connectedUser li[data-idhero='"+table.hero_id+"'] .drink").attr("data-tableId",table.id).slideDown(500,function(){                    
                     playCssAnim({elm:$(this),anim:"bounce"}); 
+                    idTablesWaiting.push(table.id);
                 }) 
             });
+
+            if($('#tableTaverne').is(':visible')){
+                let idTable =$('#tableTaverne .table').attr("data-idtable");                 
+                if(!idTablesWaiting.includes(parseInt(idTable))){
+                    $('#tableTaverne').hide(500);
+                } 
+            }
         } )
     },4000)
+
+    //boucle qui recharge la table pour voir les nouveaux joueurs dessus toutes les 3s si la table est ouverte
+    setInterval(function(){
+        if($('#tableTaverne').is(':visible')){
+            let idTable =$('#tableTaverne .table').attr("data-idtable");            
+            $(".drink[data-tableid='"+idTable+"']").trigger("click");
+        }
+    },3000)
 
     //envois une requete pour voir la table d'un joueur
     $(document).on("click",".drink",function(){ 

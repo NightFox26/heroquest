@@ -12,8 +12,7 @@ function getTaverneController(req,res){
         res.locals.page =  "taverne"; 
         partieMng.getAllPartieByUserId(req.session.hero.id,(parties)=>{  
             if(req.query.idPartie>0){
-                let partie = partieMng.getPartieByIdAndHero(req.query.idPartie,req.session.hero.id,(partie)=>{
-                    console.log(partie)
+                let partie = partieMng.getPartieByIdAndHero(req.query.idPartie,req.session.hero.id,(partie)=>{                    
                     if(partie.id!=null){
                         res.sendFlash("normal","Bravo pour cette nouvelle croisade ! On part quand ? ")
                         res.render('taverne.ejs', {gameMode: configInit.gameMode,partie:partie,parties:parties}); 

@@ -9,6 +9,17 @@ function getHeroById(id,callBack){
         callBack(hydrateHero(hero[0]));    
     });    
 }
+function getMultipleHerosById(hero1_id,hero2_id=null,hero3_id=null,hero4_id=null,callback){
+    let herosId = [hero1_id,hero2_id,hero3_id,hero4_id];
+    connection.query('SELECT * FROM heros WHERE id IN ( ? ) ORDER BY FIELD(id, ? )',[herosId,herosId], function (err, heros) {
+        if (err) throw err;        
+        callback(   hydrateHero(heros[0]),
+                    hydrateHero(heros[1]),
+                    hydrateHero(heros[2]),
+                    hydrateHero(heros[3])
+                );    
+    });
+}
 
 function getHeroByUserId(userId,callBack){    
     connection.query('SELECT * FROM heros WHERE player_id= ?',
@@ -34,5 +45,6 @@ function hydrateHero(cols){
 module.exports = {
     hydrateHero,
     getHeroById,
-    getHeroByUserId
+    getHeroByUserId,
+    getMultipleHerosById
 }

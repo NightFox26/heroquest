@@ -7,8 +7,17 @@ let connection  = servFunc.getBdd();
 
 function getPartieById(id,callBack){    
     connection.query('SELECT * FROM parties WHERE id= ?',[id], function (err, partie) {
-        if (err) throw err;        
-        callBack(hydratePartie(partie[0]));    
+        if (err) throw err; 
+        var party = partie[0];
+        heroMng.getHeroById(party.hero_1_id,(hero1)=>{
+            heroMng.getHeroById(party.hero_2_id,(hero2)=>{
+                heroMng.getHeroById(party.hero_3_id,(hero3)=>{
+                    heroMng.getHeroById(party.hero_4_id,(hero4)=>{
+                        callBack(hydratePartie(party,hero1,hero2,hero3,hero4));
+                    })
+                })
+            })
+        }) 
     });    
 }
 
@@ -84,13 +93,17 @@ function uppdatePartieHeroById(idParty,slot,hero,callback){
 }
 
 
-function hydratePartie(cols){
+function hydratePartie(cols,hero1=null,hero2=null,hero3=null,hero4=null){
     let partie = new Partie();    
     for(attrib in cols){        
         let setter = "set"+attrib.charAt(0).toUpperCase() + attrib.slice(1); 
         // console.log(setter)       
         partie[setter](cols[attrib]);
     }
+    partie.setHero_1(hero1);
+    partie.setHero_2(hero2);
+    partie.setHero_3(hero3);
+    partie.setHero_4(hero4);
     return partie;    
 }
 
