@@ -40,12 +40,13 @@ function getTaverneSocketController(io,usersInTaverne,req){
             io_taverne.emit('message',{hero,msg,dateTime});
         });
 
-        socket.on('getParty', ({partyId,socketHeroChef}) => { 
-            let hero =  usersInTaverne.get(socket.id).hero;
-            partieMng.getPartieById(partyId,(party)=>{
-                //console.log("J'envoie les infos de la table id "+partyId+" a "+hero.name);               
-                socket.emit('infosParty',{party,socketHeroChef});
-            })
+        socket.on('getParty', ({partyId,socketHeroChef}) => {
+            if(socket.id){
+                let hero =  usersInTaverne.get(socket.id).hero;
+                partieMng.getPartieById(partyId,(party)=>{                               
+                    socket.emit('infosParty',{party,socketHeroChef});
+                })
+            }
         });
         
         socket.on('joinParty', ({socketHeroChef,idParty,idSlot}) => { 
@@ -77,9 +78,12 @@ function getTaverneSocketController(io,usersInTaverne,req){
         });
         
         socket.on('invitation_accepted', ({idParty,slot,socketHeroChef,heroChef,socketHeroJoiner,heroJoiner}) => { 
-            partieMng.uppdatePartieHeroById(idParty,slot,heroJoiner,()=>{
-                color.successTxt(heroChef.name +" à accepté que "+heroJoiner.name +" rejoigne sa table !");
-                socket.to(socketHeroJoiner).emit('invitation_accepted', {socketHeroChef,heroChef});      
+            partieMng.stopAllPartiesStatusByUserId(heroJoiner,()=>{
+                partieMng.uppdatePartieHeroById(idParty,slot,heroJoiner,()=>{
+                    color.successTxt(heroChef.name +" à accepté que "+heroJoiner.name +" rejoigne sa table !");
+                    
+                    socket.to(socketHeroJoiner).emit('invitation_accepted', {idParty,heroChef});
+                })
             })
         });
 

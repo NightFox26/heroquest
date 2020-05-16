@@ -53,6 +53,19 @@ function getAllWaitingTablesController(req,res,usersInTaverne){
     }    
 }
 
+function getTableInfoController(req,res){  
+    if(req.session.user != undefined &&  req.session.user != ""){     
+        res.setHeader('Content-Type', 'application/json');
+        let idTable = req.query.id;       
+        partieMng.getPartieById(idTable,(table)=>{
+            res.end(JSON.stringify(table));   
+        }) 
+    }else{
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
+        res.redirect('/login');
+    }    
+}
+
 function getTaverneTyranniqueController(req,res){
     configInit.gameMode = "tyrannique"
     req.sendFlash("surprised","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")
@@ -74,7 +87,8 @@ function postTaverneNewCroisadeController(req,res){
 }
 
 function postTaverneLoadCroisadeController(req,res){
-    res.setHeader('Content-Type', 'text/html');    
+    res.setHeader('Content-Type', 'text/html'); 
+    console.log("id partie = "+req.body.partie_id)   
     let partie_id = req.body.partie_id;
     res.redirect('/taverne?idPartie='+partie_id);    
 }
@@ -86,5 +100,6 @@ module.exports = {
     getTaverneTyranniqueController,
     postTaverneNewCroisadeController,
     postTaverneLoadCroisadeController,
-    getAllWaitingTablesController
+    getAllWaitingTablesController,
+    getTableInfoController
 }

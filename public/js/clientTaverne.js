@@ -57,13 +57,15 @@ $(function(){
 
     //boucle de verification des nouvelles parties qui attendent des joueurs    
     setInterval(function(){
-        $.get( "/taverne/getAllWaitingTables", function(tablesWaiting){           
-            $(".connectedUser li .tableWaiting").remove();
+        $.get( "/taverne/getAllWaitingTables", function(tablesWaiting){ 
+            if($('#tableTaverne').is(':hidden')){          
+                $(".connectedUser li .drink").hide();
+            }
             var idTablesWaiting = [];
             tablesWaiting.forEach(table => {
                 $(".connectedUser li[data-idhero='"+table.hero_id+"'] .drink").attr("data-tableId",table.id).slideDown(500,function(){                    
                     playCssAnim({elm:$(this),anim:"bounce"}); 
-                    idTablesWaiting.push(table.id);
+                    idTablesWaiting.push(table.id);                    
                 }) 
             });
 
@@ -81,6 +83,23 @@ $(function(){
         if($('#tableTaverne').is(':visible')){
             let idTable =$('#tableTaverne .table').attr("data-idtable");            
             $(".drink[data-tableid='"+idTable+"']").trigger("click");
+        }
+    },3000)
+
+    //boucle qui recharge la table coté joueur (a gauche)
+    setInterval(function(){
+        if($('#tableInvited').is(':visible')){
+            let idTable =$('#tableInvited').attr("data-idTable");            
+            $.get( "/taverne/getTableInfo",{id:idTable}, function(table){             
+                updateTablePlayerSide(table);                
+            })
+        }
+
+        if($('#gameConfig').is(':visible')){
+            let idTable =$('#gameConfig').attr("data-idTable");            
+            $.get( "/taverne/getTableInfo",{id:idTable}, function(table){ 
+                updateTableChefSide(table)
+            })
         }
     },3000)
 
@@ -119,24 +138,69 @@ $(function(){
     });
    
     //reception de l'acceptation d'invitation d'un utilisateur
-    socket.on('invitation_accepted', ({socketIdInvited,heroChef})=>{        
-        new Flash(heroChef.name+" à accepté de trinquer avec vous ! ", "happy");
-        // addPlayerToTable(socketIdInvited,heroInvited);
+    socket.on('invitation_accepted', ({idParty,heroChef})=>{        
+        new Flash(heroChef.name+" à accepté de trinquer avec vous ! ", "happy"); 
+        $("#playerSection #gameConfig").remove();     
+        $("#playerSection #tableInvited").show(500).attr("data-idTable",idParty)
     });
 
-    //reception du refus d'invitation d'un utilisateur
+    //le chef de table a quitté la taverne
     socket.on('chef_table_exited', (idParty)=>{        
-        new Flash("Le chef de table a quitté precipitamment la taverne .... ", "surprised");
-        $("#tableTaverne").hide(500);
+        new Flash("Le chef de table a quitté precipitamment la taverne .... ", "surprised");        
     });
+
+   
+    function updateTablePlayerSide(table){
+        if($("#playerSection #tableInvited").attr("data-idTable") == table.id){
+            
+            $("#playerSection #gameConfig").hide(500);     
+            $("#playerSection #tableInvited .hero").html("") ;
+
+            if(table.status == "stopped"){ 
+                $("#playerSection #tableInvited").hide(500);
+                return;
+            }
+            
+            addPlayerInTableLeftSide(table.hero_1,1)
+            addPlayerInTableLeftSide(table.hero_2,2)
+            addPlayerInTableLeftSide(table.hero_3,3)
+            addPlayerInTableLeftSide(table.hero_4,4)
+        }
+    }
+
+    function updateTableChefSide(table){
+        console.log(table)
+        if($("#playerSection #gameConfig").attr("data-idTable") == table.id){
+
+            $("#playerSection #tableInvited").hide(500);
+            $("#playerSection #gameConfig .hero").html('<img src="images/icon/rat.png" class="iconAvatar rat" alt="rat icon" data-typeMonster="Rat">') ;
+                 
+            if(table.status == "stopped"){            
+                $("#playerSection #gameConfig").hide(500);                
+                return;
+            }            
+            
+            addPlayerInChefTableLeftSide(table.hero_2,1)
+            addPlayerInChefTableLeftSide(table.hero_3,2)
+            addPlayerInChefTableLeftSide(table.hero_4,3)
+        }
+    }
+
+    function addPlayerInTableLeftSide(hero,hero_place){
+        if(hero.id > 0){           
+            $("#playerSection #tableInvited #hero_"+hero_place).html(`<img src="/images/icon/${hero.type}.png" alt="icon joueur" class="iconAvatar" data-idperso="${hero.id}"> <span>${hero.name}</span>`);
+        }
+    }
+
+    function addPlayerInChefTableLeftSide(hero,hero_place){
+        if(hero.id > 0){           
+            $("#playerSection #gameConfig #rat_"+hero_place).html(`<div><img src="/images/icon/${hero.type}.png" alt="icon joueur" class="iconAvatar" data-idperso="${hero.id}"> <button class="btn kickUser">Expulser</button></div>`);
+        }
+    }
+
+
 
      /*********** A REVOIR !!!!!! */
-    //ajouter a ma table l'utilisateur qui m'a invité
-    socket.on('join_table', ({socketIdSender,heroSender})=>{        
-        new Flash("Vous rejoignez la table de "+heroSender.name, "normal");
-        addPlayerToTable(socketIdSender,heroSender);
-    });
-
     //Dire au serveur de Kicker un utilisateur de la table
     $(document).on("click",".selectCoequipier .btn-close",function(){        
         let userKickedSocket = $(this).parents(".selectCoequipier").attr("data-idSocket");
@@ -152,25 +216,6 @@ $(function(){
         let heroClass = "hero-"+heroKicker.id;
         removePlayerToTable(heroClass);     
     });
-
-
-    function addPlayerToTable(heroSocket,hero){
-        $(".ratBox").hide(500);
-        let rowPlayer = `<div class="selectCoequipier hero-${hero.id}" data-idSocket="${heroSocket}">
-                        <input type="checkbox"><img src="images/icon/${hero.type}.png" alt="hero icon" class="iconAvatar" data-idPerso='${hero.id}'> <label class="playerName">${hero.name}</label>  
-                        <button type="button" class="btn btn-close"></button> 
-                    </div>`;
-        $("#playersAtMyTable").append(rowPlayer);
-    }
-
-    function removePlayerToTable(userClass){        
-        $(document).find("."+userClass).hide(500,function(){
-            $(this).remove();
-            if($(document).find(".selectCoequipier").length == 0){
-                $(".ratBox").show(500);
-            }
-        });
-    }
 
     /*********************************/
     

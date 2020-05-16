@@ -2,8 +2,7 @@
     .wrapperBody{                
         background-color: $black;
         display: flex;
-        justify-content: space-between; 
-        // align-items: center;        
+        justify-content: space-between;             
         section#playerSection,
         section#allPlayerSection{
             display: inline-block;            
@@ -11,8 +10,7 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
             width: 368px;
-            height: 100%;
-            // height: auto;
+            height: 100%;            
             padding: 25px 25px; 
             border-radius: 25px; 
             .content{
@@ -36,12 +34,22 @@
                     }
 
                     #slotsBox{                       
-                        .ratBox{
+                        #ratBox{
                             display: flex;
                             justify-content: space-around;
                             flex-wrap: wrap;
-                            img{
-                                width: 50px;
+                            li{
+                                width: 80px;
+                                text-align: center;
+                                img{
+                                    &.rat{
+                                        width: 50px;
+                                    }
+                                } 
+                                .kickUser{
+                                    background-color: $grey;
+                                    color : $black;
+                                }                           
                             }
                         }
                     }
@@ -66,6 +74,11 @@
                         margin-bottom: 10px;                        
                     }
                 }
+                #tableInvited{
+                    display: none;
+                }
+
+
                 .iconAvatar,
                 .playerName{
                     color: $red;

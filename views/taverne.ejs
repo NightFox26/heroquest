@@ -20,17 +20,19 @@
                 </div>
     
                 <% if(locals.partie){ %>
-                    <div id="gameConfig">
+                    <div id="gameConfig" data-idTable="<%= locals.partie.id %>">
                         <% if(locals.partie.slots > 1){ %>
                             <hr>
                             <section id="slotsBox">
                                 <div class="niceTitle">Joueurs a ma table : </div>
-                                <div id="playersAtMyTable">                            
-                                    <div class="ratBox">
+                                <div id="playersAtMyTable">            
+                                    <ul id="ratBox">
                                         <% for(let i=1; i < locals.partie.slots; i++){ %>
-                                            <img src="images/icon/rat.png" class="iconAvatar" alt="rat icon" data-typeMonster="Rat">    
+                                            <li id="rat_<%= i %>" class="hero">
+                                                <img src="images/icon/rat.png" class="iconAvatar rat" alt="rat icon" data-typeMonster="Rat">
+                                            </li>    
                                         <% } %>
-                                    </div>                        
+                                    </ul>                                                         
                                 </div>
                             </section>                    
                         <% } %>
@@ -56,6 +58,17 @@
                         </div>                        
                     </div>
                 <% } %>
+
+                <div id="tableInvited" data-idTable="">
+                    <hr>
+                    <h2>Je trinque actuellement avec :</h2>
+                    <ul>
+                        <li id="hero_1" class="hero"></li>
+                        <li id="hero_2" class="hero"></li>
+                        <li id="hero_3" class="hero"></li>
+                        <li id="hero_4" class="hero"></li>
+                    </ul>
+                </div>
             </div>
         </section>
 

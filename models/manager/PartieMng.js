@@ -32,11 +32,11 @@ function getAllPartieByUserId(hero_id,callBack){
     connection.query('SELECT * FROM parties WHERE hero_id= ?',
                     hero_id, function (err, parties) {
         if (err) throw err;
-        let allParties = []
-        for( let partie of parties){
-            allParties.push(hydratePartie(partie));
+        let allParty = []
+        for( let party of parties){            
+            allParty.push(hydratePartie(party));
         }     
-        callBack(allParties);
+        callBack(allParty);
     });    
 }
 
@@ -69,9 +69,14 @@ function stopAllPartiesStatusByUserId(hero,callback){
     connection.query('UPDATE parties SET status = "stopped", hero_2_id=0, hero_3_id=0, hero_4_id=0 WHERE hero_id = ?',
     hero.id, function (err,result) {
         if (err) throw err; 
+        connection.query('UPDATE parties SET hero_2_id=0 WHERE hero_2_id = ?', hero.id);
+        connection.query('UPDATE parties SET hero_3_id=0 WHERE hero_3_id = ?', hero.id);
+        connection.query('UPDATE parties SET hero_4_id=0 WHERE hero_4_id = ?', hero.id);
         console.log("les partie sont toute stoppé pour "+hero.name+" !");
         callback()
-    });    
+    }); 
+    
+    
 }
 
 function uppdatePartieStatusById(partie,newStatus,callback){      

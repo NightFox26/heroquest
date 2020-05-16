@@ -73,6 +73,11 @@ app.get('/', function(req, res) {
     ctrl.getAllWaitingTablesController(req,res,usersInTaverne); 
 })
 
+.get('/taverne/getTableInfo', function(req,res) {
+    const ctrl = require('./controller/taverneController');
+    ctrl.getTableInfoController(req,res); 
+})
+
 .get('/taverne/tyrannique', function(req, res) {
     const ctrl = require('./controller/taverneController');
     ctrl.getTaverneTyranniqueController(req,res); 
