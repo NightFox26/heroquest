@@ -41,7 +41,7 @@ function getTaverneSocketController(io,usersInTaverne,req){
         });
 
         socket.on('getParty', ({partyId,socketHeroChef}) => {
-            if(socket.id){
+            if(usersInTaverne){
                 let hero =  usersInTaverne.get(socket.id).hero;
                 partieMng.getPartieById(partyId,(party)=>{                               
                     socket.emit('infosParty',{party,socketHeroChef});
@@ -86,17 +86,17 @@ function getTaverneSocketController(io,usersInTaverne,req){
                 })
             })
         });
-
-        /*
-        socket.on('kick_table', (userKickedSocket) => { 
+        
+        socket.on('kick_table', ({idParty,userKickedSocket,userKickedSlot}) => { 
             let heroKicker =  usersInTaverne.get(socket.id).hero;        
-            let heroKicked =  usersInTaverne.get(userKickedSocket).hero;        
-            color.warningTxt(heroKicked.name +" à été kické de la table par "+heroKicker.name);
-            socket.to(userKickedSocket).emit('kick_table',heroKicker);
+            let heroKicked =  usersInTaverne.get(userKickedSocket).hero; 
+            
+            partieMng.removeartieHeroById(idParty,userKickedSlot,()=>{
+                color.warningTxt(heroKicked.name +" à été kické de la table par "+heroKicker.name);
+                socket.to(userKickedSocket).emit('kick_table',heroKicker);
+            })
         });
-        */
-
-
+        
 
         socket.on('disconnect', (reason) => {
             if(usersInTaverne.get(socket.id)){

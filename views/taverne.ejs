@@ -28,7 +28,7 @@
                                 <div id="playersAtMyTable">            
                                     <ul id="ratBox">
                                         <% for(let i=1; i < locals.partie.slots; i++){ %>
-                                            <li id="rat_<%= i %>" class="hero">
+                                            <li id="rat_<%= i + 1 %>" class="hero">
                                                 <img src="images/icon/rat.png" class="iconAvatar rat" alt="rat icon" data-typeMonster="Rat">
                                             </li>    
                                         <% } %>

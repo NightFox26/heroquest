@@ -1,6 +1,5 @@
 const Partie     = require("../Partie");
 const servFunc   = require("../../modules/functionServer");
-
 const heroMng = require("./HeroMng")
 
 let connection  = servFunc.getBdd();
@@ -97,6 +96,14 @@ function uppdatePartieHeroById(idParty,slot,hero,callback){
     });    
 }
 
+function removeartieHeroById(idParty,slot,callback){      
+    connection.query('UPDATE parties SET hero_'+slot+'_id = 0 WHERE id = ?',
+    [idParty], function (err,result) {
+        if (err) throw err;         
+        callback()
+    });    
+}
+
 
 function hydratePartie(cols,hero1=null,hero2=null,hero3=null,hero4=null){
     let partie = new Partie();    
@@ -121,5 +128,6 @@ module.exports = {
     stopAllPartiesStatusByUserId,
     uppdatePartieStatusById,
     getPartieByIdAndHero,
-    uppdatePartieHeroById
+    uppdatePartieHeroById,
+    removeartieHeroById
 }

@@ -149,6 +149,21 @@ $(function(){
         new Flash("Le chef de table a quitté precipitamment la taverne .... ", "surprised");        
     });
 
+    //Dire au serveur de Kicker un utilisateur de la table
+    $(document).on("click",".kickUser",function(){        
+        let idParty          = $(this).parents("#gameConfig").attr("data-idtable");
+        let userKickedSocket = $(this).parents(".hero").find(".iconAvatar").attr("data-socketId");
+        let userKickedSlot   = $(this).parents(".hero").find(".iconAvatar").attr("data-slot");
+        new Flash("Moi je l'aimé bien ce joueur... ", "sad");
+        socket.emit("kick_table",({idParty,userKickedSocket,userKickedSlot}));
+    })
+
+    //On se fait kicker de la table
+    socket.on('kick_table', (heroKicker)=>{        
+        new Flash("Vous avez été kické de la table par "+heroKicker.name, "surprised"); 
+        $("#playerSection #tableInvited").hide(500);
+    });
+    
    
     function updateTablePlayerSide(table){
         if($("#playerSection #tableInvited").attr("data-idTable") == table.id){
@@ -180,9 +195,9 @@ $(function(){
                 return;
             }            
             
-            addPlayerInChefTableLeftSide(table.hero_2,1)
-            addPlayerInChefTableLeftSide(table.hero_3,2)
-            addPlayerInChefTableLeftSide(table.hero_4,3)
+            addPlayerInChefTableLeftSide(table.hero_2,2)
+            addPlayerInChefTableLeftSide(table.hero_3,3)
+            addPlayerInChefTableLeftSide(table.hero_4,4)
         }
     }
 
@@ -193,31 +208,14 @@ $(function(){
     }
 
     function addPlayerInChefTableLeftSide(hero,hero_place){
-        if(hero.id > 0){           
-            $("#playerSection #gameConfig #rat_"+hero_place).html(`<div><img src="/images/icon/${hero.type}.png" alt="icon joueur" class="iconAvatar" data-idperso="${hero.id}"> <button class="btn kickUser">Expulser</button></div>`);
+        if(hero.id > 0){   
+            let socketId = $(".connectedUser li[data-idhero='"+hero.id+"']").attr("data-socketid");  
+
+            $("#playerSection #gameConfig #rat_"+hero_place).html(`<div><img src="/images/icon/${hero.type}.png" alt="icon joueur" class="iconAvatar" data-socketId="${socketId}" data-slot="${hero_place}" data-idperso="${hero.id}"> <button class="btn kickUser">Expulser</button></div>`);
         }
     }
 
-
-
-     /*********** A REVOIR !!!!!! */
-    //Dire au serveur de Kicker un utilisateur de la table
-    $(document).on("click",".selectCoequipier .btn-close",function(){        
-        let userKickedSocket = $(this).parents(".selectCoequipier").attr("data-idSocket");
-        let userClass = $(this).parents(".selectCoequipier").removeClass("selectCoequipier").attr("class");
-        new Flash("Moi je l'aimé bien ce joueur... ", "sad"); 
-        removePlayerToTable(userClass);     
-        socket.emit("kick_table",userKickedSocket);
-    })
-
-    //On se fait kicker de la table
-    socket.on('kick_table', (heroKicker)=>{        
-        new Flash("Vous avez été kické de la table par "+heroKicker.name, "surprised"); 
-        let heroClass = "hero-"+heroKicker.id;
-        removePlayerToTable(heroClass);     
-    });
-
-    /*********************************/
+    
     
     
 });
