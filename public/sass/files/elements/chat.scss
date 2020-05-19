@@ -12,7 +12,10 @@
                 margin-bottom: 10px;  
                 background-color: rgba($color: #FFF, $alpha: 0.3);  
                 border-radius: 5px; 
-                padding: 2px 5px; 
+                padding: 2px 5px;
+                &.tableMsg{
+                    background-color: rgba($green,0.5);
+                } 
                 img{
                     vertical-align: middle;
                 }      

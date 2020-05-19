@@ -53,6 +53,8 @@
                             }
                         }
                     }
+
+                    
                     
                     #questBox{                        
                         .niceTitle{
@@ -76,6 +78,18 @@
                 }
                 #tableInvited{
                     display: none;
+                }
+
+                .tableChat{
+                    form{
+                        display: flex;
+                        flex-direction: row;
+                        input{
+                            margin-right: 10px;
+                            padding-left: 15px;
+                            width: 100%;
+                        }
+                    }
                 }
 
 

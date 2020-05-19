@@ -32,7 +32,7 @@ function getTaverneController(req,res){
     }
 }
 
-function getTaverneClassiqueController(req,res){
+function getTaverneClassiqueController(req,res){    
     configInit.gameMode = "classique"    
     var opt = {gameMode: configInit.gameMode}    
     req.sendFlash("normal","Le mode de jeu est reglé sur '"+configInit.gameMode+"'")    
@@ -75,22 +75,32 @@ function getTaverneTyranniqueController(req,res){
 }
 
 function postTaverneNewCroisadeController(req,res){
-    res.setHeader('Content-Type', 'text/html');
-    let mode = req.body.game_mode;
-    let name = req.body.game_name;
-    let slots = req.body.game_slots;
-    let hero = req.session.hero;
-    let hero_name = req.session.hero.name;
-    partieMng.insertPartieByUserId(name,hero,slots,mode,(partie)=>{
-        res.redirect('/taverne?idPartie='+partie.id); 
-    })
+    if(req.session.user != undefined &&  req.session.user != ""){
+        res.setHeader('Content-Type', 'text/html');
+        let mode = req.body.game_mode;
+        let name = req.body.game_name;
+        let slots = req.body.game_slots;
+        let hero = req.session.hero;
+        let hero_name = req.session.hero.name;
+        partieMng.insertPartieByUserId(name,hero,slots,mode,(partie)=>{
+            res.redirect('/taverne?idPartie='+partie.id); 
+        })
+    }else{
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
+        res.redirect('/login');
+    } 
 }
 
 function postTaverneLoadCroisadeController(req,res){
-    res.setHeader('Content-Type', 'text/html'); 
-    console.log("id partie = "+req.body.partie_id)   
-    let partie_id = req.body.partie_id;
-    res.redirect('/taverne?idPartie='+partie_id);    
+    if(req.session.user != undefined &&  req.session.user != ""){
+        res.setHeader('Content-Type', 'text/html'); 
+        console.log("id partie = "+req.body.partie_id)   
+        let partie_id = req.body.partie_id;
+        res.redirect('/taverne?idPartie='+partie_id);
+    }else{
+        req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")
+        res.redirect('/login');
+    }    
 }
 
 

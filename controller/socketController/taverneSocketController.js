@@ -33,15 +33,19 @@ function getTaverneSocketController(io,usersInTaverne,req){
             });
         })  
         
-        socket.on('message', (msg) => { 
+        socket.on('message', ({msg,canal="general"}) => { 
             let hero =  usersInTaverne.get(socket.id).hero;
             let dateTime = moment().format('DD/MM -- H:mm');
-            console.log( dateTime+" --- "+hero.name+ " dit = "+msg)                  
-            io_taverne.emit('message',{hero,msg,dateTime});
+            console.log( dateTime+" --- "+hero.name+ " dit = "+msg) 
+            if(canal == "general"){
+                io_taverne.emit('message',{hero,msg,dateTime,canal});
+            }else{                
+                io_taverne.to("party_"+canal).emit('message',{hero,msg,dateTime,canal})
+            }               
         });
 
         socket.on('getParty', ({partyId,socketHeroChef}) => {
-            if(usersInTaverne){
+            if(socket.id){
                 let hero =  usersInTaverne.get(socket.id).hero;
                 partieMng.getPartieById(partyId,(party)=>{                               
                     socket.emit('infosParty',{party,socketHeroChef});
@@ -81,7 +85,10 @@ function getTaverneSocketController(io,usersInTaverne,req){
             partieMng.stopAllPartiesStatusByUserId(heroJoiner,()=>{
                 partieMng.uppdatePartieHeroById(idParty,slot,heroJoiner,()=>{
                     color.successTxt(heroChef.name +" à accepté que "+heroJoiner.name +" rejoigne sa table !");
-                    
+
+                    socket.join("party_"+idParty);
+                    io_taverne.connected[socketHeroJoiner].join("party_"+idParty);
+                                        
                     socket.to(socketHeroJoiner).emit('invitation_accepted', {idParty,heroChef});
                 })
             })
@@ -93,6 +100,8 @@ function getTaverneSocketController(io,usersInTaverne,req){
             
             partieMng.removeartieHeroById(idParty,userKickedSlot,()=>{
                 color.warningTxt(heroKicked.name +" à été kické de la table par "+heroKicker.name);
+                
+                io_taverne.connected[userKickedSocket].leave("party_"+idParty);
                 socket.to(userKickedSocket).emit('kick_table',heroKicker);
             })
         });

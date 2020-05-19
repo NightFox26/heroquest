@@ -36,17 +36,32 @@ $(function(){
         new Flash(heroName+" à quitté la taverne !", "sad"); 
     })
 
-    //envois de message chat vers le serveur
+    //envois de message chat sur le canal "general" vers le serveur
     $("#chatBox form").submit(function(e){
         e.preventDefault();
         let msg = $(this).find("input[name='message']").val();
         $(this).find("input[name='message']").val("").focus();
-        socket.emit('message', msg);
+        socket.emit('message', ({msg}));
+    })
+
+    //envois de message chat sur le canal "table" vers le serveur
+    $(".tableChat form").submit(function(e){
+        e.preventDefault();
+        let msg = $(this).find("input[name='tableMsg']").val();
+        let canal = $(this).attr("data-canal");
+        $(this).find("input[name='tableMsg']").val("").focus();
+        socket.emit('message', ({msg,canal}));
     })
 
     //reception de message chat depuis le serveur
-    socket.on('message', (msg)=>{        
-        $("#chatBox .chatBody ul").append(`<li><div><small>${msg.dateTime}</small></div><img src='images/icon/${msg.hero.type}BL.png' alt="icon hero"/> <span>${msg.hero.name} :</span>${msg.msg}</li>`);
+    socket.on('message', (msg)=>{ 
+        let typeMsg = "general";
+        let titleMsg = "Toute la Taverne";
+        if(msg.canal !== "general"){
+            typeMsg="tableMsg";
+            titleMsg = "chuchote pour la table";
+        }      
+        $("#chatBox .chatBody ul").append(`<li class="${typeMsg}"><div><small>${msg.dateTime}--${titleMsg}</small></div><img src='images/icon/${msg.hero.type}BL.png' alt="icon hero"/> <span>${msg.hero.name} :</span>${msg.msg}</li>`);
         $("#chatBox .chatBody").animate({ scrollTop: $('#chatBox .chatBody ul').height()}, 1000);
 
         let counterMsg = Number($("#chatBtn span").text());
@@ -142,6 +157,7 @@ $(function(){
         new Flash(heroChef.name+" à accepté de trinquer avec vous ! ", "happy"); 
         $("#playerSection #gameConfig").remove();     
         $("#playerSection #tableInvited").show(500).attr("data-idTable",idParty)
+        $("#playerSection #tableInvited .tableChat form").attr("data-canal",idParty)
     });
 
     //le chef de table a quitté la taverne

@@ -34,7 +34,14 @@
                                         <% } %>
                                     </ul>                                                         
                                 </div>
-                            </section>                    
+                            </section> 
+
+                            <aside class="tableChat">
+                                <form action="" method="POST" data-canal="<%= partie.id %>">
+                                    <input type="text" name="tableMsg" placeholder="discuter avec ma table...">
+                                    <button class="btn" type="submit">Dire</button>
+                                </form>
+                            </aside>                   
                         <% } %>
                         <hr>
                         <section id="questBox">
@@ -68,6 +75,14 @@
                         <li id="hero_3" class="hero"></li>
                         <li id="hero_4" class="hero"></li>
                     </ul>
+
+                    <aside class="tableChat">
+                        <form action="" method="POST" data-canal="">
+                            <input type="text" name="tableMsg" placeholder="discuter avec ma table...">
+                            <button class="btn" type="submit">Dire</button>
+                        </form>
+                    </aside>
+                    <hr>
                 </div>
             </div>
         </section>
