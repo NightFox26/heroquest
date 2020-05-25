@@ -1,7 +1,7 @@
 <aside id="chatBox" class="windowModalDraggable">
     <div class="header">
         <h2>HeroQuest Chat 
-            <button class="btn btn-close" onclick="closeChat()"></button>
+            <button class="btn btn-close" onclick="closeDrag(this)"></button>
         </h2>
     </div>
 
@@ -9,7 +9,7 @@
         <ul></ul>
     </div>
     
-    <div class="chatForm boxShadow">
+    <div class="chatForm footer">
         <form action="" method="POST">
             <input type="text" name="canalChat" value="general" hidden>
             <input type="text" name="message" placeholder="Parler dans la taverne...">

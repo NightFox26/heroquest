@@ -1,0 +1,94 @@
+
+.btn{
+    display: inline-block;    
+    padding: 2px 5px;
+    background-color: $red;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 0px rgb(94, 75, 75);
+    margin-right: 5px;
+    @extend .textBorderRed;
+    img{        
+        vertical-align: middle;        
+    }
+}
+
+.btn-invalid{
+    @extend .btn;
+    background-color: $orange;
+}
+
+.btn-icon{
+    vertical-align: middle; 
+    background-color:white;
+    padding: 3px 5px;
+    &:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        background: url("../images/icon/no.png") no-repeat;
+        background-size: contain;
+        width: 20px;
+        height: 20px;     
+        margin-right: 5px;                       
+    }
+}
+
+.btn-delete{  
+    @extend .btn-icon;
+    background-color:$grey;
+    &:before {        
+        background: url("../images/icon/no.png") no-repeat;
+        background-size: contain;
+    }
+}
+
+.btn-answer{      
+    @extend .btn-icon;
+    background-color:$green;
+    &:before {        
+        background: url("../images/icon/scroll.png") no-repeat;
+        background-size: contain;
+    }
+}
+
+.btn-close{
+    position: absolute;
+    top: 21px;
+    right: 15px;
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/exit.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
+    }
+}
+
+.btn-yes{    
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/yes.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
+    }
+}
+
+.btn-no{    
+    line-height: 30px;
+    &:before {
+        content: "";
+        display: block;
+        background: url("../images/icon/no.png") no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;                            
+    }
+}
+

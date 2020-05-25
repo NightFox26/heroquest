@@ -1,11 +1,64 @@
 const socketGlobal = io();
 
 $(function(){
+    const heroId = $("#userId").text();
 
     //affiche le nombre total d'utilisateur connecté au jeu
     socketGlobal.on("nbUserLogged",(nb)=>{       
         $("footer .usersLogged span.nb").text(" : "+nb);
     })
+
+
+    /****************************/
+    /********* LETTERS **********/
+    /****************************/
+    //telecharge les lettres de l'utilisateur
+    socketGlobal.emit("getAllLetters",heroId)
+    socketGlobal.on("allLetters",(letters)=>{ 
+        if(letters.id){
+            new Letter(letters);
+        }
+    })
+    socketGlobal.on("countLetterNotRead",(nb)=>{        
+        if(nb>0){
+            new Flash("Vous avez des lettres non lu dans votre boite de reception.", "happy");
+            $("#btnLetterBox .counter").text("( "+nb+" )")
+            playCssAnim({elm:'#btnLetterBox',anim:"bounce"});
+        }else{
+            $("#btnLetterBox .counter").text("")
+        }
+    })
+
+    //Click sur une lettre
+    $("#letterBox").on("click",".letter",function(){
+        let idLetter = $(this).attr("data-letterId"); 
+        $(this).parent().find(".notRead").text("");     
+        socketGlobal.emit("readLetter",({idLetter,heroId}));
+    })
+
+    socketGlobal.on("readLetter",(letter)=>{        
+        let mail = new Letter(letter,true);
+        mail.hydrate();
+        $("#letter").show(500);
+
+    });
+
+    //Click sur supprimer lettre
+    $("#letter .btn-delete").click(function(){
+        let idLetter = $(this).parents("#letter").attr("data-idLetter");       
+        socketGlobal.emit("deleteLetter",idLetter)
+    })
+
+    socketGlobal.on("deleteLetter",(idLetter)=>{
+        $("#letter").hide(200);
+        $("#letterBox ul .rowLetter").remove();
+        $("#letterBox ul hr").not(':first').remove();
+        $("#letterBox ul .noLetters").show();
+        new Flash("Ce parchemin a bien était supprimé.", "normal");
+        socketGlobal.emit("getAllLetters",heroId)
+    })
+    /****************************************/
+
 
     //remplie la fiche des persos
     $(document).on('click','.iconAvatar',function(){

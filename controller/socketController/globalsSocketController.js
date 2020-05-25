@@ -4,14 +4,44 @@ const servFunc      = require("../../modules/functionServer");
 
 const heroMng       = require("../../models/manager/HeroMng");
 var Monster         = require("../../models/Monster");
-const partieMng = require("../../models/manager/PartieMng");
+const partieMng     = require("../../models/manager/PartieMng");
+const letterMng     = require("../../models/manager/LetterMng");
 
 function getGlobalSocketController(io){    
-    io.on('connection', (socket) => {
+    io.on('connection', (socket) => {        
 
+        //fiche perso
         socket.on("getPersoFiche",({typeMonster=undefined,idPerso=undefined})=>{
             envoiFichePerso(typeMonster,idPerso,socket)
         });
+
+        //systeme de lettres
+        socket.on("getAllLetters",(idHero)=>{
+            letterMng.countNotRead(idHero,(nb)=>{                
+                socket.emit("countLetterNotRead",nb)
+            })
+
+            letterMng.getAllLetterByHero(idHero,(letters)=>{
+                socket.emit("allLetters",letters)
+            })
+        })
+
+        socket.on("readLetter",({idLetter,heroId})=>{            
+            letterMng.setReadedLetter(idLetter,(letter)=>{                
+                letterMng.countNotRead(heroId,(nb)=>{                
+                    socket.emit("countLetterNotRead",nb)
+                })  
+                letterMng.getLetterById(idLetter,(letter)=>{
+                    socket.emit("readLetter",letter)
+                })             
+            })
+        })
+
+        socket.on("deleteLetter",(idLetter)=>{
+            letterMng.deleteLetterById(idLetter,()=>{
+                socket.emit("deleteLetter",idLetter);
+            })
+        })
 
         
     })

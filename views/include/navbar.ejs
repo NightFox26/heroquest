@@ -3,20 +3,20 @@
 </button>
 <nav>
     <% if (locals.user){ %>
-        <button>
-            <img src="/images/icon/profil.png" alt="icon armurerie"> <%= locals.user.name %>
+        <button class="btn">
+            <img src="/images/icon/profil.png" alt="icon user"> <%= locals.user.name %>
         </button>
         
-        <button>
-            <img src="/images/icon/status.png" alt="icon armurerie"> <%= locals.hero.name %>
+        <button class="btn">
+            <img src="/images/icon/status.png" alt="icon status"> <%= locals.hero.name %>
         </button>
 
-        <button>
-            <img src="/images/icon/letter.png" alt="icon armurerie"> Lettres
+        <button class="btn" id="btnLetterBox" onclick="toggleLetterBox()">
+            <img src="/images/icon/letter.png" alt="icon lettre"> Lettres <span class="counter"></span>
         </button>
 
-        <button>
-            <img src="/images/icon/trophy.png" alt="icon armurerie"> Trophés
+        <button class="btn">
+            <img src="/images/icon/trophy.png" alt="icon trophé"> Trophés
         </button>
     <% } %>
 

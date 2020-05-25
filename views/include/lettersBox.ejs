@@ -1,0 +1,50 @@
+<aside id="letterBox" class="windowModalDraggable">
+
+    <div class="header">
+        <h2>Parchemins reçu
+            <button class="btn btn-close" onclick="closeDrag(this)"></button>
+        </h2>
+    </div>
+    
+    <ul>
+        <hr>
+        <li class="noLetters">Aucun courier pour le moment</li>
+    </ul>
+</aside>
+
+<aside id="letter" class="windowModalDraggable" data-idLetter="">
+    <div class="header">
+        <h2>Parchemin
+            <button class="btn btn-close" onclick="closeDrag(this)"></button>
+        </h2>
+    </div>
+
+    <div class="content">
+        <h3></h3>
+        <p></p>        
+    </div>
+
+    <div class="footer">
+        <button class="btn-answer">repondre</button>
+        <button class="btn-delete">Supprimer</button>
+    </div>
+</aside>
+
+<aside id="sendLetter" class="windowModalDraggable" data-idUser="">
+    <div class="header">
+        <h2>Envoyer un Parchemin
+            <button class="btn btn-close" onclick="closeDrag(this)"></button>
+        </h2>
+    </div>
+
+    <form action="">
+        <div class="content">
+            <h3>Destinataire : <img src="/images/icon/elf.png" alt="destinataire icon" class="iconAvatar" data-idperso="2"></h3>
+            <textarea name="parchemin" id="" cols="30" rows="10"></textarea>     
+        </div>
+
+        <div class="footer">
+            <button type="submit" class="btn-answer">Envoyer</button>
+        </div>
+    </form>
+</aside>

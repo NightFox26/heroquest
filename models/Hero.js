@@ -49,6 +49,16 @@ class Magicien{
     }    
 }
 
+class IA{   
+    constructor(){
+        this.hp = 125;
+        this.mp = 65;
+        this.atkDice = 3;
+        this.defDice = 3;
+        this.moveDice = 2;
+    }    
+}
+
 module.exports = class Hero extends PersAction {    
     constructor(id= null,name = null,type = null,desc = null,player_id = null){
         super();

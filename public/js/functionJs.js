@@ -53,6 +53,10 @@ function closeModal(){
     });    
 }
 
+function closeDrag(btn){
+    $(btn).parents(".windowModalDraggable").fadeOut(500)
+}
+
 function toggle_headerFooter(){
     $("nav, footer").fadeToggle(500);
 }
@@ -62,12 +66,9 @@ function toggle_Chat(){
     $("#chatBox input[name='message']").focus();
 }
 
-function closeChat(){
-    $("#chatBox").fadeOut(500);
-}
-
-function closeTable(){
-    $("#tableTaverne").fadeOut(500);
+function toggleLetterBox(){
+    $("#letterBox").fadeToggle(500);
+    $("#letter").hide(500);
 }
 
 function toggle_NewGame(){
@@ -99,6 +100,3 @@ function open_FichePerso(){
     });
 }
 
-function closeFichePerso(time = 500){
-    $("#fichePerso").fadeOut(time);
-}

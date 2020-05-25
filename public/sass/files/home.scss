@@ -5,11 +5,12 @@
         padding-top: 130px;       
         padding-bottom: 10px; 
         text-align: center;
+        padding-bottom: 100px;
         .homeLink{
             display: inline-block;
             margin: 0 50px;
             opacity: 0.8;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease;            
             &:hover{
                 opacity: 1;
             }

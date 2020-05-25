@@ -1,0 +1,103 @@
+#letterBox {
+    display: none;
+    position: fixed;
+    width: 450px;
+    top: 30%;
+    left: 15%;
+    z-index: 11;
+
+    ul {
+        hr {
+            clear: both;
+        }
+
+        li {
+            margin-bottom: 6px;
+
+            button {
+                background-color: transparent;
+                width: 350px;
+                text-align: left;
+
+                &:hover {
+                    color: $red;
+                }
+
+                .title {
+                    padding-left: 10px;
+                    font-size: 16px;
+                    font-family: "Heroquest";
+                }
+            }
+
+            .sender {
+                width: 45px;
+                margin-right: 10px;
+            }
+
+            .date {
+                clear: both;
+                color: $red;
+                margin-bottom: 10px;
+            }
+
+            .notRead {
+                margin-left: 5px;
+                color: $green;
+                font-size: 12px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+                text-shadow: 1PX 1PX 1PX black;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+#letter {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 55%;
+    z-index: 11;
+
+    .content {
+        h3 {
+            margin-top: 5px;
+        }
+
+        padding: 10px;
+        padding-bottom: 20px;
+    }
+
+    .footer {
+        text-align: center;
+    }
+}
+
+#sendLetter {
+    // display: none;
+    position: fixed;
+    width: 450px;
+    top: 30%;
+    left: 50%;
+    z-index: 11;
+    h3{
+        .iconAvatar{
+            vertical-align: middle;
+        }
+    }
+    form {
+        .content {
+            padding: 10px;
+            textarea {
+                width: 100%;
+            }
+        }
+        .footer{
+            text-align: right;
+        }
+    }
+
+
+}
