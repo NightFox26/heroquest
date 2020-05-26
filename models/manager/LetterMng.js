@@ -24,7 +24,7 @@ function countNotRead(idHero,callBack){
 }
 
 function getAllLetterByHero(idHero,callBack){    
-    connection.query('SELECT * FROM letters WHERE for_hero_id= ?',[idHero], function (err, letters) {
+    connection.query('SELECT * FROM letters WHERE for_hero_id= ? ORDER BY id DESC',[idHero], function (err, letters) {
         if (err) throw err; 
         var allLetters = [];
         if(letters.length > 0){
@@ -44,6 +44,12 @@ function setReadedLetter(idLetter,cb){
     connection.query('UPDATE letters SET readed = 1 WHERE id= ?',[idLetter], function (err, letter) {
         if (err) throw err;
         cb(letter)
+    })
+}
+
+function addLetter(from_heroId,for_heroId,letter){
+    connection.query('INSERT INTO letters (`title`, `content`, `date`, `for_hero_id`, `from_hero_id`) VALUES ( ?,?,NOW(),?,? )',[letter.title,letter.content,for_heroId,from_heroId], function (err, letter) {
+        if (err) throw err;        
     })
 }
 
@@ -74,6 +80,6 @@ module.exports = {
     getAllLetterByHero,
     countNotRead,
     setReadedLetter,
-    deleteLetterById    
-
+    deleteLetterById,    
+    addLetter
 }

@@ -12,7 +12,7 @@ $(function(){
     socket.on('tavernLoggedUsers', (users) => {        
         $("#allPlayerSection .connectedUser").html("");        
         for(let user of (new Map(users))){ 
-            $("#allPlayerSection .connectedUser").append('<li data-idUser="'+user[1].player.id+'" data-idHero="'+user[1].hero.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar" data-idPerso="'+user[1].hero.id+'"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink" data-tableId=""><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
+            $("#allPlayerSection .connectedUser").append('<li class="hero" data-idUser="'+user[1].player.id+'" data-idHero="'+user[1].hero.id+'" data-socketId="'+user[0]+'"><img src="images/icon/'+user[1].hero.type+'.png" alt="'+user[1].hero.type+' icon" class="iconAvatar" data-idPerso="'+user[1].hero.id+'"><span class="playerName"> '+user[1].hero.name+'</span><div class="playersAction"><button class="btn letter btn-writteLetter"></button><button class="btn drink" data-tableId=""><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
             $("#allPlayerSection .notConnectedUser li[data-idUser='"+user[1].player.id+"']").remove()
         }
         $("#allPlayerSection .connectedUser li[data-idUser='"+myId+"'] .playersAction").remove()
@@ -22,7 +22,7 @@ $(function(){
     socket.on('tavernNotLoggedUsers', (users) => {        
         $("#allPlayerSection .notConnectedUser").html("");        
         for(let user of users){                            
-            $("#allPlayerSection .notConnectedUser").append('<li data-idUser="'+user.player.id+'"><img src="images/icon/'+user.hero.type+'Bl.png" alt="'+user.hero.type+' icon" class="iconAvatar" data-idPerso="'+user.hero.id+'"><span class="playerName"> '+user.hero.name+'</span><div class="playersAction"><button class="btn letter"><img src="images/icon/letter.png" alt="icone lettre"></button><button class="btn drink"><img src="images/icon/cup.png" alt="icone coupe"></button></div></li>');
+            $("#allPlayerSection .notConnectedUser").append('<li class="hero" data-idUser="'+user.player.id+'"><img src="images/icon/'+user.hero.type+'Bl.png" alt="'+user.hero.type+' icon" class="iconAvatar" data-idPerso="'+user.hero.id+'"><span class="playerName"> '+user.hero.name+'</span><div class="playersAction"><button class="btn letter btn-writteLetter"></button></div></li>');
         }
     });
 

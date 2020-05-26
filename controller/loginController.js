@@ -24,8 +24,7 @@ function postLoginController(req,res,userLogged){
                 req.session.hero = hero;   
                 partieMng.stopAllPartiesStatusByUserId(req.session.hero,()=>{             
                     userLogged.set(user.id,user);          
-                    req.sendFlash("happy","Bonjour "+user.name)  
-                    req.sendFlash("normal","Bienvenue au grand Hero "+hero.type+" "+hero.name)  
+                    req.sendFlash("happy","Bonjour "+user.name)                      
                     color.successTxt(user.name + " vient de se connecter !");
                     res.redirect('/home');
                 })

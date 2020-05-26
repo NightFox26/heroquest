@@ -1,8 +1,10 @@
 class Letter{
-    constructor(letter,reading=null){
+    constructor(letter,mode=null){
         this.infos = letter;
-        if(!reading){
+        if(mode == null){
             this.addRowLetterBox();    
+        }else if(mode == "reading"){
+            this.hydrate();
         }
     }
 
@@ -12,7 +14,7 @@ class Letter{
 
         let date = new Date(this.infos.date);  
         let minutes = date.getMinutes() < 10? "0"+ date.getMinutes(): date.getMinutes();
-        let theDate = date.getUTCDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" à "+date.getHours()+":"+minutes;    
+        let theDate = date.getUTCDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" à "+date.getHours()+":"+minutes;    
         let letterHtml = 
             `<li class="rowLetter">
                 <div class="float-right">
@@ -42,7 +44,11 @@ class Letter{
         $("#letter").hide(200,function(){
             $("#letter").attr("data-idLetter",$this.infos.id);
 
-            $("#letter .content h3").html(`<img src="/images/icon/${$this.infos.from_hero.type}.png" alt="${$this.infos.from_hero.type}" class="iconAvatar sender" data-idperso="${$this.infos.from_hero.id}"> ${$this.infos.title}`);
+            $("#letter .hero .iconAvatar").remove();
+            $("#letter .hero .playerName").remove();
+            $("#letter .hero").prepend(`<img src="/images/icon/${$this.infos.from_hero.type}.png" alt="${$this.infos.from_hero.type}" class="iconAvatar sender" data-idperso="${$this.infos.from_hero.id}"><span class="playerName"> ${$this.infos.from_hero.name} à ecrit :</span> `);
+
+            $("#letter .content h3").html($this.infos.title);
     
             $("#letter .content p").text(`${$this.infos.content}`);
     

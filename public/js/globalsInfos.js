@@ -13,17 +13,27 @@ $(function(){
     /********* LETTERS **********/
     /****************************/
     //telecharge les lettres de l'utilisateur
+    let newLetterCount = 0;    
     socketGlobal.emit("getAllLetters",heroId)
-    socketGlobal.on("allLetters",(letters)=>{ 
+
+    setInterval(()=>{        
+        $("#letterBox ul").html("")
+        socketGlobal.emit("getAllLetters",heroId)
+    },30000)
+
+    socketGlobal.on("allLetters",(letters)=>{         
         if(letters.id){
             new Letter(letters);
         }
     })
     socketGlobal.on("countLetterNotRead",(nb)=>{        
         if(nb>0){
-            new Flash("Vous avez des lettres non lu dans votre boite de reception.", "happy");
+            if(nb>newLetterCount){                    
+                new Flash("Vous avez des lettres non lu dans votre boite de reception.", "happy");
+            }
             $("#btnLetterBox .counter").text("( "+nb+" )")
             playCssAnim({elm:'#btnLetterBox',anim:"bounce"});
+            newLetterCount = nb;
         }else{
             $("#btnLetterBox .counter").text("")
         }
@@ -37,8 +47,7 @@ $(function(){
     })
 
     socketGlobal.on("readLetter",(letter)=>{        
-        let mail = new Letter(letter,true);
-        mail.hydrate();
+        let mail = new Letter(letter,"reading");        
         $("#letter").show(500);
 
     });
@@ -57,6 +66,44 @@ $(function(){
         new Flash("Ce parchemin a bien était supprimé.", "normal");
         socketGlobal.emit("getAllLetters",heroId)
     })
+    
+    //click sur ecrire une lettre
+    $(document).on("click",".btn-writteLetter",function(){ 
+        let heroId = $(this).parents(".hero").find(".iconAvatar").attr("data-idperso");   
+        let heroName = $(this).parents(".hero").find(".playerName").text().trim();
+        let heroIcon = $(this).parents(".hero").find(".iconAvatar").attr("src");
+        
+        $("#sendLetter input[name='heroName']").val(heroName);
+        $("#sendLetter input[name='heroId']").val(heroId);
+        $("#sendLetter h3 .iconAvatar").attr("src",heroIcon);
+        $("#sendLetter h3 .iconAvatar").attr("data-idperso",heroId);
+        $("#sendLetter h3 .heroName").text(heroName);
+        $("#sendLetter").show(500);
+    });
+
+    //envoyer une lettre
+    $("#letterForm").submit(function(e){
+        e.preventDefault();
+        let heroName = $(this).find("input[name='heroName']").val();
+        let for_heroId = $(this).find("input[name='heroId']").val();
+        let from_heroId = heroId;
+        let letter = {'title': $(this).find("input[name='title']").val(),
+                      'content': $(this).find("textarea").val()}
+
+        
+        $("#sendLetter").hide(150,function(){
+            new Flash("Ce parchemin a bien était envoyer à "+heroName+" !", "happy");
+            if(heroId == 4){
+                new Flash("Heyyy mais c'est une lettre pour moi ??", "angry");
+            }
+           socketGlobal.emit("sendLetter",{from_heroId,for_heroId,letter})
+        });
+    });
+
+
+
+
+
     /****************************************/
 
 

@@ -131,8 +131,11 @@ body {
 .overflowAuto{
     overflow: auto;    
     -ms-overflow-style: none;
+    scrollbar-width: none; // cache la scrollbar sur firefox
     &::-webkit-scrollbar {
         display: none;
+        width: 0px;
+        background: transparent;
     }
 }
 

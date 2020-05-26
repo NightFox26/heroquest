@@ -2,10 +2,10 @@
     display: none;
     position: fixed;
     width: 450px;
-    top: 30%;
+    top: 10%;
     left: 15%;
     z-index: 11;
-
+    max-height: 580px;
     ul {
         hr {
             clear: both;
@@ -57,17 +57,24 @@
 #letter {
     display: none;
     position: fixed;
-    top: 30%;
+    top: 10%;
     left: 55%;
     z-index: 11;
 
-    .content {
-        h3 {
-            margin-top: 5px;
+    .hero{
+        img{
+            margin-top: 10px;
+            margin-left: 10px;
+            vertical-align: middle;
         }
-
-        padding: 10px;
-        padding-bottom: 20px;
+        .content {
+            h3 {
+                margin-top: 5px;
+            }
+    
+            padding: 10px;
+            padding-bottom: 20px;
+        }
     }
 
     .footer {
@@ -76,11 +83,11 @@
 }
 
 #sendLetter {
-    // display: none;
+    display: none;
     position: fixed;
     width: 450px;
-    top: 30%;
-    left: 50%;
+    top: 50%;
+    left: 52%;
     z-index: 11;
     h3{
         .iconAvatar{

@@ -43,6 +43,10 @@ function getGlobalSocketController(io){
             })
         })
 
+        socket.on("sendLetter",({from_heroId,for_heroId,letter})=>{
+            letterMng.addLetter(from_heroId,for_heroId,letter)            
+        })
+
         
     })
 }
