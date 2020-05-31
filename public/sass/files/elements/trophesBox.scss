@@ -1,0 +1,31 @@
+#trophesBox {
+    display: none;
+    position: fixed;
+    width: 670px;
+    top: 10%;
+    left: 25%;
+    z-index: 11;
+    max-height: 580px;
+    #trophesList{
+        padding-left: 0;
+        text-align:center;
+        li{
+            box-sizing: border-box;
+            display: inline-block;
+            border: 3px solid black;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 4px;
+            box-shadow: 2px 2px 4px black;
+            &:hover{
+                box-shadow: 0 0 15px 6px black;
+                cursor: pointer;
+                transform: scale(1.2);
+            }
+            img{
+                vertical-align: top;
+                width: 45px;
+            }
+        }
+    }
+}

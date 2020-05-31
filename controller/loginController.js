@@ -22,7 +22,7 @@ function postLoginController(req,res,userLogged){
             heroMng.getHeroByUserId(user.id,function(hero){
                 req.session.user = user;  
                 req.session.hero = hero;   
-                partieMng.stopAllPartiesStatusByUserId(req.session.hero,()=>{             
+                partieMng.stopAllPartiesByUserId(req.session.hero,()=>{             
                     userLogged.set(user.id,user);          
                     req.sendFlash("happy","Bonjour "+user.name)                      
                     color.successTxt(user.name + " vient de se connecter !");

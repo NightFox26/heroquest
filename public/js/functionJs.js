@@ -71,6 +71,10 @@ function toggleLetterBox(){
     $("#letter").hide(500);
 }
 
+function toggleTrophesBox(){
+    $("#trophesBox").fadeToggle(500);
+}
+
 function toggle_NewGame(){
     $("#newGameForm").fadeToggle(500);
     $("#newGameForm input[name='game_name']").focus();

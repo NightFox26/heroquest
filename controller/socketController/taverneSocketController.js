@@ -10,15 +10,14 @@ function getTaverneSocketController(io,usersInTaverne,req){
 
     const io_taverne = io.of('/taverne'); 
 
-    io_taverne.on('connection',function(socket,){         
-        
+    io_taverne.on('connection',function(socket){ 
         socket.on("userLoggedTavern", function({idUser,idPartie}){ 
             userMng.getUserByIdWithHero(idUser,(user)=>{ 
                 color.infoTxt(user.player.name +' se connecte a la taverne');
                 socket.broadcast.emit("newUserLogged", user.hero.name)       
                 usersInTaverne.set(socket.id,{player:user.player,hero:user.hero}); 
 
-                partieMng.stopAllPartiesStatusByUserId(user.hero,()=>{})
+                partieMng.stopAllPartiesWaitingByUserId(user.hero,()=>{})
 
                 if(idPartie){                    
                     partieMng.getPartieByIdAndHero(idPartie,user.hero.id,(partie)=>{
@@ -114,7 +113,7 @@ function getTaverneSocketController(io,usersInTaverne,req){
                 socket.broadcast.emit("userQuit", user.hero.name)         
                 usersInTaverne.delete(socket.id); 
 
-                partieMng.stopAllPartiesStatusByUserId(user.hero,()=>{})
+                partieMng.stopAllPartiesWaitingByUserId(user.hero,()=>{})
 
                 userMng.getAllUsersWithHeros((allUsers)=>{                    
                     io_taverne.emit('tavernNotLoggedUsers',allUsers);

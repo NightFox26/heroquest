@@ -19,6 +19,8 @@ class TableTaverne{
     create(){        
         $("#tableTaverne h2 span").text(this.name);
         $("#tableTaverne .table").attr("data-idTable",this.id);
+        $("#tableTaverne .infosPartie .etage").text(this.etage);
+        $("#tableTaverne .infosPartie .mode").text(this.mode);
        
         $("#tableTaverne #hero1").html('<img src="images/icon/'+this.hero_1.type+'.png" class="iconAvatar" alt="'+this.hero_1.type+' icon" data-idperso="'+this.hero_1.id+'" data-socket="'+this.socketHero+'">');
         

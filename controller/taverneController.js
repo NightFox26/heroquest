@@ -10,7 +10,7 @@ function getTaverneController(req,res){
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;      
         res.locals.page =  "taverne"; 
-        partieMng.getAllPartieByUserId(req.session.hero.id,(parties)=>{  
+        partieMng.getAllPartieByUserIdAndMode(req.session.hero.id,configInit.gameMode,(parties)=>{  
             if(req.query.idPartie>0){
                 let partie = partieMng.getPartieByIdAndHero(req.query.idPartie,req.session.hero.id,(partie)=>{                    
                     if(partie.id!=null){
@@ -44,7 +44,7 @@ function getAllWaitingTablesController(req,res,usersInTaverne){
     if(req.session.user != undefined &&  req.session.user != ""){     
         res.setHeader('Content-Type', 'application/json');        
         let idUserInTavern = servFunc.getAllIdHeroInTavern(usersInTaverne)    
-        partieMng.getAllWaitingTables(idUserInTavern,(tables)=>{
+        partieMng.getAllWaitingTables(idUserInTavern,configInit.gameMode,(tables)=>{
             res.end(JSON.stringify(tables));   
         }) 
     }else{
