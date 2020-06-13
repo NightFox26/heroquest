@@ -2,6 +2,7 @@ const socketGlobal = io();
 
 $(function(){
     const heroId = $("#userId").text();
+    const idPartie = $("#idPartie").text();
 
     //affiche le nombre total d'utilisateur connecté au jeu
     socketGlobal.on("nbUserLogged",(nb)=>{       
@@ -49,7 +50,6 @@ $(function(){
     socketGlobal.on("readLetter",(letter)=>{        
         let mail = new Letter(letter,"reading");        
         $("#letter").show(500);
-
     });
 
     //Click sur supprimer lettre
@@ -99,14 +99,12 @@ $(function(){
            socketGlobal.emit("sendLetter",{from_heroId,for_heroId,letter})
         });
     });
-
-
-
-
-
     /****************************************/
 
 
+    /*******************************/
+    /********* Fiche Hero **********/
+    /*******************************/
     //remplie la fiche des persos
     $(document).on('click','.iconAvatar',function(){
         open_FichePerso();
@@ -134,5 +132,22 @@ $(function(){
         $('#fichePerso .esprit').text(perso.stats.mp);
     })
     /*******************************************************/
+
+
+    /*******************************/
+    /******FERMETURE DE PARTIE**** */
+    /*******************************/
+    $("footer .gamePartie .btn-delete").click(function(){
+        let idPartie = $(this).parents(".gamePartie").attr("data-partieid");   
+        socketGlobal.emit("closingGame", {idPartie});
+    })
     
+    // forcer la redirection vers taverne
+    socketGlobal.on("redirectToTaverne",(idGame)=>{ 
+        $("footer .gamePartie[data-partieid='"+idGame+"']").remove();      
+        if(idPartie == idGame){
+            alert("La partie vient d'etre stoppé !");
+            location.href = "/taverne";
+        }
+    })
 })

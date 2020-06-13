@@ -3,8 +3,8 @@ const partieMng = require("../models/manager/PartieMng");
 const color = require("../modules/colorsTxt");
 
 var jeu = new EventEmitter();
-jeu.on("start_game",(msg)=>{
-    color.successTxt("Demmarrage du jeu !");
+jeu.on("start_game",(partie_id)=>{
+    color.successTxt("La partie "+partie_id+" demmarre !");
 })
 
 const runPlateau = (idPartie,heroId,cb)=>{
@@ -13,9 +13,9 @@ const runPlateau = (idPartie,heroId,cb)=>{
             partie.hero_2_id == heroId ||
             partie.hero_3_id == heroId ||
             partie.hero_4_id == heroId ){
-                partieMng.uppdatePartieStatusById(partie,"playing",()=>{
-                    console.log("La partie "+partie.id+" demmarre !");
-                    jeu.emit('start_game');
+                partieMng.uppdatePartieStatusById(partie,"playing",()=>{  
+                    jeu.emit('start_game',partie.id);
+                    
                     cb(partie);
                 })                
         } else {

@@ -43,7 +43,29 @@ function getAllPartieByUserIdAndMode(hero_id,mode,callBack){
     });    
 }
 
-function getAllWaitingTables(userIdTavern,mode,callback){
+function getAllPartieWithMe(hero_id,mode,callBack){    
+    connection.query('SELECT * FROM parties WHERE (hero_1_id = ? OR hero_2_id = ? OR hero_3_id = ? OR hero_4_id = ? ) AND mode = ?', [hero_id,hero_id,hero_id,hero_id,mode],function (err, parties) {
+        if (err) throw err;
+        let allParty = []
+        for( let party of parties){            
+            allParty.push(hydratePartie(party));
+        }     
+        callBack(allParty);
+    });    
+}
+
+function getAllPartiePlayingWithMe(hero_id,mode,callBack){    
+    connection.query('SELECT * FROM parties WHERE (hero_1_id = ? OR hero_2_id = ? OR hero_3_id = ? OR hero_4_id = ? ) AND mode = ? AND status="playing"', [hero_id,hero_id,hero_id,hero_id,mode],function (err, parties) {
+        if (err) throw err;
+        let allParty = []
+        for( let party of parties){            
+            allParty.push(hydratePartie(party));
+        }     
+        callBack(allParty);
+    });    
+}
+
+function getAllWaitingTables(userIdTavern,mode,callback){    
     connection.query('SELECT * FROM parties WHERE status= ? AND mode = ? AND hero_id IN ( ? )',
                     ["waiting",mode,userIdTavern], function (err, parties) {
         if (err) throw err;
@@ -56,7 +78,7 @@ function getAllWaitingTables(userIdTavern,mode,callback){
 }
 
 function insertPartieByUserId(name,hero,slots,mode,callback){
-    stopAllPartiesStatusByUserId(hero,()=>{
+    stopAllPartiesWaitingByUserId(hero,()=>{
         let datas = {name,hero_id:hero.id,slots,mode,hero_1_id:hero.id}    
         connection.query('INSERT INTO parties SET ?',
                         datas, function (err,result) {
@@ -68,25 +90,23 @@ function insertPartieByUserId(name,hero,slots,mode,callback){
 }
 
 
-function stopAllPartiesWaitingByUserId(hero,callback){      
-    connection.query('UPDATE parties SET status = "stopped", hero_2_id=0, hero_3_id=0, hero_4_id=0 WHERE hero_id = ? AND status != "playing"',
+function stopAllPartiesWaitingByUserId(hero,callback){   
+    connection.query('UPDATE parties SET status = "stopped" WHERE hero_id = ? AND status != "playing"',
     hero.id, function (err,result) {
-        if (err) throw err; 
-        connection.query('UPDATE parties SET hero_2_id=0 WHERE hero_2_id = ?', hero.id);
-        connection.query('UPDATE parties SET hero_3_id=0 WHERE hero_3_id = ?', hero.id);
-        connection.query('UPDATE parties SET hero_4_id=0 WHERE hero_4_id = ?', hero.id);
+        if (err) throw err;
         console.log("les partie en attente sont toute stoppé pour "+hero.name+" !");
         callback()
     });     
 }
 
-function stopAllPartiesByUserId(hero,callback){      
+function stopAllPartiesByUserId(hero,callback){     
+    connection.query('UPDATE parties SET hero_2_id=0 WHERE hero_2_id = ?', hero.id);
+    connection.query('UPDATE parties SET hero_3_id=0 WHERE hero_3_id = ?', hero.id);
+    connection.query('UPDATE parties SET hero_4_id=0 WHERE hero_4_id = ?', hero.id);    
+
     connection.query('UPDATE parties SET status = "stopped", hero_2_id=0, hero_3_id=0, hero_4_id=0 WHERE hero_id = ?',
     hero.id, function (err,result) {
-        if (err) throw err; 
-        connection.query('UPDATE parties SET hero_2_id=0 WHERE hero_2_id = ?', hero.id);
-        connection.query('UPDATE parties SET hero_3_id=0 WHERE hero_3_id = ?', hero.id);
-        connection.query('UPDATE parties SET hero_4_id=0 WHERE hero_4_id = ?', hero.id);
+        if (err) throw err;
         console.log("Toutes les partie sont toute stoppé pour "+hero.name+" !");
         callback()
     });     
@@ -118,6 +138,14 @@ function removeartieHeroById(idParty,slot,callback){
     });    
 }
 
+function stopPartieById(idPartie,callback){
+    connection.query('UPDATE parties SET status = "stopped", hero_2_id = 0, hero_3_id = 0, hero_4_id = 0 WHERE id = ?',
+    [idPartie], function (err,result) {
+        if (err) throw err;         
+        callback()
+    });    
+}
+
 
 function hydratePartie(cols,hero1=null,hero2=null,hero3=null,hero4=null){
     let partie = new Partie();    
@@ -137,6 +165,8 @@ function hydratePartie(cols,hero1=null,hero2=null,hero3=null,hero4=null){
 module.exports = {
     getPartieById,
     getAllPartieByUserIdAndMode,
+    getAllPartiePlayingWithMe,
+    getAllPartieWithMe,
     insertPartieByUserId,
     getAllWaitingTables,
     stopAllPartiesWaitingByUserId,
@@ -144,5 +174,6 @@ module.exports = {
     getPartieByIdAndHero,
     uppdatePartieHeroById,
     removeartieHeroById,
-    stopAllPartiesByUserId
+    stopAllPartiesByUserId,
+    stopPartieById
 }

@@ -31,3 +31,7 @@
     <%- include('../include/lettersBox'); %>
     <%- include('../include/trophesBox'); %>
 <% } %> 
+
+<% if(locals.idPartie) { %>
+    <div id="idPartie" hidden><%= idPartie %></div>
+<% } %> 

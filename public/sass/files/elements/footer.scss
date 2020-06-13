@@ -7,4 +7,10 @@ footer{
     padding: 10px;
     box-shadow: 0 -5px 10px white;
     z-index: 10;
+    .gamePartie{
+        a{
+            color: $orange;
+            text-shadow: 1px 1px 2px black;
+        }
+    }
 }

@@ -4,6 +4,18 @@ $(function(){
 
     var myId = $("#userId").text();
     var idPartie =searchParams.get('idPartie');
+    var btnLaunchGame = $("#gameConfig .formSubmit a");
+
+    
+    //gestion du lancement de partie depuis la taverne
+    $(btnLaunchGame).click(()=>{
+        socket.emit("launchGame", idPartie);
+    })
+    
+    socket.on("teleportToGame",(idPartie)=>{
+        location.href = "/game/"+idPartie;
+    })
+    
           
     //previent le serveur qu'un utilisateur se connecte
     socket.emit("userLoggedTavern",({idUser:myId,idPartie:idPartie}));    
@@ -199,8 +211,7 @@ $(function(){
         }
     }
 
-    function updateTableChefSide(table){
-        console.log(table)
+    function updateTableChefSide(table){        
         if($("#playerSection #gameConfig").attr("data-idTable") == table.id){
 
             $("#playerSection #tableInvited").hide(500);

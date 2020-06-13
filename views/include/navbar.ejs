@@ -26,7 +26,7 @@
     <button onClick="toggle_headerFooter();" class="btn float-right">
         <img src="/images/icon/menuLess.png" alt="icon sans menu">
     </button>
-    <% if(locals.page == "taverne"){ %>
+    <% if(locals.page == "taverne" || locals.page == "game" ){ %>
     <button onClick="toggle_Chat();" class="btn float-right" id="chatBtn">
         <img src="/images/icon/dial.png" width=30 alt="icon tchat"><span>0</span>
     </button>

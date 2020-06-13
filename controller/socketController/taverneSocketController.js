@@ -11,17 +11,27 @@ function getTaverneSocketController(io,usersInTaverne,req){
     const io_taverne = io.of('/taverne'); 
 
     io_taverne.on('connection',function(socket){ 
+        
         socket.on("userLoggedTavern", function({idUser,idPartie}){ 
+    
             userMng.getUserByIdWithHero(idUser,(user)=>{ 
                 color.infoTxt(user.player.name +' se connecte a la taverne');
                 socket.broadcast.emit("newUserLogged", user.hero.name)       
                 usersInTaverne.set(socket.id,{player:user.player,hero:user.hero}); 
 
                 partieMng.stopAllPartiesWaitingByUserId(user.hero,()=>{})
+                
+                partieMng.getAllPartieWithMe(user.hero.id,"classique",(parties)=>{                    
+                    parties.forEach(partie => {
+                        socket.join("party_"+partie.id);                        
+                    });
+                })
 
                 if(idPartie){                    
                     partieMng.getPartieByIdAndHero(idPartie,user.hero.id,(partie)=>{
-                        partieMng.uppdatePartieStatusById(partie,"waiting",()=>{})
+                        partieMng.uppdatePartieStatusById(partie,"waiting",()=>{
+                            socket.join("party_"+partie.id);
+                        })
                     })
                 }
 
@@ -81,7 +91,7 @@ function getTaverneSocketController(io,usersInTaverne,req){
         });
         
         socket.on('invitation_accepted', ({idParty,slot,socketHeroChef,heroChef,socketHeroJoiner,heroJoiner}) => { 
-            partieMng.stopAllPartiesStatusByUserId(heroJoiner,()=>{
+            partieMng.stopAllPartiesWaitingByUserId(heroJoiner,()=>{
                 partieMng.uppdatePartieHeroById(idParty,slot,heroJoiner,()=>{
                     color.successTxt(heroChef.name +" à accepté que "+heroJoiner.name +" rejoigne sa table !");
 
@@ -104,6 +114,10 @@ function getTaverneSocketController(io,usersInTaverne,req){
                 socket.to(userKickedSocket).emit('kick_table',heroKicker);
             })
         });
+
+        socket.on("launchGame",(idPartie)=>{
+            io_taverne.to("party_"+idPartie).emit("teleportToGame",(idPartie));
+        })
         
 
         socket.on('disconnect', (reason) => {

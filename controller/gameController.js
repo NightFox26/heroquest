@@ -1,7 +1,8 @@
-const configInit    = require("../config/configInit");
-const color         = require("../modules/colorsTxt");
-const servFunc      = require("../modules/functionServer");
-const connectPlateau          = require("../game/connectPlateau");
+const configInit        = require("../config/configInit");
+const color             = require("../modules/colorsTxt");
+const servFunc          = require("../modules/functionServer");
+const connectPlateau    = require("../game/connectPlateau");
+const partieMng         = require("../models/manager/PartieMng");
 
 function getGameController(req,res){    
     res.setHeader('Content-Type', 'text/html'); 
@@ -9,13 +10,17 @@ function getGameController(req,res){
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;   
         res.locals.page =  "game";    
-        let idPartie = req.params.idPartie;
-        let gameMode = req.params.gameMode;
+        let idPartie = req.params.idPartie;        
         
         connectPlateau.runPlateau(idPartie, res.locals.hero.id,(partie)=>{
             if(partie.id){
+                let gameMode = partie.mode;
                 color.infoTxt("lancement de la partie : "+ idPartie + " en mode "+gameMode); 
-                res.render('game-normal.ejs', {gameMode,idPartie});
+
+                partieMng.getAllPartiePlayingWithMe(req.session.hero.id,gameMode,(partiesPlayingWithMe)=>{
+                    res.render('game.ejs', {gameMode,idPartie,partiesPlayingWithMe});
+                });
+
             }else{
                 res.locals.page =  "404";    
                 color.errorTxt(partie);
@@ -28,6 +33,9 @@ function getGameController(req,res){
     }   
 }
 
+function teleportPlayersToGameBord(){
+
+}
 
 module.exports = {
     getGameController

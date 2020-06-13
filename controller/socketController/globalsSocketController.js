@@ -46,6 +46,14 @@ function getGlobalSocketController(io){
         socket.on("sendLetter",({from_heroId,for_heroId,letter})=>{
             letterMng.addLetter(from_heroId,for_heroId,letter)            
         })
+        /***********************/
+
+        //fermeture d'une partie
+        socket.on("closingGame",({idPartie})=>{
+            partieMng.stopPartieById(idPartie,()=>{
+                io.emit("redirectToTaverne",idPartie)
+            })
+        })
 
         
     })

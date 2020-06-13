@@ -98,7 +98,7 @@ app.get('/', function(req, res) {
     ctrl.postTaverneLoadCroisadeController(req,res);
 })
 
-.get('/game/:gameMode/:idPartie', function(req, res) {    
+.get('/game/:idPartie', function(req, res) {    
     const ctrl = require('./controller/gameController');
     ctrl.getGameController(req,res); 
 })

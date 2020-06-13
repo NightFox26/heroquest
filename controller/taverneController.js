@@ -10,21 +10,24 @@ function getTaverneController(req,res){
         res.locals.user =  req.session.user ;
         res.locals.hero =  req.session.hero ;      
         res.locals.page =  "taverne"; 
-        partieMng.getAllPartieByUserIdAndMode(req.session.hero.id,configInit.gameMode,(parties)=>{  
-            if(req.query.idPartie>0){
-                let partie = partieMng.getPartieByIdAndHero(req.query.idPartie,req.session.hero.id,(partie)=>{                    
-                    if(partie.id!=null){
-                        res.sendFlash("normal","Bravo pour cette nouvelle croisade ! On part quand ? ")
-                        res.render('taverne.ejs', {gameMode: configInit.gameMode,partie:partie,parties:parties}); 
-                    }else{
-                        res.sendFlash("angry","Cette partie ne vous appartient pas !!!! ")
-                        res.render('taverne.ejs', {gameMode: configInit.gameMode,parties:parties}); 
-                    }
-                })
-            }else{
-                res.sendFlash("happy","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
-                res.render('taverne.ejs', {gameMode: configInit.gameMode,parties:parties}); 
-            } 
+        var gameMode = configInit.gameMode;
+        partieMng.getAllPartieByUserIdAndMode(req.session.hero.id,gameMode,(parties)=>{  
+            partieMng.getAllPartiePlayingWithMe(req.session.hero.id,gameMode,(partiesPlayingWithMe)=>{
+                if(req.query.idPartie>0){
+                    partieMng.getPartieByIdAndHero(req.query.idPartie,req.session.hero.id,(partie)=>{                    
+                        if(partie.id!=null){
+                            res.sendFlash("normal","Bravo pour cette nouvelle croisade ! On part quand ? ")
+                            res.render('taverne.ejs', {gameMode,partie,parties,partiesPlayingWithMe}); 
+                        }else{
+                            res.sendFlash("angry","Cette partie ne vous appartient pas !!!! ")
+                            res.render('taverne.ejs', {gameMode,parties,partiesPlayingWithMe}); 
+                        }
+                    })
+                }else{
+                    res.sendFlash("happy","Bienvenue a la taverne du 'Chien errant' "+req.session.hero.name)
+                    res.render('taverne.ejs', {gameMode,parties,partiesPlayingWithMe}); 
+                } 
+            })
         })
     }else{
         req.sendFlash("angry","Vous devez vous connecter pour acceder a la taverne !")

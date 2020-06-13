@@ -12,12 +12,17 @@
         <img src="/images/icon/cup.png" alt="icon coupe"> Taverne
     </a> 
 
-    <% if(locals.parties){ %>
-        <% locals.parties.forEach(function(partie){ %>
+    <% if(locals.partiesPlayingWithMe){ %>
+        <% locals.partiesPlayingWithMe.forEach(function(partie){ %>
             <% if(partie.status == "playing"){ %>
-                <a href="/game/<%= partie.mode %>/<%= partie.id %>" class="btn">
-                    <img src="/images/icon/atk.png" alt="icon coupe"> Croisade "<%= partie.name %>"
-                </a> 
+                <span class="btn gamePartie" data-partieId="<%= partie.id %>">
+                    <a href="/game/<%= partie.id %>" >
+                        <img src="/images/icon/atk.png" alt="icon coupe"> Croisade "<%= partie.name %>"
+                    </a> 
+                    <% if(locals.hero.id == partie.hero_id){ %>
+                        <button class="btn-delete" >Stopper</button>
+                    <% } %>
+                </span>
             <% } %>
         <% }); %>
     <% } %>
@@ -40,7 +45,7 @@
 <script src="/js/modules/Letter.js"></script>
 
 <% if(locals.page != "login"){ %>
-    <script src="/js/globalsInfos.js"></script>
+    <script src="/js/clientGlobal.js"></script>
 <% } %>
 
 <% if(locals.page == "taverne"){ %>
