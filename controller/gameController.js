@@ -6,9 +6,15 @@ const partieMng         = require("../models/manager/PartieMng");
 
 function getGameController(req,res){    
     res.setHeader('Content-Type', 'text/html'); 
-    if(req.session.user != undefined &&  req.session.user != ""){ 
-        res.locals.user =  req.session.user ;
-        res.locals.hero =  req.session.hero ;   
+    if((req.session.user != undefined &&  req.session.user != "") || configInit.testGame){ 
+
+        if(configInit.testGame){
+            res.locals.user =  {id:1,name:"thierry",type:"Magicien"};
+            res.locals.hero =  {id:1,name:"Nightfox26",type:"Magicien"};
+        }else{
+            res.locals.user =  req.session.user ;
+            res.locals.hero =  req.session.hero ;
+        }
         res.locals.page =  "game";    
         let idPartie = req.params.idPartie;        
         
@@ -17,7 +23,7 @@ function getGameController(req,res){
                 let gameMode = partie.mode;
                 color.infoTxt("lancement de la partie : "+ idPartie + " en mode "+gameMode); 
 
-                partieMng.getAllPartiePlayingWithMe(req.session.hero.id,gameMode,(partiesPlayingWithMe)=>{
+                partieMng.getAllPartiePlayingWithMe(res.locals.hero.id,gameMode,(partiesPlayingWithMe)=>{
                     res.render('game.ejs', {gameMode,idPartie,partiesPlayingWithMe});
                 });
 

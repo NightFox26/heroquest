@@ -1,0 +1,105 @@
+#gamePage{
+    background-image:  url("../images/bg/bg-wood.jpg");
+    .wrapperBody{     
+        text-align: center;   
+        #personnages{            
+            display: inline-block;
+            vertical-align: middle;            
+            width: 380px;
+            text-align: center;
+            margin-bottom: 20px;
+            .ficheHero{
+                position: relative;
+                display: inline-block; 
+                max-width: 100px;
+                margin-top: 15px;
+                &:hover{
+                    cursor: pointer;
+                }
+                &:nth-child(2){
+                    transform: rotate(-20deg);
+                }
+                &:nth-child(4){                    
+                    top:50px;
+                    transform: rotate(20deg);
+                }
+                img{
+                    width: 100%;                    
+                }
+                &.ficheChef{
+                    display: block;
+                    max-width: 80%;
+                    margin: auto;
+                }
+                &.turnPlaying{
+                    border: 3px solid $black;
+                    border-radius: 5px;
+                    z-index: 3;
+                    box-shadow: 4px 4px 8px black;
+                    background-color:$orange;
+                    &:before{
+                        content:"Tour de jeu";
+                        color: $black;
+                    }
+                }
+            }
+        }
+    
+        #plateau{
+            display: inline-block;
+            vertical-align: middle;            
+            width: 1110px;
+            height: 812px;        
+            background-image: url("../images/elements/plateau.jpg");
+            background-size: 100% 100%;
+            // background-color: red;
+            background-repeat: no-repeat;
+            margin: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 8px;
+            .tiles{
+                display: inline-block;
+                vertical-align: middle;
+                box-sizing: border-box;
+                width: 42px;
+                height: 42px;
+                 border: 1px solid red;
+                margin-right: -4px;
+            }
+        }
+    
+        #actions{            
+            display: inline-block; 
+            vertical-align: middle; 
+            width: 380px;
+            text-align: center;
+            color: $red;
+            padding: 0 5px;
+            .btnsAction{
+                margin-bottom: 10px;
+                button{
+                    margin-bottom: 10px;
+                }
+            }
+
+            .cardsAction{
+                img{
+                    width: 120px;
+                }
+            }
+
+            .endTurn{
+                width: 100%;
+                font-family: "heroquest";
+                color: $black;
+                font-size: 38px;
+                line-height: 50PX;
+                border-width: 5px;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+//26 x 19

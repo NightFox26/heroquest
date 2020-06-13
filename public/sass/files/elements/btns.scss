@@ -14,6 +14,13 @@
     }
 }
 
+.btnActionGame{
+    @extend .btn;
+    background-color: $black;
+    width: 160px;
+    text-align: left;
+}
+
 .btn-invalid{
     @extend .btn;
     background-color: $orange;

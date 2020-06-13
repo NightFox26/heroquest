@@ -3,23 +3,88 @@
 <body id="gamePage">
     <div class="wrapperBody">
         <%- include('./component/chat'); %>
-        
-        <section id="personnage">
 
+        <section id="personnages">
+            <div class="ficheHero ficheChef ">
+                <img src="/images/fiche/Magicien.png" alt="">
+            </div>
+
+            <div class="ficheHero ">
+                <img src="/images/fiche/Elf.png" alt="">
+            </div>
+
+            <div class="ficheHero ">
+                <img src="/images/fiche/Naim.png" alt="">
+            </div>
+
+            <div class="ficheHero turnPlaying">
+                <img src="/images/fiche/Barbare.png" alt="">
+            </div>
         </section>
 
         <section id="plateau" class="boxShadow">
             <% for(var i=0; i<26; i++){ %>
-                <% for(var j=0; j<19; j++){ %>
-                    <div class="tiles"></div>
-                <% } %>
+            <% for(var j=0; j<19; j++){ %>
+            <div class="tiles"></div>
+            <% } %>
             <% } %>
         </section>
 
         <section id="actions">
+            <fieldset class="btnsAction">
+                <legend>Actions</legend>
+                <button class="btnActionGame">
+                    <img src="/images/icon/moving.png" alt="icon move"> Se deplacer
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/attacking.png" alt="icon atk"> Attaquer
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/defending.png" alt="icon defend"> Se defendre
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/spelling.png" alt="icon spell"> Sortilege
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/openDoor.png" alt="icon open"> Ouvrir
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/searchDoor.png" alt="icon searchDoor"> Détect porte
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/searchTrap.png" alt="icon searchTrap"> Détect piége
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/searchTreasure.png" alt="icon searchTreasure"> Détect trésor
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/desamorcing.png" alt="icon desamorcing"> Désam. piege
+                </button>
+
+                <button class="btnActionGame">
+                    <img src="/images/icon/gifting.png" alt="icon gifting"> Donner obj.
+                </button>
+            </fieldset>
+
+            <div class="cardsAction">
+                <img src="/images/cards/Equipement.jpg" alt="carte equip">
+                <img src="/images/cards/Tresor.jpg" alt="carte tresor">
+                <img src="/images/cards/Parchemin_de_Sort.jpg" alt="carte sorts">
+            </div>
+
+            <button class="btn endTurn"> Fin de tour </button>
 
         </section>
     </div>
-    <%- include('include/footer'); %>      
+    <%- include('include/footer'); %>
 </body>
+
 </html>
