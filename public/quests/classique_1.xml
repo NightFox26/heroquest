@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE quest>
+<quest>
+        <nom>
+            L'Epreuve
+        </nom>
+        <descriptif>
+			« Mes amis, vous avez beaucoup appris. Le temps est venu maintenant de votre première épreuve. Vous allez vous diriger vers l’est et vous pénétrerez dans les Catacombes de Verag, une infecte gargouille. Vous devrez y découvrir la tombe de Fellmarg. Votre tâche ne sera pas facile et certains d’entre vous ne reviendront pas. Ceux qui survivront devront poursuivre leur entraînement. Ceci est votre premier pas sur le chemin qui fera de vous des Héros… Avancez prudemment mes amis. »
+        </descriptif>
+        <sprites>			
+            <monstres>
+				<Gobelin>
+					<x>9</x>
+					<y>3</y>
+				</Gobelin>
+				
+				<Gobelin>
+					<x>14</x>
+					<y>14</y>
+				</Gobelin>
+				
+				<Gobelin>
+					<x>16</x>
+					<y>17</y>
+				</Gobelin>
+				
+				<Gobelin>
+					<x>14</x>
+					<y>1</y>
+				</Gobelin>
+				
+				<Gobelin>
+					<x>17</x>
+					<y>1</y>
+				</Gobelin>
+				
+				<Orc>
+					<x>11</x>
+					<y>2</y>
+				</Orc>
+				
+				<Orc>
+					<x>20</x>
+					<y>4</y>
+				</Orc>
+				
+				<Orc>
+					<x>22</x>
+					<y>4</y>
+				</Orc>
+				
+				<Orc>
+					<x>18</x>
+					<y>6</y>
+				</Orc>
+				
+				<Orc>
+					<x>17</x>
+					<y>8</y>
+				</Orc>
+				
+				<Skeleton>
+					<x>1</x>
+					<y>7</y>
+				</Skeleton>
+				
+				<Skeleton>
+					<x>2</x>
+					<y>6</y>
+				</Skeleton>
+				
+				<Skeleton>
+					<x>6</x>
+					<y>1</y>
+				</Skeleton>
+				
+				<Skeleton>
+					<x>6</x>
+					<y>3</y>
+				</Skeleton>
+				
+				<Mumy>
+					<x>3</x>
+					<y>7</y>
+				</Mumy>
+				
+				<Mumy>
+					<x>1</x>
+					<y>2</y>
+				</Mumy>
+				
+				<Zombi>
+					<x>1</x>
+					<y>1</y>
+				</Zombi>
+				
+				<Zombi>
+					<x>2</x>
+					<y>3</y>
+				</Zombi>
+				
+				<Fimir>
+					<x>15</x>
+					<y>3</y>
+				</Fimir>
+				
+				<Fimir>
+					<x>21</x>
+					<y>2</y>
+				</Fimir>
+				
+				<Fimir>
+					<x>11</x>
+					<y>8</y>
+				</Fimir>
+				
+				<Fimir>
+					<x>19</x>
+					<y>12</y>
+				</Fimir>
+				
+				<ChaosKnight>
+					<x>12</x>
+					<y>7</y>
+				</ChaosKnight>
+				
+				<ChaosKnight>
+					<x>12</x>
+					<y>11</y>
+				</ChaosKnight>
+				
+				<ChaosKnight>
+					<x>18</x>
+					<y>11</y>
+				</ChaosKnight>
+				
+				<ChaosKnight>
+					<x>20</x>
+					<y>12</y>
+				</ChaosKnight>
+				
+				<Gargoyle>
+					<x>11</x>
+					<y>10</y>
+				</Gargoyle>          
+           
+			</monstres>
+			
+            <mobiliers>
+				<Armoir>
+					<x>18</x>
+					<y>13</y>
+					<rotation>0</rotation>
+					<ht>1</ht>
+					<lg>3</lg>
+				</Armoir>
+				
+				<Biblio>
+					<x>17</x>
+					<y>10</y>
+					<rotation>1</rotation>
+					<lg>1</lg>
+					<ht>3</ht>
+				</Biblio>
+				
+				<Sarcophage>
+					<x>2</x>
+					<y>4</y>
+					<rotation>0</rotation>
+					<lg>3</lg>
+					<ht>2</ht>
+				</Sarcophage>
+				
+				<Cheminee>
+					<x>10</x>
+					<y>8</y>
+					<rotation>1</rotation>
+					<lg>1</lg>
+					<ht>3</ht>
+				</Cheminee>
+				
+				<Table>
+					<x>12</x>
+					<y>8</y>
+					<rotation>1</rotation>
+					<lg>2</lg>
+					<ht>3</ht>
+				</Table>
+				
+				<Table>
+					<x>23</x>
+					<y>1</y>
+					<rotation>1</rotation>
+					<lg>2</lg>
+					<ht>3</ht>
+				</Table>
+				
+				<Throne>
+					<x>11</x>
+					<y>9</y>
+					<rotation>0</rotation>
+					<lg>1</lg>
+					<ht>1</ht>
+				</Throne>
+				
+				<Torture>
+					<x>18</x>
+					<y>1</y>
+					<rotation>1</rotation>
+					<lg>2</lg>
+					<ht>3</ht>
+				</Torture>
+				
+				<Bureau>
+					<x>19</x>
+					<y>5</y>
+					<rotation>1</rotation>
+					<lg>2</lg>
+					<ht>3</ht>
+				</Bureau>
+				
+				<Ratelier>
+					<x>16</x>
+					<y>3</y>
+					<rotation>1</rotation>
+					<lg>1</lg>
+					<ht>3</ht>
+				</Ratelier>
+				
+				<Grimoir>
+					<x>14</x>
+					<y>15</y>
+					<rotation>1</rotation>
+					<lg>2</lg>
+					<ht>3</ht>
+				</Grimoir>
+
+			</mobiliers>
+			
+            <elements>
+				<Porte>
+					<x>1</x>
+					<y>3</y>
+					<rotation>0</rotation> 
+					<lg>1</lg>
+					<ht>2</ht>               
+				</Porte>
+				
+				<Porte>
+					<x>9</x>
+					<y>5</y>
+					<rotation>0</rotation>  
+					<lg>1</lg>
+					<ht>2</ht>              
+				</Porte>
+				
+				<Porte>
+					<x>20</x>
+					<y>0</y>
+					<rotation>0</rotation> 
+					<lg>1</lg>
+					<ht>2</ht>               
+				</Porte>
+				
+				<Porte>
+					<x>19</x>
+					<y>9</y>
+					<rotation>0</rotation> 
+					<lg>1</lg>
+					<ht>2</ht>               
+				</Porte>
+				
+				<Porte>
+					<x>16</x>
+					<y>12</y>
+					<rotation>0</rotation>  
+					<lg>1</lg>
+					<ht>2</ht>              
+				</Porte>
+				
+				<Porte>
+					<x>8</x>
+					<y>2</y>
+					<rotation>1</rotation>  
+					<lg>2</lg>
+					<ht>1</ht>              
+				</Porte>
+				
+				<Porte>
+					<x>13</x>
+					<y>3</y>
+					<rotation>1</rotation>    
+					<lg>2</lg>
+					<ht>1</ht>            
+				</Porte>
+				
+				<Porte>
+					<x>16</x>
+					<y>2</y>
+					<rotation>1</rotation>     
+					<lg>2</lg>
+					<ht>1</ht>           
+				</Porte>
+				
+				<Porte>
+					<x>24</x>
+					<y>4</y>
+					<rotation>1</rotation>      
+					<lg>2</lg>
+					<ht>1</ht>          
+				</Porte>
+				
+				<Porte>
+					<x>16</x>
+					<y>6</y>
+					<rotation>1</rotation>    
+					<lg>2</lg>
+					<ht>1</ht>            
+				</Porte>
+				
+				<Porte>
+					<x>15</x>
+					<y>9</y>
+					<rotation>1</rotation> 
+					<lg>2</lg>
+					<ht>1</ht>               
+				</Porte>
+				
+				<Porte>
+					<x>8</x>
+					<y>12</y>
+					<rotation>1</rotation>   
+					<lg>2</lg>
+					<ht>1</ht>             
+				</Porte>			
+				
+				<PorteSecrete>
+					<x>4</x>
+					<y>1</y>
+					<direction>left</direction> 
+					<lg>2</lg>
+					<ht>1</ht>               
+				</PorteSecrete>
+				
+				<Block_L>
+					<x>12</x>
+					<y>13</y>
+					<rotation>0</rotation> 
+					<lg>2</lg>
+					<ht>1</ht>               
+				</Block_L>
+				
+				<Block>
+					<x>8</x>
+					<y>9</y>
+					<rotation>0</rotation> 
+					<lg>1</lg>
+					<ht>1</ht>               
+				</Block>
+				
+				<Block>
+					<x>11</x>
+					<y>0</y>
+					<rotation>0</rotation> 
+					<lg>1</lg>
+					<ht>1</ht>              
+				</Block>
+				
+				<Block>
+					<x>25</x>
+					<y>10</y>
+					<rotation>0</rotation>
+					<lg>1</lg>
+					<ht>1</ht>                
+				</Block>
+				
+				<Coffre>
+					<x>5</x>
+					<y>2</y>
+					<rotation>1</rotation>
+					<contenu></contenu>
+					<lg>1</lg>
+					<ht>1</ht>
+				</Coffre>
+				
+				<Coffre>
+					<x>4</x>
+					<y>7</y>
+					<rotation>1</rotation>
+					<contenu>
+						<or>84</or>
+					</contenu>
+					<lg>1</lg>
+					<ht>1</ht>
+				</Coffre>
+				
+				<Coffre>
+					<x>10</x>
+					<y>7</y>
+					<rotation>1</rotation>
+					<contenu>
+						<or>120</or>
+					</contenu>
+					<lg>1</lg>
+					<ht>1</ht>
+				</Coffre>           
+            
+				<Escalier>		
+					<x>7</x>
+					<y>10</y>
+					<lg>2</lg>
+					<ht>2</ht>
+				</Escalier>        
+			</elements>             
+        </sprites> 
+
+		<rules>
+			<start>   
+				<x1>7</x1>
+				<y1>10</y1>
+
+				<x2>8</x2>
+				<y2>10</y2>
+
+				<x3>7</x3>
+				<y3>11</y3>
+
+				<x4>8</x4>
+				<y4>11</y4>						
+			</start> 
+
+			<exit>   
+				<x1>7</x1>
+				<y1>10</y1>
+
+				<x2>8</x2>
+				<y2>10</y2>
+
+				<x3>7</x3>
+				<y3>11</y3>
+
+				<x4>8</x4>
+				<y4>11</y4>						
+			</exit>
+		</rules>
+</quest>

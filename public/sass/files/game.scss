@@ -51,21 +51,59 @@
             width: 1110px;
             height: 812px;        
             background-image: url("../images/elements/plateau.jpg");
-            background-size: 100% 100%;
-            // background-color: red;
+            background-size: 100% 100%;        
             background-repeat: no-repeat;
             margin: auto;
             margin-top: 20px;
             margin-bottom: 20px;
             padding: 8px;
+            text-align: center;
             .tiles{
+                position: relative;
+                left: -2px;
                 display: inline-block;
                 vertical-align: middle;
                 box-sizing: border-box;
                 width: 42px;
-                height: 42px;
-                 border: 1px solid red;
+                height: 42px;                
                 margin-right: -4px;
+                &:hover{
+                    border-radius: 10px;
+                    box-shadow: inset 0 0 16px 0px $red;
+                }
+                span{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    &.content{
+                        z-index: 1;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                        img{
+                            max-width: 100%;
+                            position: relative;   
+                            z-index: 0;                         
+                        }
+                    }
+                }
+                &.borderGrid{
+                    border: 1px dashed $red ;
+                }               
+                &.fog{
+                    background-color: rgba(110,110,110,0.7);
+                    span{
+                        display: none;                        
+                    }
+                }
+                .gridId{
+                    display: none;
+                    font-size: 12px;
+                    color: $black;
+                    text-shadow:1px 1px 2px white;
+                    line-height: 40px;
+                }
             }
         }
     
@@ -86,6 +124,10 @@
             .cardsAction{
                 img{
                     width: 120px;
+                    box-shadow: 2px 2px 4px black;
+                    &:hover{
+                        cursor: pointer;
+                    }
                 }
             }
 
@@ -102,4 +144,3 @@
     }
 }
 
-//26 x 19

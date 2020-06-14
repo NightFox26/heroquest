@@ -23,10 +23,12 @@
         </section>
 
         <section id="plateau" class="boxShadow">
-            <% for(var i=0; i<26; i++){ %>
-            <% for(var j=0; j<19; j++){ %>
-            <div class="tiles"></div>
-            <% } %>
+            <% for(var i=0; i<19; i++){ %>
+                <% for(var j=0; j<26; j++){ %>
+                    <div class="tiles fog" id="tile-<%= j %>-<%= i %>">
+                        <span class="gridId"><%= j %>-<%= i %></span>
+                    </div>
+                <% } %>
             <% } %>
         </section>
 
